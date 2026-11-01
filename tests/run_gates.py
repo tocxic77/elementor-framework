@@ -208,14 +208,16 @@ def main():
             destino.write_text(json.dumps(datos), encoding="utf-8")
             return correr("auditar_estructura.py", [destino], donde=adaptador)[0]
 
-        def profundidad5(d):
-            cola = hoja(d)
-            cola["elements"] = [{"id": "n1", "elType": "e-flexbox", "settings": {"configuration-id": "n1"},
-                                 "elements": [{"id": "n2", "elType": "e-flexbox",
-                                               "settings": {"configuration-id": "n2"},
-                                               "elements": [{"id": "n3", "elType": "e-flexbox",
-                                                             "settings": {"configuration-id": "n3"},
-                                                             "elements": []}]}]}]
+        def anidar(d, niveles):
+            """La hoja está en el nivel 3: `niveles` más la dejan en 3+niveles."""
+            cola, nodo = hoja(d), None
+            for i in range(niveles, 0, -1):
+                nuevo = {"id": "n%d" % i, "elType": "e-flexbox",
+                         "settings": {"configuration-id": "n%d" % i}, "elements": []}
+                if nodo:
+                    nuevo["elements"] = [nodo]
+                nodo = nuevo
+            cola["elements"] = [nodo]
 
         def sin_tipo(d):
             pila = list(d)
@@ -244,7 +246,8 @@ def main():
                 estructura(lambda d: hoja(d)["settings"].update(classes=["pp-display", "pp-inventada"])), 1)
         esperar("estructura · R4 hex local falla",
                 estructura(lambda d: hoja(d)["settings"].update(color="#FF0000")), 1)
-        esperar("estructura · R5 profundidad 6 falla", estructura(profundidad5), 1)
+        esperar("estructura · R5 profundidad 5 falla", estructura(lambda d: anidar(d, 2)), 1)
+        esperar("estructura · R5 profundidad 6 falla", estructura(lambda d: anidar(d, 3)), 1)
         esperar("estructura · R6 configuration-id duplicado falla",
                 estructura(lambda d: hoja(d)["settings"].update({"configuration-id": "banda-hero"})), 1)
         esperar("estructura · R7 breakpoint 1024 falla",
