@@ -128,12 +128,16 @@ def main():
         tipo = t.get("type") or t.get("template_type") or "?"
         estado = "activa" if t.get("is_active") else t.get("post_status", "?")
         tipos.setdefault(tipo, []).append(estado)
-    duplicadas = {k: v for k, v in tipos.items() if len(v) > 1}
+    duplicadas = {k: v for k, v in tipos.items() if v.count("activa") > 1}
+    inactivas = {k: v for k, v in tipos.items() if len(v) > 1 and v.count("activa") <= 1}
     mal_condicionadas = [t.get("title", "") for t in plantillas
                          if t.get("type") == "error-404" and "404" not in " ".join(t.get("conditions", []))]
     inactivas_con_duplicado = [t.get("title", "") for t in plantillas
                                if not t.get("is_active") and len(tipos.get(t.get("type"), [])) > 1]
 
+    avisos = []
+    if inactivas:
+        avisos.append("plantillas inactivas duplicadas (higiene de biblioteca): %s" % ", ".join(inactivas))
     no_elementor = [f["ruta"] for f in filas if f["elementor"] == 0]
     sin_imagenes = [f["ruta"] for f in filas if f["imagenes"] == 0]
     sin_favicon = [f["ruta"] for f in filas if not f["favicon"]]
@@ -162,7 +166,8 @@ def main():
 
     if args.json:
         print(json.dumps({"paginas": filas, "componentes": len(componentes),
-                          "plantillas": tipos, "fallos": fallos}, ensure_ascii=False, indent=1))
+                          "plantillas": tipos, "fallos": fallos, "avisos": avisos},
+                         ensure_ascii=False, indent=1))
     else:
         print("%-22s %8s %6s %8s %3s %6s" % ("ruta", "elementor", "img", "secciones", "h1", "bytes"))
         for f in filas:
@@ -177,6 +182,8 @@ def main():
                 print("  - " + f)
         else:
             print("AUDITORÍA · 0 fallos")
+        for a in avisos:
+            print("  avisa    " + a)
     return 1 if fallos else 0
 
 

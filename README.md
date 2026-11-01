@@ -169,7 +169,8 @@ suyos.
 - Los verificadores del framework son ejecutables y se corrieron sobre el árbol real.
 - `auditar_sitio.py` corrió contra un sitio publicado y encontró **6 fallos reales**:
   5 de 5 páginas sin estructura de Elementor, footer duplicado, plantilla 404 mal
-  condicionada, cero imágenes editoriales, sin favicon y sin `og:image`.
+  condicionada, cero imágenes editoriales, sin favicon y sin `og:image`. Tras declarar
+  favicon y `og:image` en producción, la misma auditoría bajó a **3 fallos y 1 aviso**.
 - `verificar_need.py` bloquea con `exit 1` cuando encuentra un campo en `null`, aunque
   las 20 preguntas estén respondidas: un dato ausente no puede pasar por respuesta.
 
