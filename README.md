@@ -128,6 +128,8 @@ documento en blanco o un repositorio sin `clients/` ya no salen `0`.
 | `verificar_activos.py` | nivel y procedencia de cada activo, ancho medido, generada que no reemplace real, ≥2400 px si va a sangre | conflictos y medidas faltantes |
 | `verificar_tokens.py` | `tokens.css` ↔ `sistema.yaml`: mismo color, tamaño y familia; sin hex nuevos fuera de tokens | divergencias |
 | `verificar_estatico.py` · `verificar.js` | capa estática y capa renderizada de la calidad (18 comprobaciones estáticas + las renderizadas) | `N comprobaciones · 0 bloqueantes` |
+| `verificar_servido.py` | inventario ↔ HTML publicado (y el CSS que ese HTML carga): lo servido está declarado, está autorizado, y lo declarado en uso se publicó | `páginas leídas` · fallas |
+| `verificar_404.py` | pide una URL inexistente y exige **404**: un `200` es soft-404, un `301` es redirección silenciosa | `códigos` |
 | `verificar_release.py` | **la secuencia**: corre todas las puertas en orden, corta en la primera FALLA y no declara publicable lo que quedó sin medir | tabla + `PUBLICABLE` / `NO PUBLICABLE` |
 | `adapters/elementor/auditar_estructura.py` | **ADAPTER.md reglas 1-7 sobre `_elementor_data`**: estructura, widget de texto, estilo local, hex, profundidad ≤4, `configuration-id` único, breakpoints | `R1…R7` + recuento |
 | `inventario_activos.py` | inventario medido de una carpeta de material | CSV |

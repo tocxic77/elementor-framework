@@ -15,8 +15,16 @@ lanzan sin evidencia.
 | Metadatos | `title`, descripción y OpenGraph únicos por página | revisión de HTML servido |
 | Formularios | envío real probado, respuesta registrada | manual |
 | Consentimiento | nada de analítica antes del aviso | revisión de red |
+| Activos servidos | toda imagen publicada está en el inventario y autorizada; toda la marcada en uso aparece | `framework/tools/verificar_servido.py` |
+| Página inexistente | devuelve **404**, no `200` ni `301` a la portada | `framework/tools/verificar_404.py` |
 
 **Regla:** si un bloqueante falla, no se publica. No existe «se arregla en producción».
+
+Los dos últimos no se pueden revisar en el HTML local: exigen la URL publicada.
+
+```bash
+python framework/tools/verificar_release.py clients/<cliente> --sitio https://<dominio>
+```
 
 ## Decisión 2 · Medición (30 días después)
 

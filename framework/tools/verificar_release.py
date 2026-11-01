@@ -52,6 +52,7 @@ def main(argv):
     ap = argparse.ArgumentParser(description="secuencia de release")
     ap.add_argument("cliente", nargs="?", default="")
     ap.add_argument("--html", action="append", default=[])
+    ap.add_argument("--sitio", default="", help="URL publicada: activa el 404 real y los activos servidos")
     ap.add_argument("--json", action="store_true")
     args = ap.parse_args(argv)
 
@@ -76,6 +77,18 @@ def main(argv):
     pasos.append(("tokens", "verificar_tokens.py", []))
     if cliente and (cliente / "05_SYSTEM").is_dir():
         pasos.append(("estatico", "verificar_estatico.py", [cliente / "05_SYSTEM"]))
+    # Servido va después de lo local: primero se mide lo que se puede medir sin red, y sólo
+    # entonces se cruza el inventario con el HTML publicado y el CSS que ese HTML carga.
+    paginas = list(args.html) or (sorted(cliente.glob("05_SYSTEM/*.html")) if cliente else [])
+    if cliente and (cliente / "03_ASSETS.yaml").is_file() and paginas:
+        argumentos = [cliente / "03_ASSETS.yaml"]
+        for h in paginas:
+            argumentos += ["--html", h]
+        if args.sitio:
+            argumentos += ["--sitio", args.sitio, "--pagina", "/"]
+        pasos.append(("servido", "verificar_servido.py", argumentos))
+    else:
+        pasos.append(("servido", "", []))
     if os.environ.get("ELEMENTOR_MCP_URL"):
         pasos.append(("sistema", str(RAIZ / "adapters" / "elementor" / "verificar_sistema.py"), []))
     else:
@@ -96,6 +109,11 @@ def main(argv):
     else:
         pasos.append(("estructura", "", []))
 
+    if args.sitio:
+        pasos.append(("404", "verificar_404.py", ["--sitio", args.sitio]))
+    else:
+        pasos.append(("404", "", []))
+
     resultados = []
     cortado = False
     for nombre, script, argumentos in pasos:
@@ -106,6 +124,8 @@ def main(argv):
             motivo = {
                 "sistema": "sin ELEMENTOR_MCP_URL: el kit vivo no se midió",
                 "estructura": "sin export de _elementor_data: el artefacto publicado no se auditó",
+                "servido": "sin registro de activos o sin páginas: no hay nada que cruzar",
+                "404": "sin --sitio: el código de la página inexistente no se pidió",
             }.get(nombre, "sin instrumento")
             resultados.append({"paso": nombre, "codigo": NO_MEDIDO, "resultado": motivo})
             continue

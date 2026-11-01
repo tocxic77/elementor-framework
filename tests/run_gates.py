@@ -9,12 +9,15 @@ Uso:    python tests/run_gates.py [-v]
 Sale   0 si todos los casos pasan · 1 si alguno falla.
 """
 import copy
+import http.server
 import json
 import os
 import shutil
+import socket
 import subprocess
 import sys
 import tempfile
+import threading
 from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
@@ -64,6 +67,7 @@ activos:
 PAGINA_OK = """<!doctype html><html><head><meta name="viewport" content="width=device-width">
 <link rel="stylesheet" href="tokens.css">
 <title>prueba</title></head><body><h1>Prueba</h1>
+<img src="generada.jpg" alt="operación">
 <p>Más de 350+ profesionales formados.</p></body></html>
 """
 
@@ -88,6 +92,9 @@ class Caso:
         self.escribir("03_ASSETS.yaml", ACTIVOS_OK)
         self.escribir("05_SYSTEM/index.html", PAGINA_OK)
         self.escribir("05_SYSTEM/tokens.css", TOKENS_CSS)
+        # El gate estático exige que los recursos citados existan; servido exige que la
+        # imagen declarada en uso aparezca publicada. Un byte basta para ambas cosas.
+        self.escribir("05_SYSTEM/generada.jpg", "stub")
 
     def escribir(self, rel, texto):
         (self.cliente / rel).write_text(texto, encoding="utf-8")
@@ -255,6 +262,99 @@ def main():
         esperar("estructura · export sin configuration-id es NO MEDIDO", estructura(sin_cid), 3)
         esperar("estructura · JSON que no es _elementor_data es NO MEDIDO", estructura(sin_tipo), 3)
         esperar("estructura · lista vacía es NO MEDIDO", estructura(lambda d: d.clear()), 3)
+
+        # SITIO PUBLICADO · lo que recibe el visitante
+        # servido: inventario ↔ HTML (y el CSS que la página carga)
+        sitio = c.tmp / "sitio"
+        (sitio / "img").mkdir(parents=True)
+        pagina = ('<html><head><link rel="stylesheet" href="x.css"></head><body>'
+                  '<h1>Portada</h1><img src="img/real.jpg" alt="x">'
+                  '<img src="img/fondo.jpg" srcset="img/fondo.jpg 800w, img/fondo2.jpg 1600w"></body></html>')
+        (sitio / "index.html").write_text(pagina, encoding="utf-8")
+        (sitio / "x.css").write_text(":root{--x:#000} .hero{background:url('img/fondo.jpg')}", encoding="utf-8")
+
+        def registro(extra=""):
+            destino = c.tmp / "assets_servido.yaml"
+            destino.write_text("activos:\n"
+                               "  - archivo: real.jpg\n    usado: true\n    autorizacion: propia\n"
+                               "  - archivo: fondo.jpg\n    usado: true\n    autorizacion: propia\n"
+                               "  - archivo: fondo2.jpg\n    usado: true\n    autorizacion: propia\n"
+                               "  - archivo: nunca.jpg\n    usado: false\n    autorizacion: propia\n"
+                               + extra, encoding="utf-8")
+            return destino
+
+        esperar("servido · inventario y HTML coinciden",
+                correr("verificar_servido.py", [registro(), "--html", sitio / "index.html"])[0], 0)
+        roto = sitio / "roto.html"
+        roto.write_text('<html><body><h1>x</h1><img src="img/intrusa.jpg"></body></html>',
+                        encoding="utf-8")
+        esperar("servido · imagen servida fuera del inventario falla",
+                correr("verificar_servido.py", [registro(), "--html", roto])[0], 1)
+        pendiente = c.tmp / "assets_pendiente.yaml"
+        pendiente.write_text("activos:\n  - archivo: real.jpg\n    usado: true\n"
+                            "    autorizacion: pendiente\n", encoding="utf-8")
+        esperar("servido · activo con autorización pendiente servido falla",
+                correr("verificar_servido.py", [pendiente, "--html", sitio / "index.html"])[0], 1)
+        esperar("servido · sin HTML es NO MEDIDO",
+                correr("verificar_servido.py", [registro()])[0], 3)
+        sin_uso = c.tmp / "assets_sin_uso.yaml"
+        sin_uso.write_text("activos:\n  - archivo: real.jpg\n    usado: false\n"
+                          "  - archivo: fondo.jpg\n    usado: false\n"
+                          "  - archivo: fondo2.jpg\n    usado: false\n", encoding="utf-8")
+        esperar("servido · lo que no está en uso no se exige",
+                correr("verificar_servido.py", [sin_uso, "--html", sitio / "index.html"])[0], 0)
+
+        # 404 real contra HTTP
+        def servir(modo):
+            class Manejador(http.server.BaseHTTPRequestHandler):
+                def do_GET(self):
+                    if modo == "301":
+                        self.send_response(301)
+                        self.send_header("Location", "/")
+                        self.end_headers()
+                        return
+                    if self.path == "/" or modo == "200":
+                        cuerpo = b"<html><body><h1>Portada</h1><img src='/img/real.jpg'></body></html>"
+                        self.send_response(200)
+                    else:
+                        cuerpo = b"<html><body><h1>No encontrado</h1></body></html>"
+                        self.send_response(404)
+                    self.send_header("Content-Type", "text/html")
+                    self.end_headers()
+                    self.wfile.write(cuerpo)
+
+                def log_message(self, *a):
+                    pass
+
+            srv = http.server.HTTPServer(("127.0.0.1", 0), Manejador)
+            threading.Thread(target=srv.serve_forever, daemon=True).start()
+            servidores.append(srv)
+            return "http://127.0.0.1:%d" % srv.server_address[1]
+
+        servidores = []
+        esperar("404 · un 404 real pasa",
+                correr("verificar_404.py", ["--sitio", servir("404")])[0], 0)
+        esperar("404 · 200 en ruta inexistente falla",
+                correr("verificar_404.py", ["--sitio", servir("200")])[0], 1)
+        esperar("404 · 301 hacia la portada falla",
+                correr("verificar_404.py", ["--sitio", servir("301")])[0], 1)
+        esperar("404 · servido lee la página remota y detecta lo no declarado",
+                correr("verificar_servido.py", [sin_uso, "--sitio", servir("200"), "--pagina", "/"])[0], 0)
+        hueco = socket.socket()
+        hueco.bind(("127.0.0.1", 0))
+        puerto = hueco.getsockname()[1]
+        hueco.close()
+        esperar("404 · sin respuesta es NO MEDIDO",
+                correr("verificar_404.py", ["--sitio", "http://127.0.0.1:%d" % puerto])[0], 3)
+        for srv in servidores:
+            srv.shutdown()
+
+        # auditar_sitio: sin credenciales no hay auditoría, y eso no es un fallo
+        entorno = {k: v for k, v in os.environ.items() if not k.startswith("ELEMENTOR_")}
+        r = subprocess.run([sys.executable, str(adaptador / "auditar_sitio.py"),
+                            "--sitio", "https://ejemplo.cl"],
+                           capture_output=True, text=True, env=entorno, cwd=str(RAIZ))
+        esperar("sitio · sin credenciales sale NO MEDIDO", r.returncode, 3)
 
         # release
         codigo, salida = correr("verificar_release.py", [c.cliente])
