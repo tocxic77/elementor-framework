@@ -229,3 +229,4 @@ peso y por derechos; se regeneran con `framework/03_CURATION/gusto/gen_specimen.
 | `framework/tools/verificar_wireframe.py` | El wireframe es la arquitectura banda por banda; ninguna ranura obligatoria se llena de la nada |
 | `adapters/elementor/COMPONENTES.yaml` | Kit medido por MCP: componentes, ranuras reales y lo que no expone |
 | `framework/tools/verificar_componente.py` | Una especificación de componente sostiene los mecanismos que declara |
+| `framework/tools/exportar_kit.py` | Genera KIT-SCHEMA.yaml del cliente con huella del kit medido |

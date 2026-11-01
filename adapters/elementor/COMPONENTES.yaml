@@ -13,7 +13,8 @@
 # se consigue instanciando el componente, no rellenando una ranura repetible.
 # ---------------------------------------------------------------------------
 medido: 2026-11-01
-fuente: "elementor/list-components · component_ids [11377, 11380, 11383, 11390, 11393]"
+medido_tras_creacion: 2026-11-01
+fuente: "elementor/list-components · component_ids [11377, 11380, 11383, 11390, 11393, 11399]"
 capacidades: {can_create: true, can_edit: true, can_add_to_page: true}
 no_medido: [obligatoriedad, repetibilidad, acepta_vacio]
 
@@ -71,3 +72,16 @@ componentes:
     restricciones:
       - "la tarjeta no tiene botón: el CTA de la banda debe vivir fuera de la tarjeta"
       - "no hay ranura de situación ni de precio"
+
+  - id: 11399
+    nombre: Prueba material
+    uid: component-4f9780cc-7fe9-4ca2-9b59-03154d4dcba9
+    origen: "creado 2026-11-01 desde 05_SYSTEM/COMPONENTE-pp-prueba.yaml"
+    estado: creado_sin_estilo
+    ranuras:
+      - {nombre: imagen, etiqueta: Imagen principal, tipo: imagen, campos: [src, size, alt]}
+      - {nombre: pie, etiqueta: Pie de prueba, tipo: texto_parrafo}
+      - {nombre: segunda_imagen, etiqueta: Segunda imagen, tipo: imagen, campos: [src, size, alt]}
+    restricciones:
+      - "creado sin clases ni tokens: el estilo es la pasada siguiente, no parte de esta"
+      - "el pie trae un texto de relleno que se reemplaza por atributos[1] en cada instancia"

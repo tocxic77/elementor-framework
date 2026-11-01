@@ -48,11 +48,14 @@ componentes:
   - {id: 11383, titulo: "Paso del método", overrides: [numeral, titulo, texto]}
   - {id: 11390, titulo: "Bloque de cifras", overrides: [cifra_1, cifra_2, cifra_3, rotulo_1]}
   - {id: 11393, titulo: "Tarjeta de línea de trabajo", overrides: [titulo, texto, item_1]}
+  - {id: 11399, titulo: "Prueba material", overrides: [imagen, pie, segunda_imagen]}
 
 pendientes:
   - "pp-grid-3 y pp-numeral no tienen variante móvil probada en render"
   - "falta componente de formulario nativo con e-form"
   - "falta componente de cita o testimonio"
+  - "11399 creado sin clases ni tokens: falta la pasada de estilo antes de usarlo en una pagina"
+  - "sistema.yaml.componentes y COMPONENTES.yaml son dos listas del mismo kit: deben converger"
 
 # Tipo de conocimiento → componente obligatorio. Es el dato que consulta el constructor
 # antes de componer: ADAPTER.md lo exige como paso 0. `null` no es un descuido — es un
@@ -71,7 +74,7 @@ patrones:
   credencial:
     componente: null       # hueco: franja de atributos en línea
   prueba:
-    componente: null
+    componente: 11399
     forma: "banda de imagen propia con pie de evidencia"
     cuando: "hay imágenes propias que prueban el oficio mejor que cualquier frase"
   caso:

@@ -28,6 +28,7 @@ from _comun import cargar_yaml, salir  # noqa: E402
 import medir_material  # noqa: E402
 
 KIT = os.path.normpath(os.path.join(AQUI, "..", "..", "adapters", "elementor", "COMPONENTES.yaml"))
+SISTEMA = os.path.normpath(os.path.join(AQUI, "..", "..", "adapters", "elementor", "sistema.yaml"))
 REF = re.compile(r"^(?:(EV|P)-\d+|(trayectoria|atributos|ofertas)"
                  r"(?:\[(\d+|i)(?:\.\.(\d+))?\](?:\.([a-z_]+))?)?"
                  r"|activo:(.+)|docs/.+\.md|[a-z_]+)$")
@@ -56,6 +57,10 @@ def verificar(cliente):
     if err:
         return None, err
 
+    sis, err = cargar_yaml(SISTEMA)
+    if err:
+        return None, "no se pudo leer sistema.yaml: %s" % err
+    patrones = sis.get("patrones") or {}
     kit_por_id = {c.get("id"): {r.get("nombre") for r in (c.get("ranuras") or [])}
                   for c in (kit.get("componentes") or []) if isinstance(c, dict)}
     piezas = {p.get("id") for p in (evid.get("piezas") or []) if isinstance(p, dict)}
@@ -64,6 +69,16 @@ def verificar(cliente):
                if isinstance(a, dict)}
 
     fallas, huecos = [], []
+    import hashlib
+    ruta_esquema = os.path.join(cliente, "05_SYSTEM", "KIT-SCHEMA.yaml")
+    if os.path.exists(ruta_esquema):
+        esquema, err_e = cargar_yaml(ruta_esquema)
+        if err_e:
+            fallas.append("KIT-SCHEMA.yaml no se pudo leer: %s" % err_e)
+        else:
+            huella = hashlib.sha256(open(KIT, "rb").read()).hexdigest()
+            if esquema.get("sha256_fuente") != huella:
+                fallas.append("KIT-SCHEMA.yaml quedó viejo: su huella no coincide con el kit medido")
     bandas_arq = {b.get("n"): b for b in (arq.get("bandas") or []) if isinstance(b, dict)}
     bandas_wire = {b.get("banda"): b for b in (wire.get("bandas") or []) if isinstance(b, dict)}
 
@@ -115,11 +130,16 @@ def verificar(cliente):
                 elif componente is None and not w.get("spec"):
                     fallas.append("banda %s - %s: nombra la ranura '%s' pero la banda no tiene componente"
                                   % (n, nombre, slot))
-            elif r.get("obligatorio") and not r.get("hueco_kit"):
+            elif r.get("obligatorio") and not r.get("hueco_kit") and not r.get("fuera_de_componente"):
                 fallas.append("banda %s - %s: ranura obligatoria sin asiento en el kit y sin declarar el hueco"
                               % (n, nombre))
             if r.get("hueco_kit"):
-                huecos.append("banda %s - %s: el kit no tiene esta ranura" % (n, nombre))
+                # un hueco bloquea sólo si la ranura es obligatoria y el patrón ya
+                # tiene componente: si el patrón no lo tiene, es backlog declarado.
+                tiene_componente = (patrones.get(w.get("patron")) or {}).get("componente") is not None
+                bloquea = bool(r.get("obligatorio")) and tiene_componente
+                huecos.append({"texto": "banda %s - %s: el kit no tiene esta ranura" % (n, nombre),
+                               "bloquea": bloquea})
 
             if r.get("obligatorio") and not fuente:
                 fallas.append("banda %s - %s: ranura obligatoria sin fuente" % (n, nombre))
@@ -181,19 +201,24 @@ def main(argv=None):
         print("ERROR - %s" % err)
         return 2
 
-    print("WIREFRAME - %d bandas - %d ranuras - %d huecos de kit"
-          % (datos["bandas"], datos["ranuras"], len(datos["huecos"])))
+    bloquean = [h for h in datos["huecos"] if h["bloquea"]]
+    print("WIREFRAME - %d bandas - %d ranuras - %d huecos de kit (%d bloquean)"
+          % (datos["bandas"], datos["ranuras"], len(datos["huecos"]), len(bloquean)))
     for h in datos["huecos"]:
-        print("  HUECO    " + h)
+        print(("  HUECO    " if h["bloquea"] else "  BACKLOG  ") + h["texto"])
     for f in datos["fallas"]:
         print("  FALLA    " + f)
     if datos["fallas"]:
         print("\nEl wireframe promete lo que la composicion o el kit no sostienen.")
         return 1
-    if datos["huecos"] or not datos["medido"]:
+    if bloquean or not datos["medido"]:
         print("\nCada ranura que existe esta mapeada a una ranura real del kit.")
-        print("Lo que falta es el kit: %d ranuras no existen todavia." % len(datos["huecos"]))
+        print("Bloquean la construccion %d ranuras obligatorias sin asiento." % len(bloquean))
         return 3
+    if datos["huecos"]:
+        print("\nTodas las ranuras obligatorias tienen asiento. Quedan %d huecos no bloqueantes."
+              % len(datos["huecos"]))
+        return 0
     print("\nTodas las ranuras tienen fuente y asiento real en el kit.")
     return 0
 
