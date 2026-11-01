@@ -313,6 +313,19 @@ afirmaciones:
                 int(bool(_re.search(r"trayectoria_publica\s+0\b", stdout_de(
                     "medir_material.py", ["--cliente", str(otro)])))), 1)
 
+        respaldo = (c.cliente / "02_EVIDENCE.yaml").read_text(encoding="utf-8")
+        (c.cliente / "02_EVIDENCE.yaml").write_text(respaldo +
+            "\npiezas:\n  - {id: P-A, tipo: medio, titulo: ajeno, publicable: true, "
+            "url: 'https://otro-dominio.cl/nota'}\n", encoding="utf-8")
+        esperar("migracion · una pieza ajena se mide y no es autoridad propia",
+                correr("medir_migracion.py", ["--cliente", c.cliente])[0], 0)
+        (c.cliente / "02_EVIDENCE.yaml").write_text(respaldo +
+            "\npiezas:\n  - {id: P-X, tipo: medio, titulo: sin prueba, publicable: true}\n",
+            encoding="utf-8")
+        esperar("migracion · pieza publicable sin url ni archivo falla",
+                correr("medir_migracion.py", ["--cliente", c.cliente])[0], 1)
+        c.escribir("02_EVIDENCE.yaml", respaldo)
+
         esperar("materiales · el plan de entrevista se genera desde los huecos",
                 correr("plan_material.py", ["--cliente", c.cliente])[0], 0)
         c.escribir("MEC_inventado.yaml", """
