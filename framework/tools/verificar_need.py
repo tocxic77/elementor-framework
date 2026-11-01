@@ -49,6 +49,24 @@ def vacio(v):
     return False
 
 
+def nulos(d, prefijo=""):
+    """Rutas de todo valor null en el documento.
+
+    El cuestionario sólo mira `respuestas`; un campo crítico en null fuera de ese bloque
+    pasaba la puerta sin que nadie lo viera. Un null es siempre un bloqueante: si el dato
+    no existe, la respuesta no existe.
+    """
+    fuera = []
+    if isinstance(d, dict):
+        for k, v in d.items():
+            ruta = "%s.%s" % (prefijo, k) if prefijo else str(k)
+            fuera += [ruta] if v is None else nulos(v, ruta)
+    elif isinstance(d, list):
+        for i, v in enumerate(d):
+            fuera += nulos(v, "%s[%d]" % (prefijo, i))
+    return fuera
+
+
 def main(path):
     p = Path(path)
     if not p.exists():
@@ -73,6 +91,9 @@ def main(path):
     extra = [k for k in r if k not in PREGUNTAS]
     if extra:
         print("  claves fuera de esquema  %s" % ", ".join(map(str, extra)))
+    pendientes = nulos(d)
+    for c in pendientes:
+        fallas.append("campo en null · %s" % c)
     for f in fallas:
         print("  BLOQUEA  ", f)
     for a in avisos:

@@ -111,12 +111,12 @@ Cada verificador imprime cuántas comprobaciones corrió y cuántas fallaron, y 
 | Script | Comprueba | Salida |
 |---|---|---|
 | `verificar_independencia.py` | que el framework no mencione a ningún cliente | `FRAMEWORK INDEPENDIENTE` |
-| `verificar_need.py` | que las preguntas de la fase 1 estén respondidas con fuente | recuento respondidas/total |
+| `verificar_need.py` | que las 20 preguntas estén respondidas con fuente y que **ningún campo quede en `null`** | recuento + rutas en null |
 | `verificar_evidencia.py` | que cada afirmación publicada tenga registro | huérfanas y sin usar |
 | `verificar_activos.py` | que una imagen generada no reemplace una real disponible | conflictos |
 | `inventario_activos.py` | inventario medido de una carpeta de material | CSV |
 | `adapters/elementor/verificar_sistema.py` | variables con token de origen y componentes presentes en el kit | `SISTEMA OK · N comprobaciones, 0 fallos` |
-| `adapters/elementor/auditar_sitio.py` | un sitio ya publicado: páginas construidas con Elementor, plantillas duplicadas, 404 mal condicionado, imágenes, H1 | tabla + `AUDITORÍA · N fallos` |
+| `adapters/elementor/auditar_sitio.py` | un sitio ya publicado: páginas con estructura de Elementor, plantillas duplicadas, 404 mal condicionado, imágenes, H1, **favicon y `og:image`** | tabla + `AUDITORÍA · N fallos` |
 
 ## Adaptador de Elementor
 
@@ -167,9 +167,11 @@ suyos.
 - Una página de prueba construida con `e-*` y las clases del kit renderizó a **56 px de
   titular, contraste 13,06:1 y botón sin el azul por defecto de Elementor**.
 - Los verificadores del framework son ejecutables y se corrieron sobre el árbol real.
-- `auditar_sitio.py` corrió contra un sitio publicado y encontró **4 fallos reales**:
+- `auditar_sitio.py` corrió contra un sitio publicado y encontró **6 fallos reales**:
   5 de 5 páginas sin estructura de Elementor, footer duplicado, plantilla 404 mal
-  condicionada y cero imágenes editoriales en las cinco rutas.
+  condicionada, cero imágenes editoriales, sin favicon y sin `og:image`.
+- `verificar_need.py` bloquea con `exit 1` cuando encuentra un campo en `null`, aunque
+  las 20 preguntas estén respondidas: un dato ausente no puede pasar por respuesta.
 
 **No verificado:** que las clases globales basten sin las hojas CSS del framework
 cargadas aparte. Esa prueba está pendiente y es la que decide si el sistema está

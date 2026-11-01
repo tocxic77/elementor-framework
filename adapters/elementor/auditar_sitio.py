@@ -49,6 +49,8 @@ def medir_html(html):
         "h1_texto": re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", h1[0])).strip()[:60] if h1 else "",
         "estilos_en_linea": cuenta(r'\sstyle="'),
         "heredoc": "pp-pages" in html,
+        "favicon": bool(re.search(r'rel=["\'][^"\']*icon', html, re.I)),
+        "og_image": bool(re.search(r'property=["\']og:image', html, re.I)),
     }
 
 
@@ -134,6 +136,8 @@ def main():
 
     no_elementor = [f["ruta"] for f in filas if f["elementor"] == 0]
     sin_imagenes = [f["ruta"] for f in filas if f["imagenes"] == 0]
+    sin_favicon = [f["ruta"] for f in filas if not f["favicon"]]
+    sin_og = [f["ruta"] for f in filas if not f["og_image"]]
     h1_multiple = [f["ruta"] for f in filas if f["h1"] != 1]
     inline = sum(f["estilos_en_linea"] for f in filas)
 
@@ -149,6 +153,10 @@ def main():
         fallos.append("páginas sin exactamente un H1: %s" % ", ".join(h1_multiple))
     if sin_imagenes:
         fallos.append("%d de %d páginas sin una sola imagen" % (len(sin_imagenes), len(filas)))
+    if sin_favicon:
+        fallos.append("%d de %d páginas sin favicon" % (len(sin_favicon), len(filas)))
+    if sin_og:
+        fallos.append("%d de %d páginas sin og:image (sin tarjeta al compartir)" % (len(sin_og), len(filas)))
     if inline > 20:
         fallos.append("%d estilos en línea en el HTML servido" % inline)
 
