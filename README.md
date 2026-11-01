@@ -230,3 +230,4 @@ peso y por derechos; se regeneran con `framework/03_CURATION/gusto/gen_specimen.
 | `adapters/elementor/COMPONENTES.yaml` | Kit medido por MCP: componentes, ranuras reales y lo que no expone |
 | `framework/tools/verificar_componente.py` | Una especificación de componente sostiene los mecanismos que declara |
 | `framework/tools/exportar_kit.py` | Genera KIT-SCHEMA.yaml del cliente con huella del kit medido |
+| `framework/tools/subir_activos.py` | Sube activos propios a la biblioteca y registra attachment_id con URL verificada |
