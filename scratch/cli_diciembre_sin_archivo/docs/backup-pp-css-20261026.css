@@ -1,0 +1,301 @@
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=DM+Sans:wght@400;500&display=swap');
+
+/* pp.css — capa de estructura del sitio PENNACCHIOTTI
+   Los tokens (color, tipografía) viven en el kit V4 de Elementor.
+   Aquí solo se garantiza layout: apilado, rejilla, ritmo y móvil. */
+
+.elementor .pp-band,.elementor .pp-wrap{
+  display:flex!important;flex-direction:column!important;align-items:stretch!important;
+  flex-wrap:nowrap!important;gap:0!important;
+}
+.elementor .pp-band{padding-block:112px!important;overflow:clip;}
+.elementor .pp-wrap{width:100%;max-width:1240px;margin-inline:auto;padding-inline:32px;}
+.elementor .pp-grid3{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:22px;}
+.elementor .pp-grid2{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:22px 44px;}
+.elementor .pp-grid3>*,.elementor .pp-grid2>*{min-width:0;}
+.elementor .pp-cta-row{display:flex!important;flex-direction:row!important;flex-wrap:wrap!important;gap:12px!important;}
+
+@media (max-width:1024px){
+  .elementor .pp-band{padding-block:88px!important;}
+  .elementor .pp-grid3{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
+  .elementor .pp-grid2:has(form){grid-template-columns:1fr!important;gap:48px!important;}
+}
+@media (max-width:767px){
+  .elementor .pp-band{padding-block:64px!important;}
+  .elementor .pp-wrap{padding-inline:22px;}
+  .elementor .pp-grid3,.elementor .pp-grid2{grid-template-columns:1fr!important;gap:0!important;}
+  .elementor .pp-h1{font-size:clamp(32px,9vw,40px)!important;line-height:1.1!important;}
+  .elementor .pp-h2{font-size:clamp(26px,7vw,32px)!important;line-height:1.16!important;}
+  .elementor .pp-lead{font-size:16px!important;line-height:1.62!important;}
+  .elementor .pp-cta{width:100%;}
+  .elementor .pp-cta-row{flex-direction:column!important;gap:10px!important;}
+}
+/* --- cabecera demo fuera: solo muestra el logo de la plantilla, sin menú --- */
+#site-header{display:none!important;}
+
+/* --- hero: foto a sangre con velo de tinta --- */
+.pp-band--ink:has(.pp-hero-img){
+  background-image:
+    linear-gradient(100deg, rgba(34,48,53,.97) 0%, rgba(34,48,53,.93) 40%, rgba(31,44,49,.64) 76%, rgba(28,40,45,.42) 100%),
+    url("https://pennacchiotti.cl/wp-content/uploads/2026/10/hero-1600.jpg");
+  background-size:cover;
+  background-position:center 62%;
+  background-repeat:no-repeat;
+}
+.pp-wrap:has(.pp-hero-img){display:grid!important;grid-template-columns:minmax(0,1fr)!important;
+  gap:0!important;}
+.pp-band--ink:has(.pp-hero-img) .pp-hero-img{display:none!important;}
+.pp-wrap:has(.pp-hero-img) .pp-h1{max-width:19ch;}
+.pp-wrap:has(.pp-hero-img) .pp-lead{max-width:56ch;}
+
+/* --- figura de método --- */
+.elementor .pp-figure img{display:block;width:100%;height:auto;max-height:520px;
+  object-fit:cover;object-position:center 45%;}
+@media (max-width:900px){
+  .elementor .pp-figure img{max-height:300px;}
+}
+/* --- botones: fila horizontal y alto natural (estaban estirados a 110px) --- */
+/* contenedor de los CTA del hero: fila, bajo el texto */
+[data-id="63deb5ba"]{display:flex!important;flex-direction:row!important;flex-wrap:wrap!important;
+  align-items:center!important;justify-content:flex-start!important;gap:16px!important;
+  width:100%!important;height:auto!important;margin-top:8px!important;}
+/* columna del hero: texto y luego botones */
+[data-id="118ee167"]{flex-direction:column!important;align-items:flex-start!important;}
+.elementor .pp-cta{height:auto!important;min-height:52px!important;flex:0 0 auto!important;
+  align-self:center!important;box-sizing:border-box;}
+@media (max-width:600px){
+  [data-id="63deb5ba"]{width:100%!important;}
+  [data-id="63deb5ba"] .pp-cta{flex:1 1 auto!important;justify-content:center!important;}
+}
+
+/* --- páginas editoriales: Perspectivas y artículos --- */
+body.page-id-13 .entry-title{display:none!important;}
+body.page-id-13 .site-main{max-width:780px!important;margin-inline:auto!important;padding:84px 28px 104px!important;}
+body.single .site-main{max-width:none!important;padding:0!important;}
+body.page-id-13 .entry-content,body.single .entry-content{
+  max-width:760px;margin-inline:auto;padding:104px 28px 96px;}
+body.page-id-13 .entry-content>*:first-child,body.single .entry-content>*:first-child{margin-top:0;}
+.pp-eyebrow{font-family:"DM Sans",system-ui,sans-serif;font-size:13px;letter-spacing:.14em;
+  text-transform:uppercase;color:#85979B;margin:0 0 26px;}
+.pp-h1,body.single .entry-title{font-family:Newsreader,Georgia,serif;font-weight:400;
+  font-size:clamp(34px,4.4vw,56px);line-height:1.1;color:#20282D;margin:0 0 24px;max-width:24ch;}
+.pp-lead{font-family:"DM Sans",system-ui,sans-serif;font-size:19px;line-height:1.62;
+  color:#263037;max-width:60ch;margin:0 0 46px;}
+body.page-id-13 h2,body.single h2{font-family:Newsreader,Georgia,serif;font-weight:400;
+  font-size:clamp(26px,2.6vw,32px);line-height:1.24;color:#20282D;margin:52px 0 14px;}
+body.page-id-13 p,body.single p,body.page-id-13 li,body.single li{
+  font-family:"DM Sans",system-ui,sans-serif;font-size:17px;line-height:1.72;color:#263037;margin:0 0 22px;}
+body.single .entry-content{max-width:760px;}
+
+
+/* ============================================================
+   2026-10-23 · cierre de defectos de Fase 0
+   ============================================================ */
+
+/* 1. Título del tema fuera: deja un solo H1 por página (semántico, no solo visual) */
+body.page-id-12 .entry-title,
+body.page-id-13 .entry-title { display: none !important; }
+
+/* 2. Footer heredado del kit: se oculta mientras no exista footer propio.
+      Elimina "© 2023 eramic" y el logo demo del pie. */
+footer.site-footer,
+footer#site-footer,
+.site-footer .site-description,
+.site-footer .copyright,
+.site-footer img[src*="logo-retina"] { display: none !important; }
+
+/* 3. Contraste: #85979B daba 2,92:1 sobre marfil. #586A70 da 5,43:1 (AA). */
+.pp-eyebrow,
+.pp-muted,
+.pp-lead--muted { color: #586A70 !important; }
+
+/* ============================================================
+   2026-10-24 · un solo H1 en las páginas construidas en Elementor
+   El tema imprime el título de la página como H1 y además cada página
+   declara el suyo. Se retira el del tema en las páginas afectadas.
+   ============================================================ */
+body.page-id-14 .entry-title,
+body.page-id-1933 .entry-title,
+body.page-id-2076 .entry-title,
+body.page-id-2106 .entry-title { display: none !important; }
+
+/* ============================================================
+   2026-10-24 · sistema editorial de páginas internas
+   Las páginas de contenido no tenían contenedor: el H1 caía al
+   borde y los párrafos corrían a todo el ancho. Aquí se fija un
+   ancho de lectura y un ritmo vertical únicos.
+   ============================================================ */
+
+body.page-id-12 .site-main,
+body.page-id-13 .site-main {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 84px 24px 104px;
+}
+
+body.page-id-12 h1,
+body.page-id-13 h1 {
+  font-family: var(--font-display);
+  font-size: 46px;
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+  font-weight: 400;
+  color: var(--heading);
+  margin: 0 0 22px;
+}
+
+body.page-id-12 h2,
+body.page-id-13 h2 {
+  font-family: var(--font-display);
+  font-size: 27px;
+  line-height: 1.25;
+  font-weight: 400;
+  color: var(--heading);
+  margin: 52px 0 12px;
+}
+
+body.page-id-12 p,
+body.page-id-13 p {
+  font-size: 17px;
+  line-height: 1.75;
+  color: #263037;
+  max-width: 68ch;
+  margin: 0 0 18px;
+}
+
+/* Ancho de lectura donde Elementor no lo fijó (soluciones, privacidad). */
+body.page-id-2076 main p,
+body.page-id-2106 main p {
+  max-width: 72ch;
+}
+
+/* Etiqueta de sección */
+.pp-label {
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #8B5E3C;
+  margin: 0 0 14px;
+}
+
+/* Entradilla */
+.pp-lead {
+  font-size: 19px !important;
+  line-height: 1.6 !important;
+  color: #3A4A50 !important;
+  max-width: 60ch;
+  margin: 0 0 40px !important;
+}
+
+/* Línea de tiempo: eje, hitos y numeración */
+.pp-tl {
+  margin: 36px 0 0;
+  border-left: 1px solid rgba(34, 48, 53, 0.18);
+  padding-left: 30px;
+}
+
+.pp-tl-item {
+  position: relative;
+  padding: 0 0 36px;
+}
+
+.pp-tl-item::before {
+  content: "";
+  position: absolute;
+  left: -36px;
+  top: 7px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: #FBFAF9;
+  border: 1px solid #8B5E3C;
+}
+
+.pp-tl-n {
+  font-size: 12px !important;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #8B5E3C !important;
+  margin: 0 0 6px !important;
+}
+
+.pp-tl-item p:last-child {
+  margin-bottom: 0;
+}
+
+.pp-note {
+  margin-top: 44px !important;
+  padding-top: 20px;
+  border-top: 1px solid rgba(34, 48, 53, 0.18);
+  font-size: 13px !important;
+  line-height: 1.6 !important;
+  color: #586A70 !important;
+}
+
+@media (max-width: 767px) {
+  body.page-id-12 .site-main,
+  body.page-id-13 .site-main { padding: 48px 20px 64px; }
+  body.page-id-12 h1,
+  body.page-id-13 h1 { font-size: 34px; }
+  body.page-id-12 h2,
+  body.page-id-13 h2 { font-size: 23px; margin-top: 40px; }
+  .pp-tl { padding-left: 22px; }
+  .pp-tl-item::before { left: -28px; }
+}
+
+/* 2026-10-24 · corrección de contenedor: en Perspectivas el wrapper real
+   no es .site-main, así que el ancho de lectura quedaba en 884 px. */
+body.page-id-12 .entry-content,
+body.page-id-13 .entry-content,
+body.page-id-12 .wp-block-post-content,
+body.page-id-13 .wp-block-post-content,
+body.page-id-12 main > article,
+body.page-id-13 main > article {
+  max-width: 780px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Privacidad: el texto legal estaba a 15 px, bajo el mínimo legible. */
+body.page-id-2106 main p {
+  font-size: 17px;
+  line-height: 1.75;
+}
+
+/* 2026-10-24 · el CSS de Elementor gana por especificidad: se fuerza donde
+   el texto legal salía a 15 px y donde la línea de soluciones superaba 800 px. */
+body.page-id-2106 main p { font-size: 17px !important; line-height: 1.75 !important; }
+body.page-id-2076 main p { max-width: 720px !important; }
+
+/* 2026-10-24 · Privacidad: la columna legal quedaba pegada a la izquierda con
+   media pantalla vacía. Se centra la columna de lectura. */
+body.page-id-2106 main h1,
+body.page-id-2106 main h2,
+body.page-id-2106 main p {
+  max-width: 720px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* ============================================================
+   Identidad personal · 2026-10-26
+   Retrato (attachment 2200) en marfil, monograma MP (2201/2202)
+   como icono del sitio. El retrato es 200×200: se muestra a
+   96 px como máximo para no perder nitidez en pantallas 2×.
+   ============================================================ */
+body.page-id-12 .site-main::before,
+body.page-id-14 .site-main::before {
+  content: "";
+  display: block;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: url("https://pennacchiotti.cl/wp-content/uploads/pp/mario-pennacchiotti.png") center/cover no-repeat;
+  box-shadow: 0 0 0 1px #D5DEDE, 0 0 0 7px #FBFAF9;
+  margin: 0 0 30px;
+}
+
+/* El retrato ya carga la identidad: el H1 no necesita el aire superior. */
+body.page-id-12 .site-main::before {
+  margin-top: -6px;
+}

@@ -1,0 +1,298 @@
+id,archivo,slug,mime,ancho,alto,kb,categoria,en_uso,final,motivo
+11319,Homepage-400_380.jpg,homepage-400_380-jpg,image/jpeg,400,380,10,C,False,C_placeholder,nombre de placeholder de kit
+11316,Image_Placeholder-13122021-1.jpg,image_placeholder-13122021-jpg-2,image/jpeg,683,600,3,C,True,C_placeholder,nombre de placeholder de kit
+11315,hero-bg-image.jpg,hero-bg-image-jpg,image/jpeg,1920,896,6,C,False,C_placeholder,nombre de placeholder de kit
+11313,Our-Story-400_380.jpg,our-story-400_380-jpg,image/jpeg,400,380,6,C,False,C_placeholder,nombre de placeholder de kit
+11310,Image_Placeholder_2-13122021-1.jpg,image_placeholder_2-13122021-jpg-2,image/jpeg,1036,679,3,C,False,C_placeholder,nombre de placeholder de kit
+11308,Our-Servoces-400_380.jpg,our-servoces-400_380-jpg,image/jpeg,400,380,8,C,False,C_placeholder,nombre de placeholder de kit
+11305,Image_Placeholder-13122021.jpg,image_placeholder-13122021-jpg,image/jpeg,683,600,3,C,False,C_placeholder,nombre de placeholder de kit
+11304,placeholder-6.png,placeholder-png-7,image/png,1200,800,6,C,False,C_placeholder,nombre de placeholder de kit
+11303,63x63.jpg,63x63-jpg,image/jpeg,63,63,1,C,True,C_placeholder,nombre de placeholder de kit
+11302,Sourdough_Bread1.jpg,sourdough_bread1-jpg,image/jpeg,486,667,2,C,True,C_placeholder,ancho <800 px
+11301,Sourdough_Bread2.jpg,sourdough_bread2-jpg,image/jpeg,382,497,2,C,True,C_placeholder,ancho <800 px
+11300,Wierframe-bread_menu.jpg,wierframe-bread_menu-jpg,image/jpeg,340,314,3,C,False,C_placeholder,ancho <800 px
+11299,Image_Placeholder_2-13122021.jpg,image_placeholder_2-13122021-jpg,image/jpeg,1036,679,3,C,False,C_placeholder,nombre de placeholder de kit
+11297,Contact-Us-400_380.jpg,contact-us-400_380-jpg,image/jpeg,400,380,6,C,False,C_placeholder,nombre de placeholder de kit
+11294,Image_Placeholder.jpg,image_placeholder-jpg,image/jpeg,1027,835,4,C,True,C_placeholder,nombre de placeholder de kit
+11293,Image_Placeholder_bkr_1.jpg,image_placeholder_bkr_1-jpg,image/jpeg,989,747,4,C,False,C_placeholder,nombre de placeholder de kit
+11291,Global-Styles-400_380.jpeg,global-styles-400_380-jpeg,image/jpeg,400,380,11,C,False,C_placeholder,nombre de placeholder de kit
+11259,IMG-20240420-WA0039.jpg,img-20240420-wa0039,image/jpeg,1079,1324,192,A,False,A_propio,material propio (logo o foto)
+11258,20250819_135033-scaled.jpg,20250819_135033,image/jpeg,2560,1440,561,A,False,A_propio,material propio (logo o foto)
+11257,IMG-20250517-WA0009.jpg,img-20250517-wa0009,image/jpeg,900,1600,153,B,False,A_propio,material propio (logo o foto)
+11256,IMG-20241024-WA0031.jpg,img-20241024-wa0031,image/jpeg,1280,1207,203,A,False,A_propio,material propio (logo o foto)
+11255,pp-wordmark-claro.png,pennacchiotti-wordmark-claro,image/png,977,71,2,B,False,A_propio,material propio (logo o foto)
+11243,pp-wordmark.png,pennacchiotti-wordmark,image/png,977,71,7,B,False,A_propio,material propio (logo o foto)
+11242,main-home-video_2.mp4,main-home-video_2-2,video/mp4,0,0,0,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+11241,main-home-video-button.jpg,main-home-video-button-2,image/jpeg,1300,834,100,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+11240,main-home-sticky-column-img.jpg,main-home-sticky-column-img-2,image/jpeg,1300,1470,115,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+11239,main-home-img-7.jpg,main-home-img-7-2,image/jpeg,1920,933,42,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+11238,main-home-img-6.jpg,main-home-img-6-2,image/jpeg,1300,1180,67,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+11237,main-home-img-6-d.jpg,main-home-img-6-d,image/jpeg,1300,1180,104,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+11236,main-home-img-6-c.jpg,main-home-img-6-c,image/jpeg,1300,1180,104,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+11235,main-home-img-6-b.jpg,main-home-img-6-b,image/jpeg,910,826,114,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+11234,main-home-img-6-a.jpg,main-home-img-6-a,image/jpeg,1300,1180,93,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+11233,main-home-img-5.jpg,main-home-img-5-2,image/jpeg,1840,840,99,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+11232,main-home-img-5-tablet.jpg,main-home-img-5-tablet-2,image/jpeg,800,1300,83,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+11231,main-home-img-4.jpg,main-home-img-4-2,image/jpeg,949,353,16,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+11230,main-home-img-3.jpg,main-home-img-3-2,image/jpeg,942,606,55,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+11229,main-home-img-2.jpg,main-home-img-2-2,image/jpeg,850,417,26,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+11228,main-home-img-1.jpg,main-home-img-1-2,image/jpeg,825,615,50,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+11197,business-rev-video.webp,business-rev-video-webp,image/webp,1920,1080,39,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+2239,main-home-rev-img-4.jpg,main-home-rev-img-4-jpg,image/jpeg,1920,1098,111,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+2238,main-home-rev-img-3.jpg,main-home-rev-img-3-jpg,image/jpeg,1920,1100,179,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+2237,main-home-rev-img-2.jpg,main-home-rev-img-2-jpg,image/jpeg,1920,1100,141,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+2236,main-home-rev-img-1.jpg,main-home-rev-img-1-jpg,image/jpeg,1920,1076,156,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+2235,fs-home-video.mp4,fs-home-video-mp4,,0,0,798,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+2234,fs-home-video_5.jpeg,fs-home-video-5-jpeg,image/jpeg,1920,900,55,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+2233,fs-home-img-4.jpg,fs-home-img-4-jpg,image/jpeg,1920,1080,164,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+2232,fs-home-img-6.png,fs-home-img-6-png,image/png,262,69,4,C,False,C_placeholder,ancho <800 px
+2231,fs-home-img-3-5.png,fs-home-img-3-5-png,image/png,296,85,5,C,False,C_placeholder,ancho <800 px
+2230,fs-home-img-4.png,fs-home-img-4-png,image/png,197,81,2,C,False,C_placeholder,ancho <800 px
+2229,fs-home-img-3-3.png,fs-home-img-3-3-png,image/png,305,88,5,C,False,C_placeholder,ancho <800 px
+2228,fs-home-img-3-2.png,fs-home-img-3-2-png,image/png,176,57,2,C,False,C_placeholder,ancho <800 px
+2227,fs-home-img-3-1.png,fs-home-img-3-1-png,image/png,271,90,4,C,False,C_placeholder,ancho <800 px
+2226,fs-home-img-3.jpg,fs-home-img-3-jpg,image/jpeg,1920,1066,171,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+2225,fs-home-img-2-4.png,fs-home-img-2-4-png,image/png,229,398,61,C,False,C_placeholder,ancho <800 px
+2224,fs-home-img-2-3.png,fs-home-img-2-3-png,image/png,266,514,131,C,False,C_placeholder,ancho <800 px
+2223,fs-home-img-2-2.png,fs-home-img-2-2-png,image/png,229,383,4,C,False,C_placeholder,ancho <800 px
+2222,fs-home-img-2-1.png,fs-home-img-2-1-png,image/png,229,281,15,C,False,C_placeholder,ancho <800 px
+2221,fs-home-img-2.jpg,fs-home-img-2-jpg,image/jpeg,1920,1080,118,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+2220,fs-home-img-1.jpg,fs-home-img-1-jpg,image/jpeg,1920,1080,158,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+2219,business-strategy-rev-img3.jpg,business-strategy-rev-img3-jpg,image/jpeg,1920,770,158,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+2218,business-strategy-rev-img2.jpg,business-strategy-rev-img2-jpg,image/jpeg,1920,770,100,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+2217,business-strategy-rev-img1.jpg,business-strategy-rev-img1-jpg,image/jpeg,1920,769,145,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+2216,business-rev-globe.png,business-rev-globe-png,image/png,50,54,2,C,False,C_placeholder,ancho <800 px
+2215,business-rev-scroll.png,business-rev-scroll-png,image/png,64,124,3,C,False,C_placeholder,ancho <800 px
+2214,business-rev-video.mp4,business-rev-video-mp4,,0,0,1348,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+2213,business-rev-video_19.jpeg,business-rev-video-19-jpeg,image/jpeg,1920,1080,55,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+2212,app-rev-button2.png,app-rev-button2-png,image/png,310,92,9,C,False,C_placeholder,ancho <800 px
+2211,app-rev-button1.png,app-rev-button1-png,image/png,310,92,4,C,False,C_placeholder,ancho <800 px
+2210,app-rev-img2.png,app-rev-img2-png,image/png,333,636,54,C,False,C_placeholder,ancho <800 px
+2209,app-rev-img1.png,app-rev-img1-png,image/png,330,636,380,C,False,C_placeholder,ancho <800 px
+2208,qi-addons-for-elementor-placeholder.png,qi-addons-for-elementor-placeholder,image/png,1200,800,11,C,False,C_placeholder,nombre de placeholder de kit
+2202,mp-mark-ivory-512.png,monograma-mp-%c2%b7-marfil,image/png,512,512,7,C,False,C_placeholder,ancho <800 px
+2201,mp-mark-ink-512.png,monograma-mp-%c2%b7-tinta,image/png,512,512,7,C,False,C_placeholder,ancho <800 px
+2200,mario-pennacchiotti.png,mario-pennacchiotti-%c2%b7-retrato,image/png,200,200,79,C,False,C_placeholder,ancho <800 px
+2199,Elementor-post-screenshot_2120_2026-10-25-21-30-31_2e655f2c.png,elementor-post-screenshot_2120_2026-10-25-21-30-31_2e655f2c-png,image/png,0,0,0,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+2198,Elementor-post-screenshot_2102_2026-10-25-21-30-28_4ddd69.png,elementor-post-screenshot_2102_2026-10-25-21-30-28_4ddd69-png,image/png,0,0,0,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+2167,placeholder-5.png,placeholder-png-6,image/png,1200,800,6,C,False,C_placeholder,nombre de placeholder de kit
+2158,placeholder-4.png,placeholder-png-5,image/png,1200,800,6,C,False,C_placeholder,nombre de placeholder de kit
+2151,placeholder-3.png,placeholder-png-4,image/png,1200,800,6,C,False,C_placeholder,nombre de placeholder de kit
+2138,placeholder-2.png,placeholder-png-3,image/png,1200,800,6,C,False,C_placeholder,nombre de placeholder de kit
+2125,placeholder-1.png,placeholder-png-2,image/png,1200,800,6,C,False,C_placeholder,nombre de placeholder de kit
+2122,placeholder.png,placeholder-png,image/png,1200,800,6,C,False,C_placeholder,nombre de placeholder de kit
+2062,figura-1400.jpg,figura-1400,image/jpeg,1376,768,25,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+2061,hero-1600.jpg,hero-1600,image/jpeg,1376,768,51,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+2053,krea_krea-2-medium-turbo_20261023_151102_6cb071aa-1.png,krea_krea-2-medium-turbo_20261023_151102_6cb071aa-1,image/png,1376,768,888,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+2052,krea_krea-2-medium-turbo_20261023_151050_77015581-1.png,krea_krea-2-medium-turbo_20261023_151050_77015581-1,image/png,1376,768,567,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+2051,krea_krea-2-medium-turbo_20261023_151051_a9853d13-1.png,krea_krea-2-medium-turbo_20261023_151051_a9853d13-1,image/png,1376,768,678,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+1760,default.svg,default-svg,image/svg+xml,48,64,0,C,False,C_placeholder,ancho <800 px
+1757,gallery-03-free-img-180x300-1.jpeg,gallery-03-free-img-180x300-jpeg,image/jpeg,180,300,4,C,False,C_placeholder,ancho <800 px
+1756,gallery-02-free-img-180x300-1.jpeg,gallery-02-free-img-180x300-jpeg,image/jpeg,180,300,10,C,False,C_placeholder,ancho <800 px
+1755,default.png,default-png,image/png,48,64,0,C,False,C_placeholder,ancho <800 px
+1099,demo-screenshot.jpg,demo-screenshot,image/jpeg,1200,843,92,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+1036,bg-04-free-img.png,bg-04-free-img,image/png,360,1334,0,C,False,C_placeholder,ancho <800 px
+535,bg-003-free-img.png,bg-003-free-img,image/png,768,1024,0,C,False,C_placeholder,ancho <800 px
+89,logo-retina-free-img.png,logo-retina-free-img,image/png,329,63,2,C,False,C_placeholder,ancho <800 px
+88,logo-regular-free-img.png,logo-regular-free-img,image/png,165,32,1,C,False,C_placeholder,ancho <800 px
+87,bg-001-free-img.png,bg-001-free-img,image/png,1920,1080,1,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+86,cropped-favicon.png,cropped-favicon,image/png,300,300,19,C,False,C_placeholder,ancho <800 px
+85,signature.png,signature,image/png,147,139,3,C,False,C_placeholder,ancho <800 px
+84,bg-3.png,bg-3,image/png,225,300,12,C,False,C_placeholder,ancho <800 px
+83,bg.png,bg,image/png,242,300,56,C,False,C_placeholder,ancho <800 px
+82,Ag-logo5.png,ag-logo5,image/png,300,300,10,C,False,C_placeholder,ancho <800 px
+81,Ag-logo4.png,ag-logo4,image/png,300,300,6,C,False,C_placeholder,ancho <800 px
+80,Ag-logo3.png,ag-logo3,image/png,300,300,21,C,False,C_placeholder,ancho <800 px
+79,AG-logo2.png,ag-logo2,image/png,300,300,11,C,False,C_placeholder,ancho <800 px
+78,AG-logo1.png,ag-logo1,image/png,300,300,9,C,False,C_placeholder,ancho <800 px
+77,AG-logo.png,ag-logo,image/png,300,300,10,C,False,C_placeholder,ancho <800 px
+76,AG-team4.jpeg,ag-team4,image/jpeg,300,300,11,C,False,C_placeholder,ancho <800 px
+75,AG-team3.jpeg,ag-team3,image/jpeg,300,300,15,C,False,C_placeholder,ancho <800 px
+74,AG-team2.jpeg,ag-team2,image/jpeg,300,300,10,C,False,C_placeholder,ancho <800 px
+73,AG-team1.jpeg,ag-team1,image/jpeg,300,300,16,C,False,C_placeholder,ancho <800 px
+57,marraqueta.jpg,marraqueta,image/jpeg,1213,824,297,A,False,A_propio,material propio (logo o foto)
+53,futuro-manos.jpg,futuro-manos,image/jpeg,1920,1279,647,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+52,sistema-campo.jpg,default,image/jpeg,1920,1440,1085,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+51,tierra-cosecha.jpg,tierra-cosecha,image/jpeg,1920,1255,502,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+8,mario-pennacchiotti.jpg,mario-pennacchiotti,image/jpeg,800,800,46,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+6138,shop9-gallery3.jpg,shop9-gallery3,image/jpeg,1000,1000,81,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+6137,shop9-gallery2.jpg,shop9-gallery2,image/jpeg,1000,1000,84,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+6136,shop9-gallery1.jpg,shop9-gallery1,image/jpeg,1000,1000,79,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+6135,shop8-gallery3.jpg,shop8-gallery3,image/jpeg,1000,1250,82,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+6134,shop8-gallery2.jpg,shop8-gallery2,image/jpeg,1000,1250,78,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+6133,shop8-gallery1.jpg,shop8-gallery1,image/jpeg,1000,1250,82,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+6132,shop7-gallery3.jpg,shop7-gallery3,image/jpeg,1000,1250,59,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+6131,shop7-gallery2.jpg,shop7-gallery2,image/jpeg,1000,1250,62,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+6130,shop7-gallery1.jpg,shop7-gallery1,image/jpeg,1000,1250,67,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+6129,shop6-gallery3.jpg,shop6-gallery3,image/jpeg,1000,1250,165,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+6128,shop6-gallery2.jpg,shop6-gallery2,image/jpeg,1000,1250,140,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+6127,shop6-gallery1.jpg,shop6-gallery1,image/jpeg,1000,1250,140,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+6126,shop5-gallery3.jpg,shop5-gallery3,image/jpeg,1000,1250,86,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+6125,shop5-gallery2.jpg,shop5-gallery2,image/jpeg,1000,1250,89,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+6124,shop5-gallery1.jpg,shop5-gallery1,image/jpeg,1000,1250,92,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+6123,shop4-gallery3.jpg,shop4-gallery3,image/jpeg,1000,1250,73,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+6122,shop4-gallery2.jpg,shop4-gallery2,image/jpeg,1000,1250,69,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+6121,shop4-gallery1.jpg,shop4-gallery1,image/jpeg,1000,1250,94,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+6120,shop3-gallery3.jpg,shop3-gallery3,image/jpeg,1000,1250,41,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+6119,shop3-gallery2.jpg,shop3-gallery2,image/jpeg,1000,1250,42,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+6118,shop3-gallery1.jpg,shop3-gallery1,image/jpeg,1000,1250,36,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+6117,shop2-gallery3.jpg,shop2-gallery3,image/jpeg,1000,1250,76,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+6116,shop2-gallery2.jpg,shop2-gallery2,image/jpeg,1000,1250,74,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+6115,shop2-gallery1.jpg,shop2-gallery1,image/jpeg,1000,1250,89,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+6048,about-us-img-3.jpg,about-us-img-3,image/jpeg,1242,711,57,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+6047,about-us-img-2.jpg,about-us-img-2,image/jpeg,873,1094,51,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+5950,about-us-img-1.jpg,about-us-img-1,image/jpeg,1924,792,165,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+5895,team-img-1.jpg,team-img-1,image/jpeg,1000,1095,130,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+5698,about-us-title-img.jpg,about-us-title-img,image/jpeg,1921,640,99,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+5695,shop-user.png,shop-user,image/png,97,99,16,C,False,C_placeholder,ancho <800 px
+5688,shop-bg-img.jpg,shop-bg-img,image/jpeg,1920,300,36,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+5681,shop-img1.jpg,shop-img1,image/jpeg,1000,1250,88,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+5680,shop1-gallery3.jpg,shop1-gallery3,image/jpeg,1000,1250,86,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+5679,shop1-gallery2.jpg,shop1-gallery2,image/jpeg,1000,1250,41,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+5678,shop1-gallery1.jpg,shop1-gallery1,image/jpeg,1000,1250,61,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+5589,Fingers-In-The-Noise-Elixir-1.mp3,fingers-in-the-noise-elixir-1,audio/mpeg,0,0,477,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+5587,blog-list-img-7.jpg,blog-list-img-7,image/jpeg,1300,667,123,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+5580,blog-list-img-6.jpg,blog-list-img-6,image/jpeg,1300,667,68,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+5579,blog-list-img-5.jpg,blog-list-img-5,image/jpeg,1300,667,64,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+5578,blog-list-img-4.jpg,blog-list-img-4,image/jpeg,1300,667,90,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+5418,blog-list-img-2.jpg,blog-list-img-2,image/jpeg,1300,932,162,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+5417,blog-list-img-1.jpg,blog-list-img-1,image/jpeg,1300,932,101,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+5416,blog-list-img-3.jpg,blog-list-img-3,image/jpeg,1300,932,123,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+5412,port-list-img12.jpg,port-list-img12,image/jpeg,850,1064,88,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+5411,port-list-img11.jpg,port-list-img11,image/jpeg,850,1064,92,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+5410,port-list-img10.jpg,port-list-img10,image/jpeg,850,1064,95,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+5316,port-list-bg-img.jpg,port-list-bg-img,image/jpeg,1920,800,143,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+5280,blog-single-content-image-3.jpg,blog-single-content-image-3,image/jpeg,705,750,52,C,False,C_placeholder,ancho <800 px
+5279,blog-single-content-image-2.jpg,blog-single-content-image-2,image/jpeg,705,750,28,C,False,C_placeholder,ancho <800 px
+5273,port-list-img9.jpg,port-list-img9,image/jpeg,850,1064,72,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+5272,port-list-img8.jpg,port-list-img8,image/jpeg,850,1064,92,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+5271,port-list-img7.jpg,port-list-img7,image/jpeg,850,1064,55,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+5270,port-list-img6.jpg,port-list-img6,image/jpeg,850,1064,90,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+5269,port-list-img5.jpg,port-list-img5,image/jpeg,850,1064,91,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+5268,port-list-img4.jpg,port-list-img4,image/jpeg,850,1064,88,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+5267,port-list-img3.jpg,port-list-img3,image/jpeg,850,1064,142,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+5266,port-list-img2.jpg,port-list-img2,image/jpeg,850,1064,67,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+5265,port-list-img1.jpg,port-list-img1,image/jpeg,850,1064,71,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+5213,blog-single-content-image.jpg,blog-single-content-image,image/jpeg,1000,513,59,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+5187,blog-author.png,blog-author,image/png,380,380,178,C,False,C_placeholder,ancho <800 px
+5181,blog-sidebar-img.jpg,blog-sidebar-img,image/jpeg,950,723,34,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+5179,port-masonry-img4.jpg,port-masonry-img4,image/jpeg,840,420,84,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+5178,port-masonry-img3.jpg,port-masonry-img3,image/jpeg,420,420,22,C,False,C_placeholder,ancho <800 px
+5177,port-masonry-img2.jpg,port-masonry-img2,image/jpeg,420,420,16,C,False,C_placeholder,ancho <800 px
+5176,port-masonry-img1.jpg,port-masonry-img1,image/jpeg,840,420,67,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+5172,port-img11.jpg,port-img11,image/jpeg,1300,800,81,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+5171,port-img10.jpg,port-img10,image/jpeg,1300,800,55,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+5170,port-img9.jpg,port-img9,image/jpeg,1300,800,77,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+5168,port-img8.jpg,port-img8,image/jpeg,1300,1293,184,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+5166,blog-single-title-image.jpg,blog-single-title-image,image/jpeg,2560,1035,201,A,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+5117,logo-coming-soon.png,logo-coming-soon,image/png,176,45,2,C,False,C_placeholder,ancho <800 px
+5080,port-img7.jpg,port-img7,image/jpeg,1300,1293,92,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+5079,port-img6.jpg,port-img6,image/jpeg,1300,1293,71,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+5078,port-img5.jpg,port-img5,image/jpeg,1300,1293,97,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+5077,port-img4.jpg,port-img4,image/jpeg,1300,1293,88,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+4998,port-title-bg-img.jpg,port-title-bg-img,image/jpeg,1920,300,76,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+4979,port-img3.jpg,port-img3,image/jpeg,1300,1293,94,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+4978,port-img2.jpg,port-img2,image/jpeg,1300,1293,94,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+4977,port-img1.jpg,port-img1,image/jpeg,1300,1293,82,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+4970,coming-soon-img.jpg,coming-soon-img,image/jpeg,1920,1078,195,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+4849,home-9-img-4.jpg,home-9-img-4,image/jpeg,1920,770,61,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+4818,training-iwt-img2.png,training-iwt-img2,image/png,48,64,1,C,False,C_placeholder,ancho <800 px
+4779,client-6.png,client-6,image/png,358,98,4,C,False,C_placeholder,ancho <800 px
+4778,client-5.png,client-5-2,image/png,228,93,2,C,False,C_placeholder,ancho <800 px
+4777,client-4.png,client-4-2,image/png,204,66,2,C,False,C_placeholder,ancho <800 px
+4776,client-3.png,client-3-2,image/png,353,102,4,C,False,C_placeholder,ancho <800 px
+4775,client-2.png,client-2,image/png,276,95,3,C,False,C_placeholder,ancho <800 px
+4774,client-1.png,client-1-2,image/png,313,105,6,C,False,C_placeholder,ancho <800 px
+4749,training-iwt-img1.png,training-iwt-img1,image/png,30,50,1,C,False,C_placeholder,ancho <800 px
+4717,team-7.jpg,team-7,image/jpeg,630,874,81,C,False,C_placeholder,ancho <800 px
+4693,training-bg-img5.jpg,training-bg-img5,image/jpeg,1280,2259,131,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+4634,home-9-img-3.jpg,home-9-img-3,image/jpeg,1920,738,112,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+4569,training-bg-img4.jpg,training-bg-img4,image/jpeg,1280,2259,142,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+4477,training-banner.jpg,training-banner,image/jpeg,965,1079,96,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+4361,testimonials-img-4.png,testimonials-img-4,image/png,270,270,86,C,False,C_placeholder,ancho <800 px
+4360,testimonials-img-3.png,testimonials-img-3,image/png,135,135,25,C,False,C_placeholder,ancho <800 px
+4336,training-bg-img3.jpg,training-bg-img3,image/jpeg,1280,2259,96,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+4032,training-bg-img2.jpg,training-bg-img2,image/jpeg,1280,2259,96,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+3958,home-9-img-1.png,home-9-img-1,image/png,687,502,128,C,False,C_placeholder,ancho <800 px
+3852,training-bg-img1.jpg,training-bg-img1,image/jpeg,1920,1080,97,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+3847,fs-home-video_5.jpeg,fs-home-video-5-jpeg-2,image/jpeg,1920,900,55,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+3845,fs-home-video.mp4,fs-home-video,video/mp4,1920,900,798,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+3835,main-home-video_2_5.jpeg,main-home-video-2-5-jpeg,image/jpeg,1920,900,71,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+3828,agency-bg-img5.jpg,agency-bg-img5,image/jpeg,1920,1080,97,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+3827,agency-bg-img4.jpg,agency-bg-img4,image/jpeg,1920,1080,88,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+3826,agency-bg-img3.jpg,agency-bg-img3,image/jpeg,1920,1080,138,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+3825,agency-bg-img2.jpg,agency-bg-img2,image/jpeg,1920,1080,54,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+3807,testimonials-img-2.png,testimonials-img-2,image/png,100,100,17,C,False,C_placeholder,ancho <800 px
+3803,fs-home-img-4.jpg,fs-home-img-4-2,image/jpeg,1920,1080,164,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+3791,fs-home-img-6.png,fs-home-img-6,image/png,262,69,4,C,False,C_placeholder,ancho <800 px
+3789,fs-home-img-4.png,fs-home-img-4,image/png,197,81,2,C,False,C_placeholder,ancho <800 px
+3788,fs-home-img-3-5.png,fs-home-img-3-5,image/png,296,85,5,C,False,C_placeholder,ancho <800 px
+3787,fs-home-img-3-3.png,fs-home-img-3-3,image/png,305,88,5,C,False,C_placeholder,ancho <800 px
+3786,fs-home-img-3-2.png,fs-home-img-3-2,image/png,176,57,2,C,False,C_placeholder,ancho <800 px
+3785,fs-home-img-3-1.png,fs-home-img-3-1,image/png,271,90,4,C,False,C_placeholder,ancho <800 px
+3784,fs-home-img-3.jpg,fs-home-img-3,image/jpeg,1920,1066,171,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+3777,fs-home-img-2-4.png,fs-home-img-2-4,image/png,229,398,61,C,False,C_placeholder,ancho <800 px
+3761,fs-home-img-2-3.png,fs-home-img-2-3,image/png,266,514,131,C,False,C_placeholder,ancho <800 px
+3754,fs-home-img-2-2.png,fs-home-img-2-2,image/png,229,383,4,C,False,C_placeholder,ancho <800 px
+3735,fs-home-img-2-1.png,fs-home-img-2-1,image/png,229,281,15,C,False,C_placeholder,ancho <800 px
+3532,logo-minimal-white.png,logo-minimal-white,image/png,174,46,3,C,False,C_placeholder,ancho <800 px
+3509,fs-home-img-2.jpg,fs-home-img-2,image/jpeg,1920,1080,118,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+3330,agency-bg-img1.jpg,agency-bg-img1,image/jpeg,1920,1080,97,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+3325,home-4-video.mp4,home-4-video,video/mp4,1920,1080,1966,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+3300,app-bg-img.jpg,app-bg-img,image/jpeg,1920,1116,71,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+3223,app-img7.png,app-img7,image/png,279,376,64,C,False,C_placeholder,ancho <800 px
+3213,app-img6.png,app-img6,image/png,303,580,61,C,False,C_placeholder,ancho <800 px
+3202,fs-home-img-1.jpg,fs-home-img-1,image/jpeg,1920,1080,158,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+2955,app-img5.png,app-img5,image/png,320,207,4,C,False,C_placeholder,ancho <800 px
+2954,app-img4.png,app-img4,image/png,330,636,39,C,False,C_placeholder,ancho <800 px
+2624,home-4-img-2.jpg,home-4-img-2,image/jpeg,950,645,77,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+2608,app-img3.png,app-img3,image/png,67,67,9,C,False,C_placeholder,ancho <800 px
+2521,app-img2.png,app-img2,image/png,279,376,64,C,False,C_placeholder,ancho <800 px
+2520,app-img1.png,app-img1,image/png,267,636,65,C,False,C_placeholder,ancho <800 px
+2515,app-showcase-video-img.jpg,app-showcase-video-img,image/jpeg,1920,750,91,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+2511,app-video.mp4,app-video,video/mp4,1920,750,1239,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+2384,home-4-img-3.jpg,home-4-img-3,image/jpeg,1400,628,95,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+2247,home-4-img-1.jpg,home-4-img-1,image/jpeg,2000,920,148,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+2246,business-home-slider-img4.jpg,business-home-slider-img4,image/jpeg,1280,819,83,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+2245,logo-footer.png,logo-footer,image/png,286,74,8,C,False,C_placeholder,ancho <800 px
+2094,logo-sidearea.png,logo-sidearea,image/png,172,44,2,C,False,C_placeholder,ancho <800 px
+2072,side-area-img.jpg,side-area-img,image/jpeg,632,408,16,C,False,C_placeholder,ancho <800 px
+2244,app-hotspots-img-new.png,app-hotspots-img-new,image/png,570,723,63,C,False,C_placeholder,ancho <800 px
+2243,logo-dark-skin.png,logo-dark-skin,image/png,174,46,6,C,False,C_placeholder,ancho <800 px
+2242,logo-main.png,logo-main,image/png,174,46,4,C,False,C_placeholder,ancho <800 px
+1899,app-img-slide3.jpg,app-img-slide3,image/jpeg,992,563,58,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+1898,app-img-slide2.jpg,app-img-slide2,image/jpeg,992,563,89,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+1897,app-img-slide1.jpg,app-img-slide1,image/jpeg,992,563,51,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+1893,content-side-icon.png,content-side-icon,image/png,22,22,1,C,False,C_placeholder,ancho <800 px
+1881,main-home-video_2.mp4,main-home-video_2,video/mp4,1920,900,1971,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+1880,logo-minimal.png,logo-minimal,image/png,174,46,6,C,False,C_placeholder,ancho <800 px
+1877,client-04-hover-bg.jpg,client-04-hover-bg,image/jpeg,688,652,38,C,False,C_placeholder,ancho <800 px
+1876,client-03-hover-bg.jpg,client-03-hover-bg,image/jpeg,688,652,28,C,False,C_placeholder,ancho <800 px
+1875,client-02-hover-bg.jpg,client-02-hover-bg,image/jpeg,688,652,19,C,False,C_placeholder,ancho <800 px
+1542,main-home-img-7.jpg,main-home-img-7,image/jpeg,1920,933,50,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+1451,business-video-transparent.png,business-video-transparent,image/png,900,650,1,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+1444,business-video-img.jpg,business-video-img,image/jpeg,900,650,57,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+1412,business-title-img.jpg,business-title-img,image/jpeg,900,650,15,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+1256,team-5.jpg,team-5,image/jpeg,630,874,67,C,False,C_placeholder,ancho <800 px
+1255,team-4.jpg,team-4,image/jpeg,630,874,67,C,False,C_placeholder,ancho <800 px
+1254,team-3.jpg,team-3,image/jpeg,630,874,57,C,False,C_placeholder,ancho <800 px
+1253,team-2.jpg,team-2,image/jpeg,630,874,60,C,False,C_placeholder,ancho <800 px
+1252,team-1.jpg,team-1,image/jpeg,630,874,68,C,False,C_placeholder,ancho <800 px
+1251,team-6.jpg,team-6,image/jpeg,630,874,35,C,False,C_placeholder,ancho <800 px
+1111,business-acordion-img1.jpg,business-acordion-img1,image/jpeg,914,1422,96,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+1085,main-home-img-6.jpg,main-home-img-6,image/jpeg,1300,1180,67,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+971,main-home-video-button.jpg,main-home-video-button,image/jpeg,1300,834,118,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+945,main-home-img-5-tablet.jpg,main-home-img-5-tablet,image/jpeg,800,1300,64,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+753,main-home-img-5.jpg,main-home-img-5,image/jpeg,1840,840,113,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+656,testimonials-img.png,testimonials-img,image/png,120,120,20,C,False,C_placeholder,ancho <800 px
+624,main-home-sticky-column-img.jpg,main-home-sticky-column-img,image/jpeg,1300,1470,184,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+572,main-home-img-4.png,main-home-img-4,image/png,949,353,37,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+451,business-check-mark.png,business-check-mark,image/png,15,21,0,C,False,C_placeholder,ancho <800 px
+436,main-home-img-2.png,main-home-img-2,image/png,850,417,80,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+432,main-home-img-3.jpg,main-home-img-3,image/jpeg,942,606,55,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+399,business-home-slider-img3.jpg,business-home-slider-img3,image/jpeg,1280,819,95,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+398,business-home-slider-img2.jpg,business-home-slider-img2,image/jpeg,1280,819,71,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+397,business-home-slider-img1.jpg,business-home-slider-img1,image/jpeg,1280,819,79,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+151,main-home-img-1.jpg,main-home-img-1,image/jpeg,825,615,48,B,False,B_kit,"activo de kit/demo (main-, shop#, port, business-, fs-, agency)"
+130,Group-1615.jpg,group-1615,image/jpeg,213,112,2,C,False,C_placeholder,ancho <800 px
+2241,woocommerce-placeholder.png,woocommerce-placeholder,image/png,1200,1200,100,C,False,C_placeholder,nombre de placeholder de kit

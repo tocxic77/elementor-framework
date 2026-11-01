@@ -90,7 +90,8 @@ def medir(cliente):
         if clave not in need:
             return None, 0
         entradas = [x for x in (need.get(clave) or []) if isinstance(x, dict)]
-        con_prueba = [x for x in entradas if str(x.get(campo_prueba) or "").strip()]
+        con_prueba = [x for x in entradas
+                      if str(x.get(campo_prueba) or "").strip() or str(x.get("archivo") or "").strip()]
         return len(con_prueba), len(entradas)
 
     def cuenta(clave, elemento, campos):
@@ -186,8 +187,14 @@ def main():
             if material not in faltantes and aviso not in faltantes:
                 faltantes = [f for f in faltantes if f != material] + [aviso]
         alternativas = datos.get("requiere_uno_de") or []
-        if alternativas and not any(hay(medidas.get(m, (None,))[0]) for m in alternativas):
-            faltantes.append("uno de: " + " / ".join(alternativas))
+        if alternativas:
+            # Una alternativa con umbral no está cubierta por el primer dato: se exige el mínimo.
+            def sirve(material):
+                valor = medidas.get(material, (None,))[0]
+                umbral = (datos.get("minimo") or {}).get(material)
+                return (valor is not None and valor >= umbral) if umbral is not None else hay(valor)
+            if not any(sirve(m) for m in alternativas):
+                faltantes.append("uno de: " + " / ".join(alternativas))
         (faltan if faltantes else disponibles).append((nombre, faltantes))
 
     print("\nDISPONIBLES %d de %d" % (len(disponibles), len(mecanismos)))

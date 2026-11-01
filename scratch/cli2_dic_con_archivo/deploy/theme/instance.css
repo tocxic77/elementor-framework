@@ -1,0 +1,2 @@
+/* instancia del cliente · en producción la ruta del póster es la de la biblioteca */
+:root{--media-poster:url("__UPLOADS__/pp-hero-flujo-poster.jpg")}

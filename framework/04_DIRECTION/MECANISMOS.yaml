@@ -185,6 +185,7 @@ mecanismos:
       narrada_en_prosa: cifras dentro de una frase, temprano; sirve cuando el lector llega tibio
       embebida_en_linea: tres atributos en una línea; sirve cuando el lector llega frío y quiere contexto
       diferida_al_cierre: biografía al final; sirve cuando la obra ya es conocida
+    minimo: {trayectoria_publica: 2, atributos_verificables: 2}
 
   objecion_citada:
     grupo: progresion

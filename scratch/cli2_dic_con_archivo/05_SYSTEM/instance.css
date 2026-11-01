@@ -1,0 +1,3 @@
+/* instance.css — lo único que el cliente aporta al sistema.
+   Rutas de sus activos y nada más: si este archivo crece, hay una regla mal ubicada. */
+:root{--media-poster:url('assets/pp-hero-flujo-poster.jpg')}

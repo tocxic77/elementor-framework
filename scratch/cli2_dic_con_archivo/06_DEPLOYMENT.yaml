@@ -1,0 +1,80 @@
+# 06_DEPLOYMENT · PENNACCHIOTTI — instancia
+# Cinco decisiones de Mario, 2026-10-31. Se ejecutan en este orden y ninguna es reversible
+# sin copia verificada.
+cliente: Pennacchiotti
+fecha: 2026-10-31
+tipo: reemplazo completo
+dominio: pennacchiotti.cl
+coexistencia: prohibida          # no conviven dos narrativas en el mismo dominio
+objetivo: "Sustituir la instalación visible del 2026-10-28 sin dejar rastro de la anterior"
+
+estructura:                       # multipágina, no landing
+  - {ruta: "/",              rol: "argumento y objeción"}
+  - {ruta: "/soluciones/",   rol: "qué se hace, por banda"}
+  - {ruta: "/perspectivas/", rol: "autoridad: método y criterio publicado"}
+  - {ruta: "/sobre-mi/",     rol: "confianza: quién firma"}
+  - {ruta: "/contacto/",     rol: "conversión: formulario"}
+
+conversion:
+  cta_primaria: "Agendar una conversación → /contacto/ (formulario)"
+  destino: "correo a mario@pennacchiotti.cl"
+  secundaria: "WhatsApp +56 9 7609 5093, visible, nunca la acción principal"
+  motivo: "una solicitud compleja necesita contexto escrito; WhatsApp sirve para cerrar, no para ordenar"
+
+hero:
+  medio: poster + loop de 6 s
+  descartado: "clip completo de 60 s (peso, distracción, sin valor proporcional)"
+  nota: "los 60 s quedan como activo documental, no como componente"
+
+puerta_de_lanzamiento:
+  - comprobacion: "copia previa restaurada en un entorno de prueba"
+    nivel: bloquea
+    evidencia: "pendiente · Backuply + cPanel"
+  - comprobacion: "0 rastros de demo (posts, páginas, media de kit)"
+    nivel: bloquea
+    evidencia: "pendiente · ver AUDITORIA-2026-10-31.md"
+  - comprobacion: "0 enlaces internos con 404 en navegación y pie"
+    nivel: bloquea
+    evidencia: "hoy 4 de 4 (medido 2026-10-31)"
+  - comprobacion: "formulario de contacto entrega y responde"
+    nivel: bloquea
+    evidencia: "hoy 0 <form> en /contact-us/"
+  - comprobacion: "h1 único, 0 textos bajo AA, 0 desborde a 390"
+    nivel: bloquea
+    evidencia: "lo mide el gate del sistema en cada página"
+  - comprobacion: "capturas fechadas de las 5 rutas antes y después"
+    nivel: bloquea
+  - comprobacion: "medición a 30 días: contactos recibidos y origen"
+    nivel: avisa
+
+prohibiciones_de_copy:
+  palabras: ["transformación", "cambio cultural", "impacto sostenido", "resultados garantizados"]
+  motivo: "no existe evidencia pública de permanencia del cambio; prometerlo es afirmar sin fuente"
+  permitido: "diagnóstico, criterio explícito, instalación de capacidades, transferencia"
+  h1_tesis: "se mantiene textual «Construyo capacidades técnicas que se convierten en resultados de negocio» (Mario, 2026-10-31): describe una cadena causal capacidad→resultado, no garantiza un resultado"
+
+backlog_de_mayor_valor:
+  - "Caso documentado #01: situación inicial, intervención, criterio instalado, resultado observado. Con él, B3 deja de ser hipótesis."
+
+# --- resultado de la ejecución del 2026-10-31 ---
+publicacion:
+  estado: publicado
+  fecha_utc: "2026-10-31T18:24:54Z"
+  rutas_200: ["/", "/soluciones/", "/perspectivas/", "/sobre-mi/", "/contacto/"]
+  rutas_404: ["/our-services/", "/our-story/", "/contact-us/", "/global-styles/"]
+  sitemap_urls: 5
+  contraste_minimo: "5,44:1 (10/10 PASS a 1440 y 390)"
+  formulario: "nonce ok · wp_mail ok · confirmación visible en ?enviado=1"
+  entradas_demo: "12 a papelera · feed 0 elementos"
+  media_borrada: "119 adjuntos placeholder"
+  backup:
+    base_de_datos: "pp-backup-20261031-181857.sql · 22,6 MB · 76 tablas · 23.604 filas"
+    restauracion: null          # NO comprobada: no se restauró en una base de prueba
+  desvios_del_runbook:
+    - "el HTML de las cinco páginas se sirve desde archivos (mu-plugin), no desde widgets de Elementor: el kit atómico no trae widget HTML"
+    - "el formulario usa wp_mail vía GoSMTP, no el widget Form de Elementor Pro"
+    - "los siete activos viven en el child theme /assets/, no en la biblioteca de medios"
+  avisos_abiertos:
+    - "13 elementos con style= inyectados por el contenedor de Elementor (no por el HTML propio)"
+    - "2 controles por debajo de 24 px de alto"
+    - "pp.css del child theme (con reglas page-id) se desencola, no se borra"

@@ -1,0 +1,101 @@
+# Referentes analizados
+#
+# Qué hace este archivo: guarda el análisis que antes vivía en el chat y se evaporaba.
+# No declara gustos: registra qué mecanismos usa cada sitio, medidos sobre su HTML, y el
+# instrumento cruza esos mecanismos con el material que este cliente puede sostener.
+#
+# Cada entrada de `descartados` lleva `estado: hipotesis` y `fuente: null` mientras el
+# motivo sea juicio y no medición. El instrumento deriva el motivo mecánico; esto es lo
+# que el instrumento no puede saber. Cuando el motivo se pueda citar, se cita.
+#
+# Los nombres de `observados` tienen que existir en 04_DIRECTION/MECANISMOS.yaml: un
+# mecanismo inventado aquí es un error de dato, no una idea nueva.
+#
+# tipo:      competidor     mismo mercado, mismo comprador
+#            referente      otro mercado, misma mecánica
+#            aspiracional   adonde el cliente quiere llegar, hoy inalcanzable
+
+cliente: pennacchiotti
+fecha: 2026-11-01
+
+referentes:
+
+  - sitio: jonathanstark.com
+    tipo: referente
+    temperatura: tibio
+    medido: 2026-11-01
+    evidencia: 15.726 B de HTML · 621 palabras · 1 h1 · 6 h2 · 4 citas · 36 enlaces a 8 destinos
+    observados:
+      - promesa_de_resultado
+      - calificador_de_audiencia
+      - reconocimiento_antes_del_diagnostico
+      - titular_diagnostico
+      - prueba_distribuida
+      - prueba_que_ordena_la_accion
+      - contraste_binario
+      - autoridad_situada
+      - escalera_de_compromiso
+      - destino_nombrado
+      - accion_unica_por_banda
+      - una_sola_idea
+      - cierre_invitacion
+    descartados:
+      - mecanismo: prueba_distribuida
+        motivo: exige citas reales con nombre; este cliente no tiene ninguna
+        estado: hipotesis
+        fuente: null
+      - mecanismo: escalera_de_compromiso
+        motivo: hay una sola oferta; una escalera de un peldaño no es escalera
+        estado: hipotesis
+        fuente: null
+      - mecanismo: autoridad_situada
+        motivo: la forma narrada usa podcasts y libros como cifras; aquí no existen
+        estado: hipotesis
+        fuente: null
+    notas: >
+      La autoridad llega al final, después del argumento, porque el lector ya conoce la
+      obra. Diferirla aquí sería omitirla: sin obra pública, la credencial tiene que ir
+      temprano o no existe.
+
+  - sitio: kaidavis.com
+    tipo: referente
+    temperatura: tibio
+    medido: 2026-11-01
+    evidencia: 17.846 B de HTML · 621 palabras visibles · 1 h1 · 5 h2 · 3 citas · 5 precios
+    observados:
+      - promesa_de_resultado
+      - calificador_de_audiencia
+      - accion_unica_por_banda
+      - escalera_de_compromiso
+      - etiqueta_por_situacion
+      - destino_nombrado
+      - precio_visible
+      - salida_explicita
+      - prueba_enlazada
+      - cita_con_titular
+      - prueba_agrupada
+      - inventario_de_propiedades
+      - autoridad_situada
+      - una_sola_idea
+      - cierre_invitacion
+    descartados:
+      - mecanismo: precio_visible
+        motivo: aquí el precio depende del alcance; publicarlo obligaría a inventar un mínimo
+        estado: hipotesis
+        fuente: null
+      - mecanismo: escalera_de_compromiso
+        motivo: harían falta tres ofertas reales y hay una
+        estado: hipotesis
+        fuente: null
+      - mecanismo: inventario_de_propiedades
+        motivo: hay un solo sitio; una lista de uno es un enlace
+        estado: hipotesis
+        fuente: null
+      - mecanismo: prueba_enlazada
+        motivo: el enlace de prueba necesita una página de testimonios que no existe
+        estado: hipotesis
+        fuente: null
+    notas: >
+      No nombra ningún problema y no tiene caso documentado, y aun así funciona: la
+      audiencia llega tibia y la página empieza por la oferta y el precio. Ese es el
+      dato que impide copiar el orden de Stark a un cliente frío.
