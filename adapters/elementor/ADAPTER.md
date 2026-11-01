@@ -51,3 +51,25 @@ Verificado contra **Elementor 4.3.5 / Pro 4.3.0**, kit `11286`.
 - Un componente no acepta contenido arbitrario: si la instancia necesita estructura
   distinta, se crea otro componente, no se parchea la instancia.
 - `e-form` (formulario nativo) existe en 4.3.5 pero este adaptador todavía no lo emite.
+
+## Auditoría de un sitio existente
+
+`auditar_sitio.py` lee lo que ya está publicado antes de tocarlo, con dos fuentes que
+mienten distinto: el MCP ve la estructura real de Elementor, el HTML servido ve lo que
+recibe el visitante. Ninguna de las dos basta sola.
+
+Comprueba, con números:
+
+- páginas publicadas que **no** están construidas con Elementor (estructura vacía);
+- plantillas por tipo, duplicadas y activas a la vez;
+- plantilla 404 cuya condición no es la de 404;
+- imágenes y secciones por página en el HTML servido (el banner de cookies se descuenta);
+- H1 por página y estilos en línea.
+
+```
+python auditar_sitio.py --sitio https://ejemplo.cl        # tabla legible
+python auditar_sitio.py --sitio https://ejemplo.cl --json # para otra herramienta
+```
+
+Sale 1 si algo falla. Es la puerta de entrada a una migración: sin esta medición, cualquier
+rediseño empieza inventando el estado inicial.
