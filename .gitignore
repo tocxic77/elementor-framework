@@ -17,3 +17,6 @@ framework/03_CURATION/gusto/capturas/
 .DS_Store
 Thumbs.db
 desktop.ini
+scratch/cli*
+scratch/cliente_*
+scratch/solo-*
