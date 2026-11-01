@@ -1,85 +1,184 @@
 # Elementor Framework
 
-Un método para producir sitios editoriales en WordPress con Elementor, donde cada
-decisión visual tiene una fuente y cada afirmación se puede medir.
+[![License: MIT](https://img.shields.io/badge/license-MIT-223035.svg)](LICENSE)
+[![Elementor](https://img.shields.io/badge/Elementor-4.3.5%20%2B%20Pro%204.3.0-223035.svg)](https://elementor.com)
+[![WordPress](https://img.shields.io/badge/WordPress-6.x-223035.svg)](https://wordpress.org)
 
-No es una plantilla. Es la cadena que va de una necesidad comercial a un sistema de
-diseño materializado en Elementor —variables, clases globales y componentes— y de ahí
-a una publicación verificada.
+Un método para producir sitios editoriales en WordPress donde cada decisión visual
+tiene una fuente, cada afirmación se puede medir y el sistema de diseño vive **dentro de
+Elementor** —variables globales, clases globales y componentes reutilizables— en lugar
+de en hojas de estilo sueltas.
 
-> A method for building editorial WordPress sites with Elementor: every visual decision
-> has a source, every claim is measured, and the design system lives inside Elementor
-> — global variables, global classes and reusable components — not in ad-hoc CSS.
+No es una plantilla ni un tema. Es la cadena que va de una necesidad comercial a una
+publicación verificada, con seis puertas que se pueden ejecutar.
 
-## Principios
+> *A method for building editorial WordPress sites with Elementor. The design system is
+> materialised as Elementor global variables, global classes and components — not as
+> ad-hoc CSS — and every gate is an executable script, not a checklist.*
+
+---
+
+## Índice
+
+- [Qué es y qué no es](#qué-es-y-qué-no-es)
+- [Los tres principios](#los-tres-principios)
+- [Cómo funciona](#cómo-funciona)
+- [Estructura del repositorio](#estructura-del-repositorio)
+- [Inicio rápido](#inicio-rápido)
+- [Verificadores](#verificadores)
+- [Adaptador de Elementor](#adaptador-de-elementor)
+- [Estado: qué está verificado](#estado-qué-está-verificado)
+- [Lo que falta](#lo-que-falta)
+- [Licencia](#licencia)
+
+---
+
+## Qué es y qué no es
+
+**Es** un orden de decisiones. Cada fase tiene una pregunta que la cierra, un artefacto
+que la demuestra y un verificador que la comprueba sin pedir permiso a nadie.
+
+**No es** una biblioteca de secciones bonitas. Si un componente no responde a una
+necesidad escrita en `01_NEED`, no entra.
+
+## Los tres principios
 
 1. **Nada se publica sin evidencia.** Toda afirmación con fuente, toda decisión visual
-   con referencia, todo componente con un objetivo.
-2. **El problema no es el material, es la decisión.** El framework ordena decisiones,
-   no acumula archivos.
+   con referencia, todo componente con un objetivo declarado.
+2. **El problema no es el material, es la decisión.** Un sitio mediocre con buen material
+   sigue siendo mediocre: lo que falta es criterio explícito, no más fotos.
 3. **Si una decisión no desbloquea una página, no puede bloquear una página.** No se
-   abren fases ni verificadores que no desbloqueen entrega.
+   abren fases, gates ni verificadores nuevos mientras no desbloqueen entrega.
 
-## Estructura
+## Cómo funciona
+
+| Fase | Decide | Artefacto | Puerta |
+|---|---|---|---|
+| `01_NEED` | por qué el sitio debe existir; qué lo haría falso | `01_NEED.md` + cuestionario de 9 preguntas | `verificar_need.py` |
+| `02_MATERIAL` | qué existe, en qué estado y qué falta | inventario medido + registro de afirmaciones | `inventario_activos.py`, `verificar_evidencia.py` |
+| `03_CURATION` | qué entra, qué sale y con qué criterio se juzga | biblioteca de gusto medida a 1440 y 390 | `verificar_activos.py` |
+| `04_DIRECTION` | la ley visual, y sólo eso | tesis, estrategia de imagen, prompts | revisión con capturas |
+| `05_SYSTEM` | el código que se reutiliza | `tokens.css`, `theme.css`, `utilities.css` | gate estático y renderizado |
+| `06_DEPLOYMENT` | dos puertas: QA de lanzamiento y medición a 30 días | runbook y mediciones | contraste, H1 único, desbordes |
+
+Las fases no son carpetas de documentación: son puertas. Si una fase no puede cerrarse,
+el proyecto no avanza, y eso se ve en el verificador, no en una reunión.
+
+## Estructura del repositorio
 
 ```
-framework/
-├── 01_NEED/          la necesidad: a quién le sirve, qué problema resuelve, qué la haría falsa
-├── 02_MATERIAL/      lo que existe: activos, textos, cifras, fuentes
-├── 03_CURATION/      la biblioteca de gusto: referencias medidas, no impresiones
-├── 04_DIRECTION/     la dirección: tesis visual, estrategia de imagen, prompts
-├── 05_SYSTEM/        el sistema: tokens.css, theme.css, utilities.css
-├── 06_DEPLOYMENT/    la puesta en producción y sus comprobaciones
-└── tools/            verificadores ejecutables (need, evidencia, activos, independencia)
-
-adapters/
-└── elementor/        cómo el sistema se materializa en Elementor V4 (atómica)
+.
+├── framework/
+│   ├── 01_NEED/          la necesidad y su cuestionario
+│   ├── 02_MATERIAL/      lo que existe, medido
+│   ├── 03_CURATION/      biblioteca de gusto: 54 especímenes HTML + índice YAML
+│   │   └── gusto/        gen_specimen.py · gen_doble.py · index.yaml
+│   ├── 04_DIRECTION/     tesis visual, estrategia de imagen, prompts
+│   ├── 05_SYSTEM/        tokens.css · theme.css · utilities.css
+│   ├── 06_DEPLOYMENT/    puesta en producción
+│   ├── tools/            cinco verificadores ejecutables
+│   └── README.md         qué contiene cada ranura y su deuda declarada
+└── adapters/
+    └── elementor/        el sistema materializado en Elementor V4 (atómica)
+        ├── ADAPTER.md          contrato y reglas V4
+        ├── sistema.yaml        variables, clases y componentes
+        └── verificar_sistema.py gate contra una instalación viva
 ```
 
-Las seis fases son puertas: cada una deja por escrito qué entra, qué sale y qué la
-invalida. Nada se da por bueno porque «se ve bien».
-
-## Adaptador de Elementor
-
-`adapters/elementor/` traduce el sistema a objetos nativos: variables del kit, clases
-globales `pp-*` y componentes reutilizables con propiedades expuestas. Sin HTML propio,
-sin `mu-plugin`, sin CSS inyectado fuera del kit.
-
-- `ADAPTER.md` — contrato y reglas V4 que respeta.
-- `sistema.yaml` — registro de variables, clases y componentes.
-- `verificar_sistema.py` — gate: comprueba contra una instalación viva que el sistema
-  sigue existiendo (MCP respondiendo, componentes presentes, cada variable con su token
-  de origen).
+## Inicio rápido
 
 ```bash
+git clone https://github.com/tocxic77/elementor-framework.git
+cd elementor-framework
+
+# 1 · el framework no puede nombrar a ningún cliente
+python framework/tools/verificar_independencia.py
+
+# 2 · la puerta de la fase 1
+python framework/tools/verificar_need.py clients/<proyecto>/01_NEED.yaml
+
+# 3 · el sistema sigue existiendo en el sitio
 export ELEMENTOR_MCP_URL="https://<sitio>/wp-json/elementor/mcp/"
 export ELEMENTOR_MCP_KEY="<credencial Basic>"
 python adapters/elementor/verificar_sistema.py
 ```
 
-Los identificadores de kit y de componentes en `sistema.yaml` son de una instalación de
-referencia: en cada sitio se generan los propios.
+Cada verificador imprime cuántas comprobaciones corrió y cuántas fallaron, y devuelve
+`exit 0` o `1`. Ninguno imprime credenciales.
 
-## Requisitos
+## Verificadores
 
-- WordPress 6.x con **Elementor 4.3.5** y **Elementor Pro 4.3.0** (probado).
-- Python 3.10+ para los verificadores.
-- Para el adaptador, un endpoint MCP de Elementor accesible con cabecera `Basic`.
+| Script | Comprueba | Salida |
+|---|---|---|
+| `verificar_independencia.py` | que el framework no mencione a ningún cliente | `FRAMEWORK INDEPENDIENTE` |
+| `verificar_need.py` | que las preguntas de la fase 1 estén respondidas con fuente | recuento respondidas/total |
+| `verificar_evidencia.py` | que cada afirmación publicada tenga registro | huérfanas y sin usar |
+| `verificar_activos.py` | que una imagen generada no reemplace una real disponible | conflictos |
+| `inventario_activos.py` | inventario medido de una carpeta de material | CSV |
+| `adapters/elementor/verificar_sistema.py` | variables con token de origen y componentes presentes en el kit | `SISTEMA OK · N comprobaciones, 0 fallos` |
 
-## Qué está verificado
+## Adaptador de Elementor
 
-- `framework/tools/verificar_independencia.py` → el framework no menciona a ningún
-  cliente: `exit 0`.
-- El adaptador corrió contra una instalación real: 13 variables, 18 clases globales,
-  5 componentes, gate en verde.
-- Los verificadores de `framework/tools/` son ejecutables, no documentación.
+Elementor 4.3.5 trae la capa atómica (`e-*`) pero no un widget HTML. La consecuencia
+práctica: o el sistema se materializa en el kit, o el sitio acaba siendo HTML ajeno al
+editor. Este adaptador trata el segundo caso como error.
 
-## Qué no está incluido
+**Qué traduce**
 
-- `03_CURATION/gusto/capturas/` — 64 capturas de sitios de terceros. Se excluyen por
-  peso y por derechos; se regeneran con `framework/03_CURATION/gusto/gen_specimen.py`.
-- Ningún proyecto de cliente. El framework es independiente por diseño.
+| Entra | Sale | Dónde vive |
+|---|---|---|
+| `05_SYSTEM/tokens.css` | variables globales | kit, `_elementor_page_settings` |
+| reglas de `theme.css` | clases globales `pp-*` | gestor de clases del kit |
+| bandas y patrones | componentes `e-component` | documentos de componente |
+| contenido de `01_NEED` | composición atómica | `_elementor_data` de la página |
+
+**Reglas que respeta**
+
+1. La estructura de una banda es `e-flexbox` o `e-div-block`, nunca `container` (V3).
+2. Todo texto es `e-heading` o `e-paragraph`; `text-editor` es legado y no se usa.
+3. El estilo se declara una vez, en una clase global.
+4. Colores y tamaños se referencian con `var(--token)`; hex prohibido en el elemento.
+5. Anidación máxima de 4 niveles; espaciado con `gap` en el padre, no con márgenes.
+6. Cada elemento necesita un `configuration-id` único.
+7. Breakpoints reales del kit: 1025 px (tablet) y 768 px (móvil), máximo inclusivo.
+
+**Composición de una página**, instanciando componentes en vez de copiar subárboles:
+
+```json
+{
+  "post_id": 123,
+  "xml_structure": "<e-flexbox configuration-id=\"pagina\"><e-component configuration-id=\"hero\"/><e-component configuration-id=\"objecion\"/></e-flexbox>",
+  "element_config": {
+    "hero":     { "component_id": 11377, "overrides": { "titular": "…", "cta": "…" } },
+    "objecion": { "component_id": 11380, "overrides": { "titular": "…" } }
+  }
+}
+```
+
+`sistema.yaml` registra los 13 tokens, las 18 clases `pp-*` y los 5 componentes con sus
+propiedades expuestas. Es una instalación de referencia: en cada sitio se generan los
+suyos.
+
+## Estado: qué está verificado
+
+- El adaptador corrió contra una instalación real: **13 variables, 18 clases globales,
+  5 componentes**, gate en verde (`3 comprobaciones, 0 fallos`).
+- Una página de prueba construida con `e-*` y las clases del kit renderizó a **56 px de
+  titular, contraste 13,06:1 y botón sin el azul por defecto de Elementor**.
+- Los verificadores del framework son ejecutables y se corrieron sobre el árbol real.
+
+**No verificado:** que las clases globales basten sin las hojas CSS del framework
+cargadas aparte. Esa prueba está pendiente y es la que decide si el sistema está
+completo o sólo trasladado.
+
+## Lo que falta
+
+- Emitir el formulario con `e-form` nativo en lugar de `wp_mail` externo.
+- Componentes de cita, caso y listado (`loop-grid`).
+- Un gate que lea `_elementor_data` en vez de HTML (H1 único, hex prohibido, anidación).
+- Vídeo de hero con `e-background-video`.
 
 ## Licencia
 
-MIT — ver `LICENSE`.
+MIT — ver [`LICENSE`](LICENSE). Los 64 PNG de la biblioteca de gusto no se incluyen por
+peso y por derechos; se regeneran con `framework/03_CURATION/gusto/gen_specimen.py`.
