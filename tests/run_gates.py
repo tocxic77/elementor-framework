@@ -361,6 +361,11 @@ afirmaciones:
         esperar("wireframe - ranura que el componente no expone falla",
                 correr("verificar_wireframe.py", ["--cliente", c.cliente])[0], 1)
         (cinco / "WIREFRAME.yaml").write_text(
+            WIRE.replace("slot_componente: titulo", "slot_componente: entregable"), encoding="utf-8")
+        codigo, salida = correr("verificar_wireframe.py", ["--cliente", c.cliente])
+        esperar("wireframe - ranura en la lista de restricciones permanentes falla y la cita",
+                codigo == 1 and "restriccion permanente" in salida, True)
+        (cinco / "WIREFRAME.yaml").write_text(
             WIRE.replace("esquema_componentes: {medido: false}", "esquema_componentes: {medido: true}"),
             encoding="utf-8")
         esperar("wireframe - todas las ranuras mapeadas y esquema medido da 0",

@@ -61,6 +61,7 @@ def verificar(cliente):
     if err:
         return None, "no se pudo leer sistema.yaml: %s" % err
     patrones = sis.get("patrones") or {}
+    no_admite = kit.get("restricciones_permanentes") or {}
     kit_por_id = {c.get("id"): {r.get("nombre") for r in (c.get("ranuras") or [])}
                   for c in (kit.get("componentes") or []) if isinstance(c, dict)}
     piezas = {p.get("id") for p in (evid.get("piezas") or []) if isinstance(p, dict)}
@@ -122,8 +123,10 @@ def verificar(cliente):
 
             if slot is not None:
                 if componente is not None and props and slot not in props:
-                    fallas.append("banda %s - %s: el componente %s no expone la ranura '%s'"
-                                  % (n, nombre, componente, slot))
+                    permanente = slot in (no_admite.get(componente) or [])
+                    fallas.append("banda %s - %s: el componente %s no expone la ranura '%s'%s"
+                                  % (n, nombre, componente, slot,
+                                     " (restriccion permanente medida)" if permanente else ""))
                 elif componente is None and w.get("spec") and slot not in spec_ranuras:
                     fallas.append("banda %s - %s: la especificacion %s no declara la ranura '%s'"
                                   % (n, nombre, w.get("spec"), slot))

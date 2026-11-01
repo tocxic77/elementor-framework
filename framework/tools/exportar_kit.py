@@ -45,6 +45,12 @@ def exportar(cliente):
                                                     for r in c["ranuras"]))
         for x in (c.get("restricciones") or []):
             lineas.append("    # %s" % x)
+    restr = datos.get("restricciones_permanentes") or {}
+    if restr:
+        lineas.append("")
+        lineas.append("restricciones_permanentes:")
+        for ident, lista in restr.items():
+            lineas.append("  %s: [%s]" % (ident, ", ".join(lista)))
     destino = os.path.join(cliente, "05_SYSTEM", "KIT-SCHEMA.yaml")
     os.makedirs(os.path.dirname(destino), exist_ok=True)
     with open(destino, "w", encoding="utf-8") as f:

@@ -89,3 +89,14 @@ componentes:
     restricciones:
       - "estilo resuelto con cuatro clases existentes y cero tokens nuevos: no se creo ninguna clase"
       - "el pie trae un texto de relleno que se reemplaza por atributos[1] en cada instancia"
+
+# Restricciones permanentes: lo que cada componente NO admite, medido en su esquema
+# de ranuras. No es una decisión de diseño: es lo que el componente no expone. Si un
+# wireframe futuro pide una de estas ranuras, la puerta falla y cita esta lista.
+restricciones_permanentes:
+  11377: []
+  11380: [cita, cita_objecion]
+  11383: [entregable, duracion]
+  11390: [enlace_evidencia, imagen, rotulo_por_cifra]
+  11393: [cta, cta_interno, situacion, precio]
+  11399: []
