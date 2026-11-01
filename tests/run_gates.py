@@ -315,13 +315,34 @@ afirmaciones:
 
         cinco = c.cliente / "05_SYSTEM"
         cinco.mkdir(parents=True, exist_ok=True)
+        spec = cinco / "COMPONENTE-prueba.yaml"
+        spec.write_text("componente: pp-prueba\nestado: especificado\n"
+                        "satisface: [prueba_material]\n"
+                        "ranuras:\n  - {nombre: imagen, tipo: imagen, material: evidencia_visual_propia}\n",
+                        encoding="utf-8")
+        esperar("componente - una ranura con el material exigido sostiene el mecanismo",
+                correr("verificar_componente.py", ["--cliente", c.cliente, "--spec", spec])[0], 0)
+        spec.write_text("componente: pp-prueba\nestado: especificado\n"
+                        "satisface: [prueba_material]\n"
+                        "ranuras:\n  - {nombre: pie, tipo: texto_parrafo, material: evidencia_verbal}\n",
+                        encoding="utf-8")
+        esperar("componente - declarar un mecanismo que ninguna ranura sostiene falla",
+                correr("verificar_componente.py", ["--cliente", c.cliente, "--spec", spec])[0], 1)
+        spec.write_text("componente: pp-prueba\nestado: especificado\n"
+                        "satisface: [escalera_de_compromiso]\n"
+                        "ranuras:\n  - {nombre: titulo, tipo: texto_titulo, material: ofertas_distintas}\n",
+                        encoding="utf-8")
+        esperar("componente - un minimo no alcanzado falla",
+                correr("verificar_componente.py", ["--cliente", c.cliente, "--spec", spec])[0], 1)
+        cinco = c.cliente / "05_SYSTEM"
+        cinco.mkdir(parents=True, exist_ok=True)
         ARQ = ("bandas:\n"
                "  - {n: 1, objetivo: metodo, mecanismos: [metodo_en_secuencia], patron: proceso,"
                " componente: 11383, evidencia: ['problema_declarado']}\n")
         WIRE = ("esquema_componentes: {medido: false}\n"
                 "bandas:\n"
                 "  - {banda: 1, objetivo: metodo, patron: proceso, componente: 11383, slots: ["
-                "{ranura: titulo, funcion: x, fuente: 'docs/PRODUCT.md', obligatorio: true}]}\n")
+                "{ranura: titulo, slot_componente: titulo, fuente: 'docs/PRODUCT.md', obligatorio: true}]}\n")
         (cinco / "ARQUITECTURA.yaml").write_text(ARQ, encoding="utf-8")
         (cinco / "WIREFRAME.yaml").write_text(WIRE, encoding="utf-8")
         esperar("wireframe · coherente pero con slots del kit sin medir devuelve 3",
@@ -334,6 +355,16 @@ afirmaciones:
                                                 encoding="utf-8")
         esperar("wireframe · componente distinto al de la arquitectura falla",
                 correr("verificar_wireframe.py", ["--cliente", c.cliente])[0], 1)
+        (cinco / "WIREFRAME.yaml").write_text(WIRE.replace("banda: 1", "banda: 2"), encoding="utf-8")
+        (cinco / "WIREFRAME.yaml").write_text(WIRE.replace("slot_componente: titulo", "slot_componente: epigrafe"),
+                                                encoding="utf-8")
+        esperar("wireframe - ranura que el componente no expone falla",
+                correr("verificar_wireframe.py", ["--cliente", c.cliente])[0], 1)
+        (cinco / "WIREFRAME.yaml").write_text(
+            WIRE.replace("esquema_componentes: {medido: false}", "esquema_componentes: {medido: true}"),
+            encoding="utf-8")
+        esperar("wireframe - todas las ranuras mapeadas y esquema medido da 0",
+                correr("verificar_wireframe.py", ["--cliente", c.cliente])[0], 0)
         (cinco / "WIREFRAME.yaml").write_text(WIRE.replace("banda: 1", "banda: 2"), encoding="utf-8")
         esperar("wireframe · banda que la arquitectura no tiene falla",
                 correr("verificar_wireframe.py", ["--cliente", c.cliente])[0], 1)

@@ -1,0 +1,73 @@
+# ---------------------------------------------------------------------------
+# KIT MEDIDO · componentes reales del kit Elementor
+#
+# Leído con `elementor/list-components` + `component_ids` el 2026-11-01.
+# Aquí sólo hay lo que el MCP devolvió: id, uid, nombre y las ranuras expuestas
+# (`overridable_props`) con su etiqueta y el esquema del valor.
+#
+# Lo que el instrumento NO declara, y por tanto queda como no medido:
+#   · obligatoriedad de una ranura
+#   · repetibilidad de una ranura
+#   · si una ranura acepta vacío
+# El MCP expone ranuras con clave fija (cifra_1, cifra_2, cifra_3): la repetición
+# se consigue instanciando el componente, no rellenando una ranura repetible.
+# ---------------------------------------------------------------------------
+medido: 2026-11-01
+fuente: "elementor/list-components · component_ids [11377, 11380, 11383, 11390, 11393]"
+capacidades: {can_create: true, can_edit: true, can_add_to_page: true}
+no_medido: [obligatoriedad, repetibilidad, acepta_vacio]
+
+componentes:
+  - id: 11377
+    nombre: Hero de banda
+    uid: component-ee1e6312-031e-44fe-a2bf-cbb4a2531b79
+    ranuras:
+      - {nombre: antetitulo, etiqueta: Antetítulo, tipo: texto_parrafo}
+      - {nombre: titular, etiqueta: Titular, tipo: texto_titulo}
+      - {nombre: bajada, etiqueta: Bajada, tipo: texto_parrafo}
+      - {nombre: cta, etiqueta: Texto del botón, tipo: texto_boton}
+      - {nombre: imagen, etiqueta: Imagen, tipo: imagen, campos: [src, size, alt]}
+
+  - id: 11380
+    nombre: Banda de objeción
+    uid: component-d3d69d65-78a3-4057-92bc-d976fb04fced
+    ranuras:
+      - {nombre: etiqueta, etiqueta: Etiqueta, tipo: texto_parrafo}
+      - {nombre: titular, etiqueta: Titular, tipo: texto_titulo}
+      - {nombre: cuerpo, etiqueta: Cuerpo, tipo: texto_parrafo}
+    restricciones:
+      - "no hay ranura de cita: la voz del cliente sólo puede ir en `etiqueta` o en `titular`"
+
+  - id: 11383
+    nombre: Paso del método
+    uid: component-d3a97b18-53df-42ee-8019-24ba21cf61af
+    ranuras:
+      - {nombre: numeral, etiqueta: Numeral, tipo: texto_parrafo}
+      - {nombre: titulo, etiqueta: Título, tipo: texto_titulo}
+      - {nombre: texto, etiqueta: Texto, tipo: texto_parrafo}
+    restricciones:
+      - "no hay ranura de entregable ni de duración: el paso sólo lleva numeral, título y texto"
+
+  - id: 11390
+    nombre: Bloque de cifras
+    uid: component-85bb1be9-30a2-4032-b1b8-a9fcfba4b8dd
+    ranuras:
+      - {nombre: cifra_1, etiqueta: Cifra 1, tipo: texto_parrafo}
+      - {nombre: cifra_2, etiqueta: Cifra 2, tipo: texto_parrafo}
+      - {nombre: cifra_3, etiqueta: Cifra 3, tipo: texto_parrafo}
+      - {nombre: rotulo_1, etiqueta: Rótulo 1, tipo: texto_parrafo}
+    restricciones:
+      - "tres cifras y un solo rótulo: las tres comparten unidad o se quedan sin rótulo"
+      - "no hay ranura de enlace: la cifra no puede llevar su fuente enlazada dentro del bloque"
+      - "no hay ranura de imagen"
+
+  - id: 11393
+    nombre: Tarjeta de línea de trabajo
+    uid: component-176e9d8a-4046-44dc-8a18-2c7b72e0b574
+    ranuras:
+      - {nombre: item_1, etiqueta: Item 1, tipo: texto_parrafo}
+      - {nombre: titulo, etiqueta: Título, tipo: texto_titulo}
+      - {nombre: texto, etiqueta: Texto, tipo: texto_parrafo}
+    restricciones:
+      - "la tarjeta no tiene botón: el CTA de la banda debe vivir fuera de la tarjeta"
+      - "no hay ranura de situación ni de precio"
