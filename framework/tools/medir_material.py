@@ -17,6 +17,19 @@ AQUI = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, AQUI)
 from _comun import cargar_yaml  # noqa: E402
 
+FUENTES = {
+    "trayectoria_publica": "01_NEED.yaml trayectoria[].verificable",
+    "atributos_verificables": "01_NEED.yaml atributos[].documento",
+    "propiedades_propias": "01_NEED.yaml propiedades[] tipo: dominio",
+}
+
+# Etiqueta de la fuente para los materiales que distinguen declarado de verificado.
+FUENTES = {
+    "trayectoria_publica": "01_NEED.yaml trayectoria[].verificable",
+    "atributos_verificables": "01_NEED.yaml atributos[].documento",
+    "propiedades_propias": "01_NEED.yaml propiedades[] tipo: dominio",
+}
+
 MECANISMOS_POR_DEFECTO = os.path.join(AQUI, "..", "04_DIRECTION", "MECANISMOS.yaml")
 
 
@@ -72,11 +85,29 @@ def medir(cliente):
                     and str(a.get("estado") or "").strip().lower() in ("validada", "validado", "aprobada")])
 
     # Declarado y vacío no es lo mismo que no declarado.
+    def verificados(clave, campo_prueba):
+        """Cuenta declaraciones con prueba. Declarar un hecho no lo hace publicable."""
+        if clave not in need:
+            return None, 0
+        entradas = [x for x in (need.get(clave) or []) if isinstance(x, dict)]
+        con_prueba = [x for x in entradas if str(x.get(campo_prueba) or "").strip()]
+        return len(con_prueba), len(entradas)
+
     def cuenta(clave, elemento, campos):
         if clave not in need:
             return None
         return len([x for x in (need.get(clave) or [])
                     if isinstance(x, dict) and any(x.get(c) for c in campos)])
+
+    trayectoria = verificados("trayectoria", "verificable")
+    atributos = verificados("atributos", "documento")
+    # Una propiedad es un dominio propio. Un canal de YouTube se controla, no se posee.
+    if "propiedades" in need:
+        props = [x for x in (need.get("propiedades") or []) if isinstance(x, dict)]
+        dominios = [x for x in props if str(x.get("tipo") or "dominio").strip().lower() == "dominio"]
+        propiedades = (len(dominios), len(props))
+    else:
+        propiedades = (None, 0)
 
     ofertas = [o for o in (need.get("ofertas") or []) if isinstance(o, dict)]
     con_precio = [o for o in ofertas if o.get("precio") is not None]
@@ -94,16 +125,13 @@ def medir(cliente):
         "testimonios_reales": (con_tipo("testimonio"),
                                "02_EVIDENCE.yaml afirmaciones tipo: testimonio"),
         "caso_documentado": (con_tipo("caso"), "02_EVIDENCE.yaml afirmaciones tipo: caso"),
-        "trayectoria_publica": (cuenta("trayectoria", "hecho", ("hecho", "hito")),
-                                "01_NEED.yaml trayectoria[].hecho"),
+        "trayectoria_publica": (trayectoria[0], trayectoria[1]),
         "ofertas_distintas": (len(ofertas) if ofertas else (None if "ofertas" not in need else 0),
                               "01_NEED.yaml ofertas (gratis cuenta)"),
         "precio_publico": (len(con_precio) if ofertas else (None if "ofertas" not in need else 0),
                            "01_NEED.yaml ofertas[].precio (0 = gratis, null = no publicado)"),
-        "atributos_verificables": (cuenta("atributos", "atributo", ("atributo",)),
-                                   "01_NEED.yaml atributos[].atributo"),
-        "propiedades_propias": (cuenta("propiedades", "dominio", ("dominio",)),
-                                "01_NEED.yaml propiedades[].dominio"),
+        "atributos_verificables": (atributos[0], atributos[1]),
+        "propiedades_propias": (propiedades[0], propiedades[1]),
     }, None
 
 
@@ -138,6 +166,9 @@ def main():
     print("MATERIAL                          VALOR    FUENTE")
     for nombre, (valor, fuente) in medidas.items():
         marca = "NO MED" if valor is None else str(valor)
+        if isinstance(fuente, int):   # (con prueba, declarados)
+            fuente = "%s  ·  %d de %d declarados con prueba" % (
+                FUENTES.get(nombre, ""), valor or 0, fuente)
         print("  %-30s %-8s %s" % (nombre, marca, fuente))
 
     disponibles, faltan = [], []

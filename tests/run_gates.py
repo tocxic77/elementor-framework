@@ -302,6 +302,17 @@ afirmaciones:
                     "medir_material.py", ["--cliente", str(c.cliente)])))), 1)
         c.escribir("02_EVIDENCE.yaml", previo)
 
+        otro = Path(c.tmp) / "clients" / "solo-declarado"
+        otro.mkdir(parents=True, exist_ok=True)
+        for f in ("01_NEED.yaml", "02_EVIDENCE.yaml", "03_ASSETS.yaml"):
+            (otro / f).write_text((c.cliente / f).read_text(encoding="utf-8"), encoding="utf-8")
+        (otro / "01_NEED.yaml").write_text(
+            (otro / "01_NEED.yaml").read_text(encoding="utf-8")
+            + "\ntrayectoria:\n  - hecho: algo vivido\n    verificable: null\n", encoding="utf-8")
+        esperar("materiales · declarado sin verificador no cuenta como trayectoria publica",
+                int(bool(_re.search(r"trayectoria_publica\s+0\b", stdout_de(
+                    "medir_material.py", ["--cliente", str(otro)])))), 1)
+
         esperar("materiales · el plan de entrevista se genera desde los huecos",
                 correr("plan_material.py", ["--cliente", c.cliente])[0], 0)
         c.escribir("MEC_inventado.yaml", """
