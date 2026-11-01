@@ -124,6 +124,13 @@ def main():
         print("\nNO DISPONIBLES %d" % len(faltan))
         for nombre, motivos in faltan:
             print("  × %-34s %s" % (nombre, ", ".join(motivos)))
+    print("\nPOR PRINCIPIO")
+    no_disponibles = dict(faltan)
+    for grupo in sorted({(v.get("grupo") or "sin_grupo") for v in mecanismos.values()}):
+        nombres = [n for n, v in mecanismos.items() if (v.get("grupo") or "sin_grupo") == grupo]
+        listos = [n for n in nombres if n not in no_disponibles]
+        print("  %-12s %d de %d disponibles" % (grupo, len(listos), len(nombres)))
+
     print("\nUn mecanismo no disponible no se diseña: se declara el hueco.")
     return 0
 

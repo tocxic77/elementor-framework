@@ -9,6 +9,9 @@
 #                                     sistema.yaml          sistema.yaml
 #
 # `requiere` son materiales que deben existir TODOS. `requiere_uno_de` basta con UNO.
+# `grupo` es el principio estable al que sirve el mecanismo: siete grupos que no cambian.
+# Lo que puede crecer es el detalle dentro de cada grupo, nunca el número de principios.
+#
 # `formas` son implementaciones del mismo mecanismo: cambia la puesta en escena, no la
 # función. Una forma no es otro mecanismo.
 #
@@ -29,6 +32,7 @@
 mecanismos:
 
   perdida_antes_de_beneficio:
+    grupo: progresion
     objetivo: que el lector se reconozca antes de que se le pida atención
     requiere: [problema_declarado]
     cuando_si: el problema está declarado por el propietario y citado con fuente
@@ -36,6 +40,7 @@ mecanismos:
     efecto: identificación antes de la promesa
 
   reconocimiento_antes_del_diagnostico:
+    grupo: progresion
     objetivo: validar la competencia del lector antes de señalarle un error
     requiere: [problema_declarado, audiencia_declarada]
     cuando_si: la audiencia tiene un oficio con maestría reconocible
@@ -43,6 +48,7 @@ mecanismos:
     efecto: baja la guardia antes del reproche
 
   titular_diagnostico:
+    grupo: jerarquia
     objetivo: nombrar el error del lector, no el beneficio de la marca
     requiere: [problema_declarado]
     cuando_si: el error se puede decir en una frase
@@ -50,6 +56,7 @@ mecanismos:
     efecto: el lector reformula su propia situación
 
   promesa_de_resultado:
+    grupo: oferta
     objetivo: que el titular diga qué se produce, no quién lo produce
     requiere: [conversion_declarada]
     cuando_si: el resultado es observable y nombrable
@@ -57,6 +64,7 @@ mecanismos:
     efecto: la oferta se puede evaluar sin conocer la marca
 
   calificador_de_audiencia:
+    grupo: audiencia
     objetivo: filtrar antes de persuadir
     requiere: [audiencia_declarada]
     cuando_si: la audiencia se identifica por sector, escala o rol
@@ -64,6 +72,7 @@ mecanismos:
     efecto: el lector correcto se reconoce y el resto se autoexcluye
 
   accion_unica_por_banda:
+    grupo: accion
     objetivo: una sola decisión por banda
     requiere: [conversion_declarada]
     cuando_si: hay una conversión declarada
@@ -72,6 +81,7 @@ mecanismos:
     nota: es por banda, no por página. Una página con tres puertas sigue teniendo una acción por banda.
 
   escalera_de_compromiso:
+    grupo: oferta
     objetivo: que cada lector elija su profundidad de compromiso
     requiere: [ofertas_distintas, conversion_declarada]
     cuando_si: existen tres o más ofertas reales de fricción creciente
@@ -79,6 +89,7 @@ mecanismos:
     efecto: el visitante avanza sin que se le pida todo de golpe
 
   etiqueta_por_situacion:
+    grupo: oferta
     objetivo: que el lector elija por su situación, no por el nombre del servicio
     requiere: [ofertas_distintas]
     cuando_si: cada oferta corresponde a un momento distinto del comprador
@@ -86,6 +97,7 @@ mecanismos:
     efecto: el lector se ubica sin leer la descripción
 
   destino_nombrado:
+    grupo: accion
     objetivo: que el botón nombre la cosa, no la acción
     requiere: [ofertas_distintas]
     cuando_si: cada destino tiene un nombre propio
@@ -93,6 +105,7 @@ mecanismos:
     efecto: el clic deja de ser una apuesta
 
   precio_visible:
+    grupo: oferta
     objetivo: que el lector se filtre por presupuesto antes de escribir
     requiere: [ofertas_distintas, precio_publico]
     cuando_si: el precio es fijo o tiene un mínimo publicable
@@ -100,6 +113,7 @@ mecanismos:
     efecto: la conversación empieza con quien ya aceptó el orden de magnitud
 
   salida_explicita:
+    grupo: accion
     objetivo: bajar el riesgo percibido de la oferta continua
     requiere: [conversion_declarada]
     cuando_si: el compromiso se puede terminar sin penalización
@@ -107,6 +121,7 @@ mecanismos:
     efecto: la decisión se vuelve reversible y por eso se toma
 
   prueba_material:
+    grupo: prueba
     objetivo: demostrar operación real
     requiere: [evidencia_visual_propia]
     cuando_si: existe al menos un activo real, propio y autorizado
@@ -114,6 +129,7 @@ mecanismos:
     efecto: el material es la prueba, no la decoración
 
   prueba_distribuida:
+    grupo: prueba
     objetivo: sostener la confianza entre afirmaciones, no en un bloque
     requiere: [testimonios_reales]
     cuando_si: hay tres o más citas y la página hace afirmaciones que necesitan respaldo
@@ -121,6 +137,7 @@ mecanismos:
     efecto: confianza distribuida a lo largo de la página
 
   prueba_agrupada:
+    grupo: prueba
     objetivo: dejar que el lector escanee la prueba en un solo lugar
     requiere: [testimonios_reales]
     cuando_si: la página es un índice de ofertas y el lector compara antes de leer
@@ -128,6 +145,7 @@ mecanismos:
     efecto: la prueba se convierte en sección consultable
 
   prueba_enlazada:
+    grupo: prueba
     objetivo: probar sin ocupar espacio
     requiere: [testimonios_reales]
     cuando_si: existe una página de prueba completa a la que remitir
@@ -135,6 +153,7 @@ mecanismos:
     efecto: la credibilidad está a un clic dentro de la primera frase
 
   cita_con_titular:
+    grupo: prueba
     objetivo: que la cita se pueda escanear y su titular sea la afirmación del cliente
     requiere: [testimonios_reales]
     cuando_si: las citas contienen una frase corta y concreta que las resume
@@ -142,6 +161,7 @@ mecanismos:
     efecto: el lector lee la prueba sin leer el párrafo
 
   prueba_que_ordena_la_accion:
+    grupo: prueba
     objetivo: que la prueba misma pida la acción
     requiere: [testimonios_reales, conversion_declarada]
     cuando_si: un cliente recomienda la acción con sus palabras
@@ -149,6 +169,7 @@ mecanismos:
     efecto: la decisión llega desde un tercero
 
   autoridad_situada:
+    grupo: autoridad
     objetivo: que la credencial llegue en el momento en que el lector la necesita
     requiere_uno_de: [trayectoria_publica, atributos_verificables]
     cuando_si: la confianza del lector depende de saber quién habla
@@ -160,6 +181,7 @@ mecanismos:
       diferida_al_cierre: biografía al final; sirve cuando la obra ya es conocida
 
   objecion_citada:
+    grupo: progresion
     objetivo: desarmar la duda única antes de que el lector la use para irse
     requiere: [objecion_declarada]
     cuando_si: la objeción está declarada por el propietario con sus palabras
@@ -167,6 +189,7 @@ mecanismos:
     efecto: la duda pierde fuerza al venir de la voz del lector
 
   metodo_en_secuencia:
+    grupo: progresion
     objetivo: que el método se lea como proceso
     requiere: [problema_declarado]
     cuando_si: los pasos tienen orden causal
@@ -174,6 +197,7 @@ mecanismos:
     efecto: el lector entiende cómo se trabaja
 
   inventario_de_propiedades:
+    grupo: autoridad
     objetivo: mostrar amplitud de obra sin argumentar sobre ella
     requiere: [propiedades_propias]
     cuando_si: existen dos o más propiedades con dominio propio
@@ -181,6 +205,7 @@ mecanismos:
     efecto: la credibilidad viene del ecosistema, no de la biografía
 
   contraste_binario:
+    grupo: jerarquia
     objetivo: hacer el reencuadre legible de un golpe
     requiere: []
     cuando_si: hay un reencuadre que se puede decir en dos mitades
@@ -188,6 +213,7 @@ mecanismos:
     efecto: el cambio de marco se entiende en una lectura
 
   una_sola_idea:
+    grupo: jerarquia
     objetivo: que toda la página defienda una tesis
     requiere: [problema_declarado]
     cuando_si: la página se puede resumir en una frase
@@ -195,6 +221,7 @@ mecanismos:
     efecto: todo el texto empuja en la misma dirección
 
   ritmo_densidad_alterna:
+    grupo: jerarquia
     objetivo: evitar el cansancio y el ruido
     requiere: []
     cuando_si: hay prosa larga que cortar con una línea o una prueba
@@ -202,6 +229,7 @@ mecanismos:
     efecto: la lectura respira sin perder densidad
 
   cierre_invitacion:
+    grupo: progresion
     objetivo: dejar la relación abierta después de la acción
     requiere: [conversion_declarada]
     cuando_si: la relación continúa después de la conversión
