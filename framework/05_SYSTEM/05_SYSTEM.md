@@ -25,12 +25,12 @@ framework/05_SYSTEM/capturas/patrones/       preview por patrón, 1440 y 390
 Se corre siempre, antes de declarar nada:
 
 ```bash
-python ../creative/art-director/scripts/verificar_estatico.py 05_SYSTEM
+python framework/tools/verificar_estatico.py 05_SYSTEM
 ```
 
 ```javascript
 // en el navegador, sobre la página servida
-js(<contenido de creative/art-director/scripts/verificar.js>)
+js(<contenido de framework/tools/verificar.js>)
 ```
 
 | Comprobación | Criterio | Bloquea |

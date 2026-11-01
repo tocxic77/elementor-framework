@@ -1,0 +1,29 @@
+name: puertas
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  puertas:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pyyaml
+
+      # Cada caso levanta un cliente de prueba y comprueba que la puerta FALLA
+      # sobre el defecto que dice detectar. Si un caso falla, el build es rojo.
+      - name: casos de las puertas
+        run: python tests/run_gates.py
+
+      # El release del repositorio nunca puede dar FALLA. NO MEDIDO (3) es
+      # admisible aquí porque no hay cliente; FALLA (1) no.
+      - name: release del repositorio
+        run: |
+          python framework/tools/verificar_release.py; codigo=$?
+          echo "salida: $codigo"
+          if [ "$codigo" -ne 0 ] && [ "$codigo" -ne 3 ]; then exit 1; fi

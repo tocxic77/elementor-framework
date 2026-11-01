@@ -103,20 +103,47 @@ export ELEMENTOR_MCP_KEY="<credencial Basic>"
 python adapters/elementor/verificar_sistema.py
 ```
 
-Cada verificador imprime cuántas comprobaciones corrió y cuántas fallaron, y devuelve
-`exit 0` o `1`. Ninguno imprime credenciales.
+Cada verificador imprime cuántas comprobaciones corrió, cuántas fallaron y cuántas no pudo
+medir. Ninguno imprime credenciales.
+
+Códigos de salida, iguales en todas las puertas:
+
+| Código | Significado |
+|---|---|
+| `0` | todo lo que la puerta mide se midió y pasó |
+| `1` | algo medido incumple la regla |
+| `2` | error de uso: argumentos inválidos o documento vacío/ilegible (no se midió nada) |
+| `3` | **NO MEDIDO**: la puerta corrió y no había nada que medir, o faltó el instrumento |
+
+`3` existe para que «no lo comprobé» no pueda leerse como «está bien»: un registro vacío, un
+documento en blanco o un repositorio sin `clients/` ya no salen `0`.
 
 ## Verificadores
 
 | Script | Comprueba | Salida |
 |---|---|---|
-| `verificar_independencia.py` | que el framework no mencione a ningún cliente | `FRAMEWORK INDEPENDIENTE` |
-| `verificar_need.py` | que las 20 preguntas estén respondidas con fuente y que **ningún campo quede en `null`** | recuento + rutas en null |
-| `verificar_evidencia.py` | que cada afirmación publicada tenga registro | huérfanas y sin usar |
-| `verificar_activos.py` | que una imagen generada no reemplace una real disponible | conflictos |
+| `verificar_independencia.py` | que el framework **y el adaptador** no nombren a ningún cliente, por token completo | `ACOPLA archivo:línea` |
+| `verificar_need.py` | las 20 preguntas respondidas con fuente y que **ningún campo quede en `null`** | recuento + rutas en null |
+| `verificar_evidencia.py` | fuente de cada afirmación **resuelta contra el YAML, no contra el cwd**; cada cifra publicada respaldada | huérfanas, sin fuente, cifras sin respaldo |
+| `verificar_activos.py` | nivel y procedencia de cada activo, ancho medido, generada que no reemplace real, ≥2400 px si va a sangre | conflictos y medidas faltantes |
+| `verificar_tokens.py` | `tokens.css` ↔ `sistema.yaml`: mismo color, tamaño y familia; sin hex nuevos fuera de tokens | divergencias |
+| `verificar_estatico.py` · `verificar.js` | capa estática y capa renderizada de la calidad (18 comprobaciones estáticas + las renderizadas) | `N comprobaciones · 0 bloqueantes` |
+| `verificar_release.py` | **la secuencia**: corre todas las puertas en orden, corta en la primera FALLA y no declara publicable lo que quedó sin medir | tabla + `PUBLICABLE` / `NO PUBLICABLE` |
 | `inventario_activos.py` | inventario medido de una carpeta de material | CSV |
 | `adapters/elementor/verificar_sistema.py` | variables con token de origen y componentes presentes en el kit | `SISTEMA OK · N comprobaciones, 0 fallos` |
 | `adapters/elementor/auditar_sitio.py` | un sitio ya publicado: páginas con estructura de Elementor, plantillas duplicadas, 404 mal condicionado, imágenes, H1, **favicon y `og:image`** | tabla + `AUDITORÍA · N fallos` |
+
+El operador corre **un** comando; la secuencia no se arma a mano:
+
+```bash
+python framework/tools/verificar_release.py clients/<proyecto>
+```
+
+Y los casos que prueban que las puertas fallan cuando deben fallar:
+
+```bash
+python tests/run_gates.py        # 24 casos, sin red ni credenciales
+```
 
 ## Adaptador de Elementor
 

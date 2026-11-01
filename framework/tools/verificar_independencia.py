@@ -1,54 +1,80 @@
 #!/usr/bin/env python3
 """verificar_independencia.py — el framework no puede nombrar a ningún cliente.
 
-Lee los nombres de carpeta en clients/ y busca cada uno dentro de framework/.
-Sale 1 si aparece alguno: un artefacto del framework que menciona a un cliente
-dejó de ser reutilizable.
+Lee los nombres de carpeta en `clients/` y los busca dentro de `framework/` **y** de
+`adapters/` (el adaptador también se distribuye: si nombra a un cliente, deja de ser
+reutilizable). Sale 1 si aparece alguno.
 
-Uso (desde 04_WEB/): python framework/tools/verificar_independencia.py
+Un repositorio sin `clients/` no puede demostrar independencia: sale NO MEDIDO (3), no OK.
+Para correrlo en CI hace falta un cliente de prueba: `--clients tests/fixtures/clients`.
+
+Uso:
+    python verificar_independencia.py [--clients DIR] [--framework DIR] [--adapters DIR]
+Sale 0 OK · 1 FALLA · 2 ERROR DE USO · 3 NO MEDIDO.
 """
-import os
+import argparse
+import re
 import sys
+from pathlib import Path
 
-RAIZ = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-FRAMEWORK = os.path.join(RAIZ, "framework")
-CLIENTS = os.path.join(RAIZ, "clients")
-EXCLUIR = {".png", ".jpg", ".jpeg", ".mp4", ".zip"}
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from _comun import Puerta  # noqa: E402
+
+AQUI = Path(__file__).resolve().parent
+RAIZ = AQUI.parent.parent
+EXCLUIR = {".png", ".jpg", ".jpeg", ".mp4", ".zip", ".pyc"}
 
 
-def main():
-    if not os.path.isdir(CLIENTS):
-        print("sin clients/ · nada que verificar")
-        return 0
-    nombres = [d.lower() for d in os.listdir(CLIENTS) if os.path.isdir(os.path.join(CLIENTS, d))]
+def main(argv):
+    ap = argparse.ArgumentParser(description="independencia del framework")
+    ap.add_argument("--clients", default=str(RAIZ / "clients"))
+    ap.add_argument("--framework", default=str(RAIZ / "framework"))
+    ap.add_argument("--adapters", default=str(RAIZ / "adapters"))
+    args = ap.parse_args(argv)
+
+    p = Puerta("independencia")
+    clients = Path(args.clients)
+    if not clients.is_dir():
+        p.aviso("no existe %s: no hay nombres de cliente contra los que medir" % clients)
+        return p.imprimir()
+    nombres = sorted(d.name.lower() for d in clients.iterdir()
+                     if d.is_dir() and not d.name.startswith(("_", ".")))
     if not nombres:
-        print("clients/ vacío · 0 clientes, 0 acoplamientos")
-        return 0
-    hallazgos = []
-    for base, _, archivos in os.walk(FRAMEWORK):
-        for a in archivos:
-            if os.path.splitext(a)[1].lower() in EXCLUIR:
+        p.aviso("%s no tiene ninguna carpeta de cliente" % clients)
+        return p.imprimir()
+
+    revisados, hallazgos = 0, []
+    cortos = [n for n in nombres if len(n) < 4]
+    for n in cortos:
+        p.aviso("nombre de cliente demasiado corto para buscarlo sin falsos positivos: «%s»" % n)
+    buscables = [n for n in nombres if len(n) >= 4]
+    # Coincidencia por token: `prueba` no debe aparecer dentro de «comprueba» ni de
+    # «tabla-como-prueba». Guiones y dígitos cuentan como parte del token.
+    patrones = [(n, re.compile(r"(?<![a-z0-9-])%s(?![a-z0-9-])" % re.escape(n))) for n in buscables]
+    for raiz in (Path(args.framework), Path(args.adapters)):
+        if not raiz.is_dir():
+            continue
+        for archivo in sorted(raiz.rglob("*")):
+            if not archivo.is_file() or archivo.suffix.lower() in EXCLUIR:
                 continue
-            p = os.path.join(base, a)
+            if any(parta in (".git", "__pycache__") for parta in archivo.parts):
+                continue
+            revisados += 1
             try:
-                texto = open(p, encoding="utf-8", errors="ignore").read().lower()
+                lineas = archivo.read_text(encoding="utf-8", errors="ignore").lower().splitlines()
             except OSError:
                 continue
-            for n in nombres:
-                for i, linea in enumerate(texto.splitlines(), 1):
-                    if n in linea:
-                        hallazgos.append((os.path.relpath(p, RAIZ), i, n, linea.strip()[:70]))
-    print("clientes: %d · archivos del framework revisados" % len(nombres))
-    print("-" * 62)
+            for n, patron in patrones:
+                for i, linea in enumerate(lineas, 1):
+                    if patron.search(linea):
+                        hallazgos.append((archivo.relative_to(RAIZ), i, n, linea.strip()[:70]))
+
+    p.mide("clientes", "%d (%s)" % (len(nombres), ", ".join(nombres) or "ninguno"))
+    p.mide("archivos revisados", revisados)
     for ruta, i, n, linea in hallazgos:
-        print("  ACOPLA  %s:%d  [%s]  %s" % (ruta, i, n, linea))
-    print("-" * 62)
-    if hallazgos:
-        print("INDEPENDENCIA ROTA · %d referencias" % len(hallazgos))
-        return 1
-    print("FRAMEWORK INDEPENDIENTE")
-    return 0
+        p.falla("ACOPLA %s:%d [%s] %s" % (ruta, i, n, linea))
+    return p.imprimir()
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    sys.exit(main(sys.argv[1:]))

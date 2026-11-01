@@ -32,11 +32,11 @@ sólo tiene prosa, no cuenta como hecha. El estado de abajo es la verdad de hoy,
 
 | Ranura | Debe contener | Estado | Artefacto real |
 |---|---|---|---|
-| `01_NEED/` | Problema, audiencia, acción, objeción, quién firma — con fuente por respuesta | **plantilla + puerta ejecutable** | `01_NEED.md` · `CUESTIONARIO.md` 20 preguntas · `tools/verificar_need.py` · `<cliente>/01_NEED.yaml` (9/12 con fuente → **BLOQUEADO**) |
+| `01_NEED/` | Problema, audiencia, acción, objeción, quién firma — con fuente por respuesta | **plantilla + puerta ejecutable** | `01_NEED.md` · `CUESTIONARIO.md` 20 preguntas · `tools/verificar_need.py` · `<cliente>/01_NEED.yaml` (20/20 con fuente) |
 | `02_MATERIAL/` | Evidencia y material: activos con medida + afirmaciones con fuente | **plantilla + 2 instancias** | `02_MATERIAL.md` · `<cliente>/02_EVIDENCE.yaml` 5 afirmaciones (3 validadas, 2 rechazadas) · `tools/verificar_evidencia.py` |
 | `03_CURATION/` | Qué entra y qué sale + biblioteca de gusto (imagen + take/avoid) | **hecha** | `03_CURATION.md` · `gusto/index.yaml` 59 refs (54 ficha + 5 medidas) · 64 PNG (1440+390) |
 | `04_DIRECTION/` | Firma visual, antirreglas, tipo, color, foto, motion + qué imagen puede ocupar qué banda | **plantilla + 1 instancia + 2 artefactos** | `04_DIRECTION.md` · `IMAGE_STRATEGY.md` (niveles A/B/C + regla ejecutable) · `prompts.yaml` 6 categorías · `<cliente>/DIRECTION.md` v1.3 · `03_ASSETS.yaml` 20 activos medidos · `tools/verificar_activos.py` |
-| `05_SYSTEM/` | Tokens + patrones en código + previews | **hecha** | `tokens.css` 32 · `utilities.css` 16 · `theme.css` 159 · 11 patrones · gate 10/10 estáticas |
+| `05_SYSTEM/` | Tokens + patrones en código + previews | **hecha** | `tokens.css` 32 · `utilities.css` 16 · `theme.css` 159 · 11 patrones · gate estático 18 comprobaciones · `tools/verificar_tokens.py` |
 | `06_DEPLOYMENT/` | QA medido, accesibilidad, SEO, analítica, lanzamiento | **plantilla, sin evidencia** | `06_DEPLOYMENT/06_DEPLOYMENT.md` |
 
 Las seis ranuras tienen su archivo. Ninguna está llena de evidencia excepto `05_SYSTEM` y una
@@ -72,7 +72,7 @@ es del cliente, aunque se llame igual.
 
 ```
 04_WEB/
-├── framework/          6 ranuras, 3 archivos de sistema, 4 puertas — cero nombres de cliente
+├── framework/          6 ranuras, 3 archivos de sistema, 8 puertas — cero nombres de cliente
 ├── clients/
 │   └── <cliente>/  01_NEED.yaml · 02_EVIDENCE.yaml · 03_ASSETS.yaml · 03_SELECCION.md
 │                       DIRECTION.md · 05_SYSTEM/ (página, assets, capturas) · docs · material
@@ -82,7 +82,13 @@ es del cliente, aunque se llame igual.
 La prueba de independencia es un comando, no una promesa:
 
 ```bash
-python framework/tools/verificar_independencia.py   # exit 0 = FRAMEWORK INDEPENDIENTE
+python framework/tools/verificar_independencia.py   # 0 = independiente · 3 = no había clientes que buscar
+```
+
+Y la secuencia completa, que es lo que corre el operador:
+
+```bash
+python framework/tools/verificar_release.py clients/<cliente>
 ```
 
 ## Regla de no duplicación

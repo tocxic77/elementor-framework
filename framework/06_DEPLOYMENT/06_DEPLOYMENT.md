@@ -7,10 +7,10 @@ lanzan sin evidencia.
 
 | Comprobación | Criterio | Herramienta |
 |---|---|---|
-| Un `h1` por página | exactamente 1 en todas las publicadas | `verificar.js` |
-| Accesibilidad de color | 0 textos bajo AA computado | `verificar.js` |
-| Responsive | 0 desborde a 390/768/1440 | `verificar.js` |
-| Peso y medios | imágenes servidas ≤ 2× el ancho de uso, formato moderno | `verificar_estatico.py` |
+| Un `h1` por página | exactamente 1 en todas las publicadas | `framework/tools/verificar.js` |
+| Accesibilidad de color | 0 textos bajo AA computado | `framework/tools/verificar.js` |
+| Responsive | 0 desborde a 390/768/1440 | `framework/tools/verificar.js` |
+| Peso y medios | imágenes servidas ≤ 2× el ancho de uso, formato moderno | `framework/tools/verificar_estatico.py` |
 | Navegación | toda página alcanzable desde la cabecera y el pie | manual, con captura |
 | Metadatos | `title`, descripción y OpenGraph únicos por página | revisión de HTML servido |
 | Formularios | envío real probado, respuesta registrada | manual |

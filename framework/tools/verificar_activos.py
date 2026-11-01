@@ -1,85 +1,107 @@
 #!/usr/bin/env python3
 """verificar_activos.py — la regla «una imagen generada nunca reemplaza un real disponible».
 
-Uso: python verificar_activos.py <cliente>/03_ASSETS.yaml
-
 Comprueba:
-  1. todo activo declara nivel (real | derivada | generada);
-  2. nivel real con procedencia verificada debe traer exif: true;
-  3. nivel derivada debe citar su fuente documental;
-  4. nivel generada debe traer prompt_id y motivo_falta;
-  5. si hay un activo real del mismo tema sin usar, la generada no puede ocupar el hueco;
-  6. las imágenes deben medir ≥2400 px de ancho para uso de banda completa.
+  1. el registro declara activos (un registro vacío es FALLA, no OK);
+  2. todo activo declara nivel (real | derivada | generada);
+  3. nivel real: procedencia declarada, y si es `verificada` debe traer `exif: true`;
+  4. nivel derivada: cita su documento fuente;
+  5. nivel generada: trae `prompt_id`, `motivo_falta` y `tema`, y no ocupa el hueco de un
+     real del mismo tema que sigue sin usar;
+  6. medida: un activo **en uso** cuyo ancho no se midió (0, null o ausente) es FALLA —
+     no se puede afirmar que sirva a sangre sin haberlo medido;
+  7. medida: un activo en uso por debajo de 2400 px es FALLA (el docstring de la fase 4
+     prometía esta regla y el código sólo avisaba); si no está en uso, es aviso.
+
+Uso:    python verificar_activos.py <cliente>/03_ASSETS.yaml
+Sale    0 OK · 1 FALLA · 2 ERROR DE USO · 3 NO MEDIDO.
 """
+import argparse
 import sys
 from pathlib import Path
 
-try:
-    import yaml
-except ImportError:
-    print("falta PyYAML: pip install pyyaml")
-    sys.exit(2)
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from _comun import Puerta, cargar_yaml  # noqa: E402
 
 MIN_ANCHO = 2400
+NIVELES = ("real", "derivada", "generada")
 
 
 def main(argv):
-    if not argv:
-        print(__doc__)
+    ap = argparse.ArgumentParser(description="puerta de 03_ASSETS")
+    ap.add_argument("activos")
+    args = ap.parse_args(argv)
+
+    datos, error = cargar_yaml(args.activos)
+    if error:
+        print("ERROR DE USO · %s" % error)
         return 2
-    p = Path(argv[0])
-    if not p.exists():
-        print("no existe:", p)
-        return 1
-    d = yaml.safe_load(p.read_text(encoding="utf-8")) or {}
-    activos = d.get("activos") or []
-    fallas, avisos = [], []
+
+    p = Puerta("activos", Path(args.activos).name)
+    activos = datos.get("activos") or []
+    if not activos:
+        p.falla("el registro no declara activos: no hay nada que verificar y la fase exige material medido")
+
+    reales = [a for a in activos if (a.get("nivel") or "").lower() == "real"]
+    if activos and not reales:
+        p.aviso("0 activos reales: todo el material es derivado o generado; declara por qué")
+
     for a in activos:
         n = a.get("archivo", "?")
         nivel = (a.get("nivel") or "").lower()
-        if nivel not in ("real", "derivada", "generada"):
-            fallas.append(f"{n}: nivel no declarado o desconocido «{nivel}»")
+        usado = bool(a.get("usado"))
+
+        if nivel not in NIVELES:
+            p.falla("%s: nivel no declarado o desconocido «%s»" % (n, nivel))
             continue
+
         if nivel == "real":
-            if (a.get("procedencia") or "") == "verificada" and not a.get("exif"):
-                fallas.append(f"{n}: procedencia verificada sin EXIF")
-            if (a.get("procedencia") or "") not in ("verificada", "declarada"):
-                fallas.append(f"{n}: procedencia sin declarar")
+            procedencia = (a.get("procedencia") or "").lower()
+            if procedencia not in ("verificada", "declarada"):
+                p.falla("%s: procedencia sin declarar" % n)
+            if procedencia == "verificada" and not a.get("exif"):
+                p.falla("%s: procedencia verificada sin EXIF" % n)
+
         if nivel == "derivada" and not a.get("fuente"):
-            fallas.append(f"{n}: derivada sin documento fuente")
+            p.falla("%s: derivada sin documento fuente" % n)
+
         if nivel == "generada":
             if not a.get("prompt_id"):
-                fallas.append(f"{n}: generada sin prompt_id")
+                p.falla("%s: generada sin prompt_id" % n)
             if not a.get("motivo_falta"):
-                fallas.append(f"{n}: generada sin motivo_falta")
+                p.falla("%s: generada sin motivo_falta" % n)
             tema = a.get("tema")
-            reales_libres = [b.get("archivo") for b in activos
-                             if (b.get("nivel") or "").lower() == "real"
-                             and tema and b.get("tema") == tema
-                             and not b.get("usado")]
-            if reales_libres:
-                fallas.append("%s: generada reemplaza real disponible del tema «%s»: %s"
-                              % (n, tema, ", ".join(reales_libres)))
+            if not tema:
+                p.falla("%s: generada sin tema: no se puede comprobar que no reemplace a un real" % n)
+            libres = [b.get("archivo") for b in reales
+                      if tema and b.get("tema") == tema and not b.get("usado")]
+            if libres:
+                p.falla("%s: generada reemplaza real disponible del tema «%s»: %s"
+                        % (n, tema, ", ".join(libres)))
+
         if (a.get("tipo") or "imagen") == "imagen":
-            w = a.get("ancho") or 0
-            if w and w < MIN_ANCHO:
-                avisos.append(f"{n}: {w} px de ancho, bajo {MIN_ANCHO} → no sirve a sangre")
-        if a.get("usado") and (a.get("autorizacion") or "").lower() == "pendiente":
-            fallas.append(f"{n}: en uso y sin autorización de publicación")
-    print("activos ·", d.get("cliente", p.stem))
-    print("-" * 62)
-    print("  total %d · reales %d · derivadas %d · generadas %d" % (
+            ancho = a.get("ancho")
+            medido = isinstance(ancho, int) and ancho > 0
+            if not medido:
+                (p.falla if usado else p.aviso)(
+                    "%s: ancho no medido (ancho=%r)%s"
+                    % (n, ancho, " y el activo está en uso" if usado else ""))
+            elif ancho < MIN_ANCHO:
+                (p.falla if usado else p.aviso)(
+                    "%s: %d px de ancho, bajo %d → no sirve a sangre%s"
+                    % (n, ancho, MIN_ANCHO, " y está en uso" if usado else ""))
+
+        if usado and (a.get("autorizacion") or "").lower() == "pendiente":
+            p.falla("%s: en uso y sin autorización de publicación" % n)
+
+    p.mide("activos", "%d · reales %d · derivadas %d · generadas %d" % (
         len(activos),
         sum(1 for a in activos if (a.get("nivel") or "").lower() == "real"),
         sum(1 for a in activos if (a.get("nivel") or "").lower() == "derivada"),
         sum(1 for a in activos if (a.get("nivel") or "").lower() == "generada")))
-    for f in fallas:
-        print("  FALLA  ", f)
-    for a in avisos[:6]:
-        print("  avisa  ", a)
-    print("-" * 62)
-    print("ACTIVOS OK" if not fallas else f"ACTIVOS CON FALLAS · {len(fallas)}")
-    return 1 if fallas else 0
+    p.mide("en uso / sin usar", "%d / %d" % (sum(1 for a in activos if a.get("usado")),
+                                             sum(1 for a in activos if not a.get("usado"))))
+    return p.imprimir()
 
 
 if __name__ == "__main__":

@@ -7,8 +7,11 @@ Sale 1 si falta una respuesta de nivel `bloquea` o si una respuesta no tiene fue
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from _comun import cargar_yaml  # noqa: E402
+
 try:
-    import yaml
+    import yaml  # noqa: F401  (sólo para el mensaje de dependencia)
 except ImportError:
     print("falta PyYAML: pip install pyyaml")
     sys.exit(2)
@@ -72,7 +75,10 @@ def main(path):
     if not p.exists():
         print("no existe el archivo:", path)
         return 1
-    d = yaml.safe_load(p.read_text(encoding="utf-8")) or {}
+    d, error = cargar_yaml(p)
+    if error:
+        print("ERROR DE USO · %s" % error)
+        return 2
     r = d.get("respuestas") or {}
     fallas, avisos, ok = [], [], 0
     for qid, (nivel, preg) in PREGUNTAS.items():
