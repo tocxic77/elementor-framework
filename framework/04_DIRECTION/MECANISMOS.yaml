@@ -8,20 +8,23 @@
 #   mecanismo (por qué funciona)  →  patrón (qué forma)  →  componente (con qué id)
 #                                     sistema.yaml          sistema.yaml
 #
-# `requiere` sólo usa el vocabulario cerrado de abajo. Un mecanismo cuyos materiales no
-# se pueden medir NO está disponible: no se asume, no se improvisa.
+# `requiere` son materiales que deben existir TODOS. `requiere_uno_de` basta con UNO.
+# `formas` son implementaciones del mismo mecanismo: cambia la puesta en escena, no la
+# función. Una forma no es otro mecanismo.
 #
 # Materiales y dónde se miden (los implementa tools/medir_material.py):
-#   problema_declarado     01_NEED.yaml  respuestas.a2
-#   objecion_declarada     01_NEED.yaml  intencion.objecion
-#   conversion_declarada   01_NEED.yaml  intencion.accion
-#   audiencia_declarada    01_NEED.yaml  intencion.audiencia
-#   evidencia_visual_propia 03_ASSETS.yaml  activos seleccionados con autorizacion: propia
-#   testimonios_reales     sin campo donde vivir → NO MEDIDO
-#   caso_documentado       sin campo donde vivir → NO MEDIDO
-#   trayectoria_publica    sin campo donde vivir → NO MEDIDO
-#   ofertas_distintas      sin campo donde vivir → NO MEDIDO
-#   atributos_verificables sin campo donde vivir → NO MEDIDO
+#   problema_declarado      01_NEED.yaml   respuestas.a2
+#   objecion_declarada      01_NEED.yaml   intencion.objecion
+#   conversion_declarada    01_NEED.yaml   intencion.accion
+#   audiencia_declarada     01_NEED.yaml   intencion.audiencia
+#   evidencia_visual_propia 03_ASSETS.yaml activos seleccionados con autorizacion: propia
+#   testimonios_reales      sin campo donde vivir → NO MEDIDO
+#   caso_documentado        sin campo donde vivir → NO MEDIDO
+#   trayectoria_publica     sin campo donde vivir → NO MEDIDO
+#   ofertas_distintas       sin campo donde vivir → NO MEDIDO
+#   atributos_verificables  sin campo donde vivir → NO MEDIDO
+#   precio_publico          sin campo donde vivir → NO MEDIDO
+#   propiedades_propias     sin campo donde vivir → NO MEDIDO
 
 mecanismos:
 
@@ -29,7 +32,7 @@ mecanismos:
     objetivo: que el lector se reconozca antes de que se le pida atención
     requiere: [problema_declarado]
     cuando_si: el problema está declarado por el propietario y citado con fuente
-    cuando_no: el problema lo supone la agencia
+    cuando_no: el problema lo supone la agencia, o la audiencia llega tibia y ya lo sabe
     efecto: identificación antes de la promesa
 
   reconocimiento_antes_del_diagnostico:
@@ -71,9 +74,16 @@ mecanismos:
   escalera_de_compromiso:
     objetivo: que cada lector elija su profundidad de compromiso
     requiere: [ofertas_distintas, conversion_declarada]
-    cuando_si: existen tres ofertas de fricción creciente que ya existen de verdad
+    cuando_si: existen tres o más ofertas reales de fricción creciente
     cuando_no: hay menos de tres ofertas reales
     efecto: el visitante avanza sin que se le pida todo de golpe
+
+  etiqueta_por_situacion:
+    objetivo: que el lector elija por su situación, no por el nombre del servicio
+    requiere: [ofertas_distintas]
+    cuando_si: cada oferta corresponde a un momento distinto del comprador
+    cuando_no: las ofertas son variantes de lo mismo y la etiqueta se vuelve decorativa
+    efecto: el lector se ubica sin leer la descripción
 
   destino_nombrado:
     objetivo: que el botón nombre la cosa, no la acción
@@ -81,6 +91,20 @@ mecanismos:
     cuando_si: cada destino tiene un nombre propio
     cuando_no: todos los destinos llevan a la misma página
     efecto: el clic deja de ser una apuesta
+
+  precio_visible:
+    objetivo: que el lector se filtre por presupuesto antes de escribir
+    requiere: [ofertas_distintas, precio_publico]
+    cuando_si: el precio es fijo o tiene un mínimo publicable
+    cuando_no: el precio depende del alcance y publicarlo engaña
+    efecto: la conversación empieza con quien ya aceptó el orden de magnitud
+
+  salida_explicita:
+    objetivo: bajar el riesgo percibido de la oferta continua
+    requiere: [conversion_declarada]
+    cuando_si: el compromiso se puede terminar sin penalización
+    cuando_no: no hay forma real de salir; prometerlo sin cumplirlo se detecta
+    efecto: la decisión se vuelve reversible y por eso se toma
 
   prueba_material:
     objetivo: demostrar operación real
@@ -92,9 +116,30 @@ mecanismos:
   prueba_distribuida:
     objetivo: sostener la confianza entre afirmaciones, no en un bloque
     requiere: [testimonios_reales]
-    cuando_si: hay tres o más citas verificables con nombre
+    cuando_si: hay tres o más citas y la página hace afirmaciones que necesitan respaldo
     cuando_no: no hay citas reales
     efecto: confianza distribuida a lo largo de la página
+
+  prueba_agrupada:
+    objetivo: dejar que el lector escanee la prueba en un solo lugar
+    requiere: [testimonios_reales]
+    cuando_si: la página es un índice de ofertas y el lector compara antes de leer
+    cuando_no: la página argumenta y necesita respaldo junto a cada afirmación
+    efecto: la prueba se convierte en sección consultable
+
+  prueba_enlazada:
+    objetivo: probar sin ocupar espacio
+    requiere: [testimonios_reales]
+    cuando_si: existe una página de prueba completa a la que remitir
+    cuando_no: el enlace lleva a una lista sin verificar
+    efecto: la credibilidad está a un clic dentro de la primera frase
+
+  cita_con_titular:
+    objetivo: que la cita se pueda escanear y su titular sea la afirmación del cliente
+    requiere: [testimonios_reales]
+    cuando_si: las citas contienen una frase corta y concreta que las resume
+    cuando_no: hay que inventar el titular y deja de ser cita
+    efecto: el lector lee la prueba sin leer el párrafo
 
   prueba_que_ordena_la_accion:
     objetivo: que la prueba misma pida la acción
@@ -103,19 +148,16 @@ mecanismos:
     cuando_no: los testimonios elogian sin recomendar
     efecto: la decisión llega desde un tercero
 
-  autoridad_embebida:
-    objetivo: verificar contexto sin argumentar
-    requiere: [atributos_verificables]
-    cuando_si: hay tres atributos verificables y distintos entre sí
-    cuando_no: los tres son calidad, compromiso y experiencia
-    efecto: credencial comprimida en una línea
-
-  autoridad_diferida:
-    objetivo: que la credencial llegue cuando ya hay interés
-    requiere: [trayectoria_publica]
-    cuando_si: existe obra pública previa (libros, prensa, charlas)
-    cuando_no: no hay obra que diferir; diferida sin obra es autoridad ausente
-    efecto: la trayectoria no interrumpe el argumento
+  autoridad_situada:
+    objetivo: que la credencial llegue en el momento en que el lector la necesita
+    requiere_uno_de: [trayectoria_publica, atributos_verificables]
+    cuando_si: la confianza del lector depende de saber quién habla
+    cuando_no: no hay nada que situar; credencial sin obra es autoridad ausente
+    efecto: la trayectoria respalda sin interrumpir
+    formas:
+      narrada_en_prosa: cifras dentro de una frase, temprano; sirve cuando el lector llega tibio
+      embebida_en_linea: tres atributos en una línea; sirve cuando el lector llega frío y quiere contexto
+      diferida_al_cierre: biografía al final; sirve cuando la obra ya es conocida
 
   objecion_citada:
     objetivo: desarmar la duda única antes de que el lector la use para irse
@@ -128,8 +170,15 @@ mecanismos:
     objetivo: que el método se lea como proceso
     requiere: [problema_declarado]
     cuando_si: los pasos tienen orden causal
-    cuando_no: los pasos son paralelos
+    cuando_no: los pasos son paralelos o el servicio no tiene proceso propio
     efecto: el lector entiende cómo se trabaja
+
+  inventario_de_propiedades:
+    objetivo: mostrar amplitud de obra sin argumentar sobre ella
+    requiere: [propiedades_propias]
+    cuando_si: existen dos o más propiedades con dominio propio
+    cuando_no: hay un solo sitio; una lista de uno es un enlace
+    efecto: la credibilidad viene del ecosistema, no de la biografía
 
   contraste_binario:
     objetivo: hacer el reencuadre legible de un golpe
@@ -142,7 +191,7 @@ mecanismos:
     objetivo: que toda la página defienda una tesis
     requiere: [problema_declarado]
     cuando_si: la página se puede resumir en una frase
-    cuando_no: varias tesis compiten
+    cuando_no: varias tesis compiten, o la página es un catálogo y su tesis es la oferta
     efecto: todo el texto empuja en la misma dirección
 
   ritmo_densidad_alterna:

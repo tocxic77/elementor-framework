@@ -69,6 +69,8 @@ def medir(cliente):
         "trayectoria_publica": (None, "02_EVIDENCE.yaml: las afirmaciones no declaran tipo"),
         "ofertas_distintas": (None, "01_NEED.yaml: no hay lista de ofertas"),
         "atributos_verificables": (None, "01_NEED.yaml: no hay lista de atributos"),
+        "precio_publico": (None, "01_NEED.yaml: no hay campo de precio"),
+        "propiedades_propias": (None, "no hay inventario de propiedades propias"),
     }, None
 
 
@@ -93,7 +95,8 @@ def main():
         return 1
 
     # Vocabulario cerrado: un mecanismo que pide un material desconocido es un error de dato.
-    desconocidos = sorted({m for v in mecanismos.values() for m in (v.get("requiere") or [])
+    desconocidos = sorted({m for v in mecanismos.values()
+                           for m in (v.get("requiere") or []) + (v.get("requiere_uno_de") or [])
                            if m not in medidas})
     if desconocidos:
         print("ERROR · la biblioteca cita materiales que no se miden: %s" % ", ".join(desconocidos))
@@ -106,8 +109,11 @@ def main():
 
     disponibles, faltan = [], []
     for nombre, datos in mecanismos.items():
-        requisitos = datos.get("requiere") or []
-        faltantes = [m for m in requisitos if not medidas.get(m, (None,))[0]]
+        # `requiere`: todos. `requiere_uno_de`: al menos uno.
+        faltantes = [m for m in (datos.get("requiere") or []) if not medidas.get(m, (None,))[0]]
+        alternativas = datos.get("requiere_uno_de") or []
+        if alternativas and not any(medidas.get(m, (None,))[0] for m in alternativas):
+            faltantes.append("uno de: " + " / ".join(alternativas))
         (faltan if faltantes else disponibles).append((nombre, faltantes))
 
     print("\nDISPONIBLES %d de %d" % (len(disponibles), len(mecanismos)))
