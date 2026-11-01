@@ -138,6 +138,8 @@ def main(argv):
             inventario[clave] = a
 
     locales, externas, leidas, ilegibles = set(), set(), [], []
+    paginas_leidas = set()   # etiquetas de página leídas («index», «articulo», …)
+    servido_en = {}          # nombre de archivo → páginas donde aparece
     host = urllib.parse.urlparse(args.sitio).netloc if args.sitio else None
 
     for ruta in args.html:
@@ -149,6 +151,10 @@ def main(argv):
         l, e = referencias(html, host, hojas_de(html, archivo.parent))
         locales |= l
         externas |= e
+        etiqueta = archivo.stem.lower()
+        paginas_leidas.add(etiqueta)
+        for nombre in l:
+            servido_en.setdefault(nombre, set()).add(etiqueta)
         leidas.append("%s (%d)" % (archivo.name, len(l)))
 
     if args.sitio:
@@ -162,6 +168,10 @@ def main(argv):
             l, e = referencias(html, host)
             locales |= l
             externas |= e
+            etiqueta = ruta.strip("/").lower() or "index"
+            paginas_leidas.add(etiqueta)
+            for nombre in l:
+                servido_en.setdefault(nombre, set()).add(etiqueta)
             leidas.append("%s (%d)" % (ruta, len(l)))
 
     for ruta in ilegibles:
@@ -178,17 +188,38 @@ def main(argv):
         p.aviso("orígenes externos no comparables: " + ", ".join(sorted(externas)[:5]))
 
     for nombre in sorted(locales):
-        if nombre not in inventario:
+        activo = inventario.get(nombre)
+        if activo is None:
             p.falla("%s se sirve y no está en el inventario" % nombre)
-        elif (inventario[nombre].get("autorizacion") or "").lower() == "pendiente":
+            continue
+        autorizacion = (activo.get("autorizacion") or "").strip().lower()
+        if autorizacion == "pendiente":
             p.falla("%s se sirve con autorización pendiente" % nombre)
+        elif not autorizacion:
+            p.sin_medir("%s se sirve sin autorización declarada: no se puede juzgar su publicación"
+                        % nombre)
+        if not activo.get("seleccionado"):
+            p.falla("%s se sirve y no está seleccionado" % nombre)
+        destinos = {str(d).lower() for d in (activo.get("publicado_en") or [])}
+        if destinos and not (destinos & paginas_leidas):
+            p.falla("%s se sirve en %s y declara publicarse sólo en %s"
+                    % (nombre, ", ".join(sorted(servido_en[nombre])) or "?",
+                       ", ".join(sorted(destinos))))
 
+    # La otra dirección: lo declarado que no está.
     for nombre, a in sorted(inventario.items()):
-        if a.get("usado") and nombre not in locales:
-            p.falla("%s está marcado en uso y no aparece en ninguna página servida" % nombre)
+        destinos = {str(d).lower() for d in (a.get("publicado_en") or [])}
+        for destino in sorted(destinos & paginas_leidas):
+            if destino not in servido_en.get(nombre, set()):
+                p.falla("%s declara publicarse en %s y esa página no lo sirve"
+                        % (nombre, destino))
+        for destino in sorted(destinos - paginas_leidas):
+            p.sin_medir("%s declara publicarse en %s, que no se leyó" % (nombre, destino))
 
-    usados = [n for n, a in inventario.items() if a.get("usado")]
-    p.mide("declarados en uso", "%d · servidos %d" % (len(usados), len(set(usados) & locales)))
+    seleccionados = [n for n, a in inventario.items() if a.get("seleccionado")]
+    con_destino = [n for n in seleccionados if inventario[n].get("publicado_en")]
+    p.mide("seleccionados", "%d · servidos %d" % (len(seleccionados), len(set(seleccionados) & locales)))
+    p.mide("con destino declarado", "%d de %d seleccionados" % (len(con_destino), len(seleccionados)))
     p.mide("servidos fuera del inventario", len([n for n in locales if n not in inventario]))
     return p.imprimir()
 

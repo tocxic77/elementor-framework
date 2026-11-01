@@ -7,7 +7,7 @@ Mide ancho × alto (cabecera JPEG), peso y si conserva EXIF de cámara. Clasific
 evidencia según IMAGE_STRATEGY.md:
   procedencia verificada  → tiene EXIF de cámara
   procedencia declarada   → no lo tiene; la autoría se firma aparte
-No inventa `tema` ni `usado`: eso lo llena quien cura.
+No inventa `tema` ni `seleccionado`: eso lo llena quien cura.
 """
 import glob
 import os
@@ -74,7 +74,7 @@ def main(argv):
             "    alto: %d" % r["h"],
             "    kb: %d" % r["kb"],
             "    tema: null",
-            "    usado: false",
+            "    seleccionado: false",
         ]
     texto = "\n".join(lineas) + "\n"
     if salida:

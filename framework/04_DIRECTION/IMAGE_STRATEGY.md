@@ -24,16 +24,36 @@ Regla de lectura del inventario: el nivel A se acepta por EXIF de cámara **o** 
 declarada y firmada. Las dos columnas no se mezclan, y `verificar_activos.py` falla si una
 procedencia queda sin declarar.
 
+## Dos preguntas, dos campos
+
+El registro declara **dos cosas distintas** y ninguna sustituye a la otra:
+
+| Campo | Responde | Quién lo escribe |
+|---|---|---|
+| `seleccionado: true` | ¿este activo está elegido para el sitio y con derechos declarados? | decisión |
+| `publicado_en: [index, articulo]` | ¿en qué páginas afirmamos que aparece? | decisión, verificable |
+| `autorizacion: propia · licencia · pendiente` | ¿se puede publicar? | obligatoria si está seleccionado |
+
+`publicado` **no se declara: se mide**. `verificar_servido.py` lo cruza contra el HTML
+publicado y el CSS que ese HTML carga, en las dos direcciones: un activo servido que no está
+seleccionado, sin autorización o en una página que no declara es FALLA; un activo que declara
+una página y no aparece en ella también.
+
+Un solo campo `usado` mezclaba ambas preguntas y obligaba a los gates a asumir
+`usado == publicado`. Esa equivalencia resultó falsa: cuatro activos marcados «en uso» no
+aparecían en ninguna página, y una imagen publicada estaba marcada «no usada». Un registro
+con `usado` ya no pasa.
+
 ## La regla que sí se puede hacer cumplir
 
 > **Una imagen generada nunca reemplaza un activo real disponible.**
 
 Forma ejecutable: toda imagen `generada` en el inventario debe traer `motivo_falta` (qué
 material real no existía, con nombre de banda y tema) y `prompt_id`. Si en el inventario hay
-un activo `real` del mismo `tema` sin usar, la puerta falla:
+un activo `real` del mismo `tema` sin seleccionar, la puerta falla:
 
 ```
-FALLA  hero · generada reemplaza real disponible: marraqueta.jpg (4032×1908, sin usar)
+FALLA  hero · generada reemplaza real disponible: marraqueta.jpg (4032×1908, sin seleccionar)
 ```
 
 Una regla que no puede fallar no es una regla.

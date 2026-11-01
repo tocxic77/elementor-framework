@@ -125,7 +125,7 @@ documento en blanco o un repositorio sin `clients/` ya no salen `0`.
 | `verificar_independencia.py` | que el framework **y el adaptador** no nombren a ningún cliente, por token completo | `ACOPLA archivo:línea` |
 | `verificar_need.py` | las 20 preguntas respondidas con fuente y que **ningún campo quede en `null`** | recuento + rutas en null |
 | `verificar_evidencia.py` | fuente de cada afirmación **resuelta contra el YAML, no contra el cwd**; cada cifra publicada respaldada | huérfanas, sin fuente, cifras sin respaldo |
-| `verificar_activos.py` | nivel y procedencia de cada activo, ancho medido, generada que no reemplace real, ≥2400 px si va a sangre | conflictos y medidas faltantes |
+| `verificar_activos.py` | nivel y procedencia, `seleccionado` vs `publicado_en`, ancho medido, generada que no reemplace real, ≥2400 px si va a sangre, autorización declarada | conflictos, medidas faltantes y derechos sin declarar |
 | `verificar_tokens.py` | `tokens.css` ↔ `sistema.yaml`: mismo color, tamaño y familia; sin hex nuevos fuera de tokens | divergencias |
 | `verificar_estatico.py` · `verificar.js` | capa estática y capa renderizada de la calidad (18 comprobaciones estáticas + las renderizadas) | `N comprobaciones · 0 bloqueantes` |
 | `verificar_servido.py` | inventario ↔ HTML publicado (y el CSS que ese HTML carga): lo servido está declarado, está autorizado, y lo declarado en uso se publicó | `páginas leídas` · fallas |

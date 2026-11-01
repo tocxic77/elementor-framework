@@ -51,7 +51,8 @@ activos:
     ancho: 3000
     alto: 2000
     tema: operacion
-    usado: false
+    seleccionado: false
+    autorizacion: propia
   - archivo: generada.jpg
     tipo: imagen
     nivel: generada
@@ -61,7 +62,9 @@ activos:
     tema: detalle
     prompt_id: hero-operacion
     motivo_falta: "no existe material del tema"
-    usado: true
+    seleccionado: true
+    autorizacion: propia
+    publicado_en: [index]
 """
 
 PAGINA_OK = """<!doctype html><html><head><meta name="viewport" content="width=device-width">
@@ -199,6 +202,14 @@ def main():
                 correr("verificar_tokens.py", ["--sistema", sistema,
                                                "--css", c.tmp / "sin-css"])[0], 1)
 
+        c.escribir("03_ASSETS.yaml", ACTIVOS_OK.replace("seleccionado: false", "usado: false"))
+        esperar("activos · el campo «usado» ya no vale",
+                correr("verificar_activos.py", [c.yaml("03_ASSETS.yaml")])[0], 1)
+        c.escribir("03_ASSETS.yaml", ACTIVOS_OK.replace(
+            "    autorizacion: propia\n    publicado_en: [index]", "    publicado_en: [index]"))
+        esperar("activos · seleccionado sin autorización es NO MEDIDO",
+                correr("verificar_activos.py", [c.yaml("03_ASSETS.yaml")])[0], 3)
+        c.escribir("03_ASSETS.yaml", ACTIVOS_OK)
         # ADAPTER.md · las siete reglas, sobre _elementor_data
         adaptador = RAIZ / "adapters" / "elementor"
         plantilla = json.loads((RAIZ / "tests" / "fixtures" / "estructura" / "valida.json")
@@ -264,45 +275,75 @@ def main():
         esperar("estructura · lista vacía es NO MEDIDO", estructura(lambda d: d.clear()), 3)
 
         # SITIO PUBLICADO · lo que recibe el visitante
-        # servido: inventario ↔ HTML (y el CSS que la página carga)
         sitio = c.tmp / "sitio"
         (sitio / "img").mkdir(parents=True)
-        pagina = ('<html><head><link rel="stylesheet" href="x.css"></head><body>'
-                  '<h1>Portada</h1><img src="img/real.jpg" alt="x">'
-                  '<img src="img/fondo.jpg" srcset="img/fondo.jpg 800w, img/fondo2.jpg 1600w"></body></html>')
-        (sitio / "index.html").write_text(pagina, encoding="utf-8")
-        (sitio / "x.css").write_text(":root{--x:#000} .hero{background:url('img/fondo.jpg')}", encoding="utf-8")
-
-        def registro(extra=""):
-            destino = c.tmp / "assets_servido.yaml"
-            destino.write_text("activos:\n"
-                               "  - archivo: real.jpg\n    usado: true\n    autorizacion: propia\n"
-                               "  - archivo: fondo.jpg\n    usado: true\n    autorizacion: propia\n"
-                               "  - archivo: fondo2.jpg\n    usado: true\n    autorizacion: propia\n"
-                               "  - archivo: nunca.jpg\n    usado: false\n    autorizacion: propia\n"
-                               + extra, encoding="utf-8")
-            return destino
-
-        esperar("servido · inventario y HTML coinciden",
-                correr("verificar_servido.py", [registro(), "--html", sitio / "index.html"])[0], 0)
+        (sitio / "index.html").write_text(
+            '<html><head><link rel="stylesheet" href="x.css"></head><body><h1>Portada</h1>'
+            '<img src="img/real.jpg">'
+            '<img src="img/fondo.jpg" srcset="img/fondo.jpg 800w, img/fondo2.jpg 1600w">'
+            '</body></html>', encoding="utf-8")
+        (sitio / "x.css").write_text(".hero{background:url('img/fondo.jpg')}", encoding="utf-8")
+        (sitio / "otra.html").write_text('<html><body><h1>Otra</h1></body></html>', encoding="utf-8")
         roto = sitio / "roto.html"
         roto.write_text('<html><body><h1>x</h1><img src="img/intrusa.jpg"></body></html>',
                         encoding="utf-8")
+
+        def registro(*filas):
+            destino = c.tmp / "assets_servido.yaml"
+            cuerpo = ""
+            for nombre, sel, aut, destino_paginas in filas:
+                cuerpo += "  - archivo: %s\n    seleccionado: %s\n" % (nombre, str(sel).lower())
+                if aut:
+                    cuerpo += "    autorizacion: %s\n" % aut
+                if destino_paginas:
+                    cuerpo += "    publicado_en: [%s]\n" % ", ".join(destino_paginas)
+            destino.write_text("activos:\n" + cuerpo, encoding="utf-8")
+            return destino
+
+        completo = registro(("real.jpg", True, "propia", ["index"]),
+                            ("fondo.jpg", True, "propia", ["index"]),
+                            ("fondo2.jpg", True, "propia", ["index"]))
+        esperar("servido · inventario y HTML coinciden",
+                correr("verificar_servido.py", [completo, "--html", sitio / "index.html"])[0], 0)
         esperar("servido · imagen servida fuera del inventario falla",
-                correr("verificar_servido.py", [registro(), "--html", roto])[0], 1)
-        pendiente = c.tmp / "assets_pendiente.yaml"
-        pendiente.write_text("activos:\n  - archivo: real.jpg\n    usado: true\n"
-                            "    autorizacion: pendiente\n", encoding="utf-8")
-        esperar("servido · activo con autorización pendiente servido falla",
-                correr("verificar_servido.py", [pendiente, "--html", sitio / "index.html"])[0], 1)
+                correr("verificar_servido.py", [completo, "--html", roto])[0], 1)
+        esperar("servido · publicado sin seleccionar falla",
+                correr("verificar_servido.py",
+                       [registro(("real.jpg", False, "propia", ["index"])),
+                        "--html", sitio / "index.html"])[0], 1)
+        esperar("servido · se sirve con autorización pendiente y falla",
+                correr("verificar_servido.py",
+                       [registro(("real.jpg", True, "pendiente", ["index"]),
+                                 ("fondo.jpg", True, "propia", ["index"]),
+                                 ("fondo2.jpg", True, "propia", ["index"])),
+                        "--html", sitio / "index.html"])[0], 1)
+        esperar("servido · declara una página y esa página no lo sirve falla",
+                correr("verificar_servido.py",
+                       [registro(("real.jpg", True, "propia", ["index"]),
+                                 ("fondo.jpg", True, "propia", ["index"]),
+                                 ("fondo2.jpg", True, "propia", ["index", "otra"])),
+                        "--html", sitio / "index.html", "--html", sitio / "otra.html"])[0], 1)
+        esperar("servido · se sirve en una página que no declara falla",
+                correr("verificar_servido.py",
+                       [registro(("real.jpg", True, "propia", ["contacto"]),
+                                 ("fondo.jpg", True, "propia", ["index"]),
+                                 ("fondo2.jpg", True, "propia", ["index"])),
+                        "--html", sitio / "index.html"])[0], 1)
+        esperar("servido · destino que no se leyó es NO MEDIDO",
+                correr("verificar_servido.py",
+                       [registro(("real.jpg", True, "propia", ["index"]),
+                                 ("fondo.jpg", True, "propia", ["index"]),
+                                 ("fondo2.jpg", True, "propia", ["index"]),
+                                 ("nunca.jpg", True, "propia", ["contacto"])),
+                        "--html", sitio / "index.html"])[0], 3)
+        esperar("servido · sin autorización declarada es NO MEDIDO",
+                correr("verificar_servido.py",
+                       [registro(("real.jpg", True, "", ["index"]),
+                                 ("fondo.jpg", True, "", ["index"]),
+                                 ("fondo2.jpg", True, "", ["index"])),
+                        "--html", sitio / "index.html"])[0], 3)
         esperar("servido · sin HTML es NO MEDIDO",
-                correr("verificar_servido.py", [registro()])[0], 3)
-        sin_uso = c.tmp / "assets_sin_uso.yaml"
-        sin_uso.write_text("activos:\n  - archivo: real.jpg\n    usado: false\n"
-                          "  - archivo: fondo.jpg\n    usado: false\n"
-                          "  - archivo: fondo2.jpg\n    usado: false\n", encoding="utf-8")
-        esperar("servido · lo que no está en uso no se exige",
-                correr("verificar_servido.py", [sin_uso, "--html", sitio / "index.html"])[0], 0)
+                correr("verificar_servido.py", [completo])[0], 3)
 
         # 404 real contra HTTP
         def servir(modo):
@@ -338,8 +379,10 @@ def main():
                 correr("verificar_404.py", ["--sitio", servir("200")])[0], 1)
         esperar("404 · 301 hacia la portada falla",
                 correr("verificar_404.py", ["--sitio", servir("301")])[0], 1)
-        esperar("404 · servido lee la página remota y detecta lo no declarado",
-                correr("verificar_servido.py", [sin_uso, "--sitio", servir("200"), "--pagina", "/"])[0], 0)
+        esperar("404 · servido lee la página remota y la cruza",
+                correr("verificar_servido.py",
+                       [registro(("real.jpg", True, "propia", ["index"])),
+                        "--sitio", servir("200"), "--pagina", "/"])[0], 0)
         hueco = socket.socket()
         hueco.bind(("127.0.0.1", 0))
         puerto = hueco.getsockname()[1]
