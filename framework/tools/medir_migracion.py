@@ -60,7 +60,8 @@ def medir(cliente):
         host = dominio_de(url)
         if p.get("publicable") and not (url or archivo):
             faltan_prueba.append(p.get("id") or p.get("titulo"))
-        sitio = "propia" if host and host in propios else ("ajena" if host else "sin url")
+        propia = bool(p.get("url_propia"))
+        sitio = "propia" if propia or (host and host in propios) else ("ajena" if host else "sin url")
         existe = None
         if archivo:
             existe = any(os.path.exists(os.path.join(b, archivo)) for b in bases(cliente))
@@ -101,6 +102,10 @@ def main(argv=None):
     print("\nAUTORIDAD MIGRADA  %d de %d  (%d %%)" % (
         len(propias), total, round(100.0 * len(propias) / total) if total else 0))
     if ajenas:
+        caducas = [f for f in ajenas if f["vigencia"] and "permanente" not in str(f["vigencia"])]
+        print("POR REHOSPEDAR (la fuente no sobrevive): %d" % len(caducas))
+        for f in caducas:
+            print("  ! %-6s %-20s %s" % (f["id"], f["tipo"], f["host"]))
         print("SIGUE FUERA DE CASA")
         for f in ajenas:
             print("  × %-6s %-20s %s" % (f["id"], f["tipo"], f["host"] or "sin dominio"))
