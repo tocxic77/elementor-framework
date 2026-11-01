@@ -1,0 +1,55 @@
+# Sistema de diseño materializado en Elementor
+# Kit: 11286 · Elementor 4.3.5 / Pro 4.3.0
+# Fuente: framework/05_SYSTEM/tokens.css y theme.css
+
+kit: 11286
+
+variables:
+  # color
+  - {label: ink,    tipo: global-color-variable, valor: "#223035"}
+  - {label: ink-2,  tipo: global-color-variable, valor: "#263037"}
+  - {label: ivory,  tipo: global-color-variable, valor: "#FBFAF9"}
+  - {label: text,   tipo: global-color-variable, valor: "#EFEFEF"}
+  - {label: muted,  tipo: global-color-variable, valor: "#D9DEDE"}
+  - {label: label,  tipo: global-color-variable, valor: "#A9B3B4"}
+  - {label: sage,   tipo: global-color-variable, valor: "#D5DEDE"}
+  # tipografía
+  - {label: serif,  tipo: global-font-variable,  valor: "Newsreader"}
+  - {label: sans,   tipo: global-font-variable,  valor: "DM Sans"}
+  # escala
+  - {label: display, tipo: global-size-variable, valor: "56px"}
+  - {label: h2,      tipo: global-size-variable, valor: "42px"}
+  - {label: lead,    tipo: global-size-variable, valor: "18px"}
+  - {label: body,    tipo: global-size-variable, valor: "16px"}
+
+clases:
+  - {label: pp-band,      id: g-241d984, uso: "banda de página, padding 7rem/3rem, fondo ink"}
+  - {label: pp-band--alt, id: g-389493f, uso: "variante de banda sobre ink-2"}
+  - {label: pp-wrap,      id: g-d99c81b, uso: "ancho máximo 1300 px centrado"}
+  - {label: pp-eyebrow,   id: g-91c7783, uso: "antetítulo rótulo en versalitas"}
+  - {label: pp-display,   id: g-1d6a9bc, uso: "titular principal, var(--display)"}
+  - {label: pp-h2,        id: g-735ab06, uso: "titular de banda, var(--h2)"}
+  - {label: pp-h3,        id: g-3fe87e3, uso: "titular de tarjeta o paso, 1.75rem"}
+  - {label: pp-lead,      id: g-eefb406, uso: "bajada, var(--lead), 46ch"}
+  - {label: pp-body,      id: g-9058ced, uso: "párrafo corrido, 62ch"}
+  - {label: pp-btn,       id: g-9c8a261, uso: "botón con filete, inverso al hover"}
+  - {label: pp-rule,      id: g-52d6984, uso: "filete horizontal de 1 px"}
+  - {label: pp-grid-2,    id: g-4e58c64, uso: "dos columnas, colapsa en móvil"}
+  - {label: pp-grid-3,    id: g-8164809, uso: "tres columnas, colapsa en móvil"}
+  - {label: pp-figure,    id: g-5b3728e, uso: "imagen en proporción 16 por 9, cover"}
+  - {label: pp-meta,      id: g-a026505, uso: "fila de datos en versalitas"}
+  - {label: pp-numeral,   id: g-4bf4255, uso: "cifra grande serif, clamp 2.5 a 4rem"}
+  - {label: pp-stack,     id: g-8cfe84f, uso: "columna con gap uniforme"}
+  - {label: pp-card,      id: g-5f9fc2c, uso: "tarjeta con filete superior"}
+
+componentes:
+  - {id: 11377, titulo: "Hero de banda", overrides: [antetitulo, titular, bajada, cta, imagen]}
+  - {id: 11380, titulo: "Banda de objeción", overrides: [etiqueta, titular, cuerpo]}
+  - {id: 11383, titulo: "Paso del método", overrides: [numeral, titulo, texto]}
+  - {id: 11390, titulo: "Bloque de cifras", overrides: [cifra_1, cifra_2, cifra_3, rotulo_1]}
+  - {id: 11393, titulo: "Tarjeta de línea de trabajo", overrides: [titulo, texto, item_1]}
+
+pendientes:
+  - "pp-grid-3 y pp-numeral no tienen variante móvil probada en render"
+  - "falta componente de formulario nativo con e-form"
+  - "falta componente de cita o testimonio"

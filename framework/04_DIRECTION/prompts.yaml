@@ -1,0 +1,86 @@
+# prompts.yaml — base por categoría, no por proyecto
+#
+# Regla: un prompt se escribe con materia (equipo, luz, distancia, encuadre), no con
+# adjetivos de calidad. «Premium corporate photography» produce foto de banco.
+#
+# Cada entrada declara:
+#   prompt    qué se pide, en inglés (los modelos rinden mejor en inglés)
+#   prohibido qué no puede aparecer
+#   verifica  qué se mide en la imagen resultante antes de usarla
+#
+# Ningún resultado de esta base es nivel A. Se usa sólo cuando IMAGE_STRATEGY.md
+# autoriza nivel C para esa banda, con motivo_falta declarado.
+
+version: 1
+fecha: 2026-10-31
+paleta_referencia:
+  ink: "#223035"
+  ivory: "#FBFAF9"
+  duotono: "ink sobre ivory, contraste alto, sin saturación añadida"
+
+categorias:
+
+  - id: hero-operacion
+    uso: "banda P1 cuando no hay video del tema"
+    proporcion: "16:10"
+    prompt: |
+      Documentary photograph, available light only, of a working food production line:
+      stainless steel mixer with dough inside, flour dust suspended in side light,
+      concrete floor, worn work surface. Shot at chest height, 35 mm, slight grain.
+      Muted palette, deep blue-grey shadows, no direct flash.
+      No people looking at camera. No text, no logos, no signage.
+    prohibido: [personas-mirando-a-camara, sonrisas-de-stock, texto, logos, flash-directo, saturacion]
+    verifica: ["ancho >= 2400 px", sin-texto, duotono-compatible, sin-personas-en-primer-plano]
+
+  - id: transferencia-conocimiento
+    uso: "banda P2/P3 cuando el tema es traspaso de criterio técnico"
+    proporcion: "3:2"
+    prompt: |
+      Close documentary shot of a technical notebook page with handwritten measurements
+      and a printed process sheet beside a caliper on a steel bench, morning window light
+      from the left. Shallow depth of field, readable but not staged.
+      No stock-photo handshake. No text overlays. No brand marks.
+    prohibido: [apreton-de-manos, pizarra-con-flechas-genericas, texto-inventado-legible, marcas]
+    verifica: [texto-legible-real-o-ninguno, "ancho >= 2400 px", sin-marcas]
+
+  - id: innovacion-aplicada
+    uso: "banda P6 cuando se describe instrumentación o medición"
+    proporcion: "3:2"
+    prompt: |
+      Documentary detail of a texture analyser probe descending into a dough sample,
+      lab bench, cool overhead light, cable and screen edge visible but out of focus.
+      Real equipment proportions. Neutral background, no gradient.
+      No invented screens. No charts generated inside the image.
+    prohibido: [pantallas-con-graficos-inventados, hologramas, robots, over-lay-tecnologico]
+    verifica: [equipo-real-identificable, sin-graficos-inventados, "ancho >= 2400 px"]
+
+  - id: proceso-diagrama
+    uso: "banda P2/P7 — nivel B, no C: se dibuja desde el proceso real"
+    tipo: derivada
+    prompt: |
+      Flat vector schematic, 1 px strokes, ink #223035 on ivory #FBFAF9, no fills except
+      8 percent ink, labels in DM Sans 13 px, arrows 12 px apart, no gradients, no shadows.
+      Represents: input, control point, decision, output — four nodes, one loop back.
+    prohibido: [degradados, sombras, iconos-3d, colores-fuera-de-paleta]
+    verifica: [trazos-1px, 2-colores-maximo, etiquetas-legibles-a-390-px]
+
+  - id: abstracto-datos
+    uso: "fondo de banda P4 o P9 — atmósfera, nunca dato"
+    proporcion: "21:9"
+    prompt: |
+      Abstract macro of paper fibres and flour grain at 4x, backlit, near-monochrome
+      ink and ivory, no colour. Even texture, no focal subject, no pattern repetition
+      that reads as logo. Usable as a background under white text.
+    prohibido: [particulas-flotantes-3d, azul-tecnologico, brillos, patron-repetido]
+    verifica: [luminancia-media-bajo-40-por-ciento, sin-sujeto, teselable]
+
+  - id: retrato-autor
+    uso: "banda P8 — prohibida la generación: lo firma una persona real"
+    tipo: solo_real
+    prompt: null
+    prohibido: [rostro-sintetico, retoque-que-borre-edad]
+    verifica: [consentimiento-del-retratado, exif-o-autoria-declarada]
+
+# Uso: el brief de un proyecto se arma copiando la categoría que corresponde a cada hueco
+# sin imagen asignada en 03_CURATION. No se inventan categorías nuevas por proyecto: si
+# falta una, se añade aquí y se usa en el siguiente.

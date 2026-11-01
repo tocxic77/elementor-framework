@@ -1,0 +1,527 @@
+# Biblioteca de gusto — 54 sistemas de referencia
+#
+# Qué es: cada entrada es un sistema de diseño real, reducido a un espécimen comparable
+# (misma estructura: paleta, tipo, radio, sombra, acciones, medida) a 1440 y 390 px.
+# El espécimen se genera desde la ficha de tokens del sistema, NO es una captura del
+# sitio en vivo. take/avoid se derivan de lo que la ficha declara, no de una inspección
+# del sitio publicado.
+#
+# Cómo se usa: se elige por `take`, se descarta por `avoid`. Una firma nueva de un
+# DIRECTION.md debe poder citar al menos una entrada de esta lista.
+#
+# Reglas:
+#   take  → mecánica transferible, ≤3 por entrada.
+#   avoid → lo que ese sistema hace y nuestro sistema prohíbe, ≤3 por entrada.
+#   imagen→ capturas/<slug>.png, un PNG con escritorio y móvil en la misma pieza.
+#
+# Generado: 2026-10-31 · 59 entradas (54 ficha + 5 medidas) · 64 imágenes
+
+meta:
+  fuente: popular-web-designs (54 fichas de tokens en HTML/CSS) + 5 sitios medidos
+  generador: gen_doble.py
+  capturador: 1440 px + 390 px en una sola imagen
+  total: 59
+  medidos: 5
+  fecha: 2026-10-31
+
+referencias:
+  # ---------- IA y modelos ----------
+  - nombre: claude
+    categoria: ia
+    estilo: acento terracota cálido, composición editorial limpia
+    imagen: capturas/claude.png
+    take: [tono-editorial-sin-ruido, acento-unico-cálido, jerarquia-por-tamano]
+    avoid: [tarjetas-con-sombra]
+
+  - nombre: cohere
+    categoria: ia
+    estilo: gradientes vivos, estética de panel con datos
+    imagen: capturas/cohere.png
+    take: [densidad-de-datos-legible]
+    avoid: [gradientes-de-fondo, exceso-de-color-por-banda]
+
+  - nombre: elevenlabs
+    categoria: ia
+    estilo: UI cinematográfica oscura, onda de audio
+    imagen: capturas/elevenlabs.png
+    take: [negro-como-superficie-no-como-acento]
+    avoid: [animacion-constante, brillos-degradados]
+
+  - nombre: minimax
+    categoria: ia
+    estilo: interfaz oscura con acentos neón
+    imagen: capturas/minimax.png
+    take: [contraste-alto-en-oscuro]
+    avoid: [neon-sobre-negro-como-identidad]
+
+  - nombre: mistral.ai
+    categoria: ia
+    estilo: minimalismo francés, tono púrpura
+    imagen: capturas/mistral.ai.png
+    take: [reticula-amplia, una-sola-familia]
+    avoid: [acento-púrpura-genérico]
+
+  - nombre: ollama
+    categoria: ia
+    estilo: terminal primero, monocromo
+    imagen: capturas/ollama.png
+    take: [monocromo-con-jerarquia, mono-para-datos]
+    avoid: [todo-el-sitio-en-monoespaciado]
+
+  - nombre: opencode.ai
+    categoria: ia
+    estilo: tema oscuro para desarrolladores, monoespaciado total
+    imagen: capturas/opencode.ai.png
+    take: [bloques-de-codigo-como-contenido]
+    avoid: [monoespaciado-en-texto-largo]
+
+  - nombre: replicate
+    categoria: ia
+    estilo: lienzo blanco limpio, código al frente
+    imagen: capturas/replicate.png
+    take: [blanco-con-filetes, ejemplo-ejecutable-visible]
+    avoid: [hero-centrado-sin-fondo]
+
+  - nombre: runwayml
+    categoria: ia
+    estilo: UI oscura cinematográfica, rica en medios
+    imagen: capturas/runwayml.png
+    take: [video-como-fondo-con-texto-encima-legible]
+    avoid: [video-autoplay-sin-poster]
+
+  - nombre: together.ai
+    categoria: ia
+    estilo: técnico, tipo plano de ingeniería
+    imagen: capturas/together.ai.png
+    take: [reticula-visible, tablas-bien-resueltas]
+    avoid: [azul-tecnico-por-defecto]
+
+  - nombre: voltagent
+    categoria: ia
+    estilo: negro total, acento esmeralda, terminal nativo
+    imagen: capturas/voltagent.png
+    take: [acento-unico-sobre-negro]
+    avoid: [monocromo-sin-textura]
+
+  - nombre: x.ai
+    categoria: ia
+    estilo: monocromo tajante, monoespaciado
+    imagen: capturas/x.ai.png
+    take: [tipografia-grande-como-imagen]
+    avoid: [ausencia-de-imagenes-total]
+
+  # ---------- Herramientas de desarrollo ----------
+  - nombre: cursor
+    categoria: herramientas
+    estilo: oscuro pulido, acentos degradados
+    imagen: capturas/cursor.png
+    take: [superficie-oscura-con-un-solo-brillo]
+    avoid: [degradados-en-botones]
+
+  - nombre: expo
+    categoria: herramientas
+    estilo: oscuro, tracking cerrado, centrado en código
+    imagen: capturas/expo.png
+    take: [tracking-cerrado-en-titulares, jerarquia-de-codigo]
+    avoid: [texto-claro-sobre-oscuro-bajo-AA]
+
+  - nombre: linear.app
+    categoria: herramientas
+    estilo: oscuro ultra minimalista, preciso, acento púrpura
+    imagen: capturas/linear.app.png
+    take: [densidad-precisa, filetes-de-1px, un-acento-por-vista]
+    avoid: [purpura-como-color-de-marca]
+
+  - nombre: lovable
+    categoria: herramientas
+    estilo: degradados juguetones, tono amable
+    imagen: capturas/lovable.png
+    take: [lenguaje-directo-en-titulares]
+    avoid: [degradados-como-estructura]
+
+  - nombre: mintlify
+    categoria: herramientas
+    estilo: limpio, acento verde, optimizado para lectura
+    imagen: capturas/mintlify.png
+    take: [medida-de-lectura-corta, navegacion-lateral-persistente]
+    avoid: [verde-como-identidad-unica]
+
+  - nombre: posthog
+    categoria: herramientas
+    estilo: marca juguetona, UI oscura para desarrolladores
+    imagen: capturas/posthog.png
+    take: [ilustracion-propia, tono-humano-en-copy]
+    avoid: [mascota-como-estructura]
+
+  - nombre: raycast
+    categoria: herramientas
+    estilo: cromo oscuro, acentos degradados vivos
+    imagen: capturas/raycast.png
+    take: [atajos-visibles, densidad-alta-con-aire]
+    avoid: [degradado-como-fondo-de-banda]
+
+  - nombre: resend
+    categoria: herramientas
+    estilo: oscuro mínimo, acentos monoespaciados
+    imagen: capturas/resend.png
+    take: [mono-para-etiquetas, pocos-elementos-por-banda]
+    avoid: [oscuridad-sin-jerarquia]
+
+  - nombre: sentry
+    categoria: herramientas
+    estilo: panel oscuro denso en datos, acento rosa-púrpura
+    imagen: capturas/sentry.png
+    take: [tabla-como-prueba, cifras-contextualizadas]
+    avoid: [densidad-sin-respiro]
+
+  - nombre: supabase
+    categoria: herramientas
+    estilo: oscuro esmeralda, código primero
+    imagen: capturas/supabase.png
+    take: [codigo-real-en-la-portada]
+    avoid: [esmeralda-sobre-negro-sin-textura]
+
+  - nombre: superhuman
+    categoria: herramientas
+    estilo: oscuro premium, teclado primero, brillo púrpura
+    imagen: capturas/superhuman.png
+    take: [promesa-concreta-de-velocidad]
+    avoid: [brillo-como-profundidad]
+
+  - nombre: vercel
+    categoria: herramientas
+    estilo: blanco y negro de precisión, sistema Geist
+    imagen: capturas/vercel.png
+    take: [blanco-negro-sin-tercero, tipografia-como-sistema, filetes-1px]
+    avoid: [monocromo-en-todo-el-sitio]
+
+  - nombre: warp
+    categoria: herramientas
+    estilo: IDE oscuro, comandos en bloques
+    imagen: capturas/warp.png
+    take: [bloques-como-unidad-de-lectura]
+    avoid: [cromo-de-app-en-una-web]
+
+  - nombre: zapier
+    categoria: herramientas
+    estilo: naranja cálido, ilustración amable
+    imagen: capturas/zapier.png
+    take: [diagramas-de-flujo-como-contenido]
+    avoid: [naranja-saturado-en-superficies-grandes]
+
+  # ---------- Infraestructura y nube ----------
+  - nombre: clickhouse
+    categoria: infraestructura
+    estilo: acento amarillo, estilo de documentación técnica
+    imagen: capturas/clickhouse.png
+    take: [benchmark-con-fuente-visible]
+    avoid: [amarillo-sobre-blanco-sin-borde]
+
+  - nombre: composio
+    categoria: infraestructura
+    estilo: oscuro moderno con iconos de integración
+    imagen: capturas/composio.png
+    take: [iconografia-propia-uniforme]
+    avoid: [mosaico-de-logos-como-hero]
+
+  - nombre: hashicorp
+    categoria: infraestructura
+    estilo: corporativo limpio, blanco y negro
+    imagen: capturas/hashicorp.png
+    take: [sobriedad-corporativa-sin-adornos]
+    avoid: [ausencia-de-punto-de-vista]
+
+  - nombre: mongodb
+    categoria: infraestructura
+    estilo: hoja verde, foco en documentación
+    imagen: capturas/mongodb.png
+    take: [arquitectura-de-informacion-para-docs]
+    avoid: [verde-de-marca-en-todo]
+
+  - nombre: sanity
+    categoria: infraestructura
+    estilo: acento rojo, composición editorial
+    imagen: capturas/sanity.png
+    take: [contenido-primero, edicion-visible]
+    avoid: [rojo-saturado-en-cta]
+
+  - nombre: stripe
+    categoria: infraestructura
+    estilo: degradados púrpura, elegancia en peso 300
+    imagen: capturas/stripe.png
+    take: [peso-ligero-a-gran-tamano, retícula-de-dos-columnas, diagramas-como-prueba]
+    avoid: [degradados-de-fondo, malla-de-degradados]
+
+  # ---------- Diseño y productividad ----------
+  - nombre: airtable
+    categoria: diseno
+    estilo: colorido, amable, datos estructurados
+    imagen: capturas/airtable.png
+    take: [datos-como-demostracion]
+    avoid: [multiples-acentos-en-una-vista]
+
+  - nombre: cal
+    categoria: diseno
+    estilo: neutral limpio, simple para desarrolladores
+    imagen: capturas/cal.png
+    take: [formulario-como-pagina, cero-adorno]
+    avoid: [neutralidad-sin-caracter]
+
+  - nombre: clay
+    categoria: diseno
+    estilo: formas orgánicas, degradados suaves, dirección de arte fuerte
+    imagen: capturas/clay.png
+    take: [direccion-de-arte-antes-que-plantilla]
+    avoid: [formas-organicas-como-relleno]
+
+  - nombre: figma
+    categoria: diseno
+    estilo: multicolor vibrante, lúdico y profesional
+    imagen: capturas/figma.png
+    take: [color-por-funcion]
+    avoid: [paleta-multicolor-sin-regla]
+
+  - nombre: framer
+    categoria: diseno
+    estilo: negro y azul, movimiento primero
+    imagen: capturas/framer.png
+    take: [movimiento-con-proposito, tipografia-grande]
+    avoid: [animacion-en-cada-banda]
+
+  - nombre: intercom
+    categoria: diseno
+    estilo: paleta azul amable, patrones conversacionales
+    imagen: capturas/intercom.png
+    take: [voz-conversacional-en-copy]
+    avoid: [burbujas-de-chat-decorativas]
+
+  - nombre: miro
+    categoria: diseno
+    estilo: acento amarillo brillante, lienzo infinito
+    imagen: capturas/miro.png
+    take: [lienzo-como-marco-mental]
+    avoid: [amarillo-como-fondo-de-banda]
+
+  - nombre: notion
+    categoria: diseno
+    estilo: minimalismo cálido, titulares serif, superficies suaves
+    imagen: capturas/notion.png
+    take: [serif-en-titulares, gris-calido-como-fondo, densidad-documental]
+    avoid: [tarjetas-con-sombra-suave]
+
+  - nombre: pinterest
+    categoria: diseno
+    estilo: acento rojo, retícula tipo mampostería, imagen primero
+    imagen: capturas/pinterest.png
+    take: [imagen-antes-que-texto, proporcion-irregular]
+    avoid: [mamposteria-como-relleno]
+
+  - nombre: webflow
+    categoria: diseno
+    estilo: acento azul, marketing pulido
+    imagen: capturas/webflow.png
+    take: [composicion-de-marketing-resuelta]
+    avoid: [azul-saas-por-defecto]
+
+  # ---------- Fintech ----------
+  - nombre: coinbase
+    categoria: fintech
+    estilo: identidad azul limpia, tono institucional
+    imagen: capturas/coinbase.png
+    take: [claridad-institucional, numeros-con-contexto]
+    avoid: [azul-institucional-sin-acento]
+
+  - nombre: kraken
+    categoria: fintech
+    estilo: UI oscura con púrpura, paneles densos
+    imagen: capturas/kraken.png
+    take: [cifras-tabulares, densidad-controlada]
+    avoid: [densidad-de-panel-en-marketing]
+
+  - nombre: revolut
+    categoria: fintech
+    estilo: oscuro elegante, tarjetas degradadas, precisión
+    imagen: capturas/revolut.png
+    take: [premium-sin-adorno]
+    avoid: [tarjetas-degradadas-como-sistema]
+
+  - nombre: wise
+    categoria: fintech
+    estilo: verde brillante, amable y claro
+    imagen: capturas/wise.png
+    take: [claridad-de-tarifas, lenguaje-directo]
+    avoid: [verde-vivo-en-superficies-grandes]
+
+  # ---------- Enterprise y consumidor ----------
+  - nombre: airbnb
+    categoria: consumidor
+    estilo: coral cálido, foto dominante, UI redondeada
+    imagen: capturas/airbnb.png
+    take: [foto-como-estructura, radios-consistentes, busqueda-protagonista]
+    avoid: [reticula-de-tarjetas-iguales]
+
+  - nombre: apple
+    categoria: consumidor
+    estilo: blanco premium, SF Pro, imagen cinematográfica
+    imagen: capturas/apple.png
+    take: [aire-como-lujo, una-idea-por-pantalla, producto-en-escena]
+    avoid: [aspiracional-sin-dato, secciones-centradas-repetidas]
+
+  - nombre: bmw
+    categoria: consumidor
+    estilo: superficies oscuras premium, ingeniería precisa
+    imagen: capturas/bmw.png
+    take: [ficha-tecnica-como-contenido, oscuridad-con-detalle]
+    avoid: [coche-protagonista-en-todas-las-bandas]
+
+  - nombre: ibm
+    categoria: enterprise
+    estilo: sistema Carbon, paleta azul estructurada
+    imagen: capturas/ibm.png
+    take: [sistema-antes-que-pagina, retícula-de-16-columnas, tipografia-funcional]
+    avoid: [azul-corporativo-genérico]
+
+  - nombre: nvidia
+    categoria: enterprise
+    estilo: verde y negro, energía técnica
+    imagen: capturas/nvidia.png
+    take: [cifras-de-rendimiento-con-fuente]
+    avoid: [verde-sobre-negro-como-identidad]
+
+  - nombre: spacex
+    categoria: consumidor
+    estilo: blanco y negro tajante, imagen a sangre
+    imagen: capturas/spacex.png
+    take: [imagen-a-sangre-con-texto-fuera, cero-adorno]
+    avoid: [oscuridad-sin-jerarquia-tipografica]
+
+  - nombre: spotify
+    categoria: consumidor
+    estilo: verde vibrante sobre oscuro, tipografía gruesa
+    imagen: capturas/spotify.png
+    take: [tipografia-gruesa-como-identidad]
+    avoid: [verde-saturado-sobre-negro-en-texto]
+
+  - nombre: uber
+    categoria: consumidor
+    estilo: negro y blanco tajante, tipo apretada, energía urbana
+    imagen: capturas/uber.png
+    take: [tipografia-apretada, contraste-duro]
+    avoid: [monocromo-en-toda-la-jerarquia]
+
+  # ---------- Referencias medidas (sitios reales, 2026-10-31) ----------
+  # origen: medido · 1440 y 390 con el mismo instrumento que el gate del sistema.
+  - nombre: robwalling
+    categoria: referencia-autoridad
+    origen: medido
+    estilo: "444 palabras · 4 familias · 21 degradados · 20 sombras · 32 imágenes · 3,1 MB"
+    imagen: capturas/ref-robwalling-1440.png
+    take: [autoridad-personal-con-contenido-real, una-accion-por-banda]
+    avoid: [cuatro-familias-tipograficas, tarjetas-con-sombra]
+
+  - nombre: winwithoutpitching
+    categoria: referencia-autoridad
+    origen: medido
+    estilo: "844 palabras · 2 familias (Inter + Libre Baskerville) · 1,9 MB · 1 degradado"
+    imagen: capturas/ref-winwithoutpitching-1440.png
+    take: [serif-para-el-argumento-sans-para-la-interfaz, orden-sin-adorno]
+    avoid: [orden-sin-decision-visual]
+
+  - nombre: pentagram
+    categoria: referencia-innovacion
+    origen: medido
+    estilo: "2.997 palabras · 190 imágenes · 20 videos · 82 animaciones · 10,7 MB · 2 h1"
+    imagen: capturas/ref-pentagram-1440.png
+    take: [navegacion-como-identidad, imagen-como-contenido, escala-como-ritmo]
+    avoid: [10-7-mb-en-la-portada, dos-h1, veinte-videos-como-carga]
+
+  - nombre: ideo
+    categoria: referencia-innovacion
+    origen: medido
+    estilo: "2.470 palabras · 51 imágenes · 0 videos en portada · 63 reglas con sombra · peso no medible (48 KB reportados vienen de caché)"
+    imagen: capturas/ref-ideo-1440.png
+    take: [fotografia-real-como-evidencia, espacio-negativo, texto-que-explica-el-trabajo]
+    avoid: [sombras-en-63-reglas, movimiento-que-no-se-puede-medir]
+
+  - nombre: field
+    categoria: referencia-innovacion
+    origen: medido
+    estilo: "207 palabras · 17 videos · 0 degradados · 2 familias (DM Sans + DM Mono) · 1,0 MB"
+    imagen: capturas/ref-field-1440.png
+    take: [una-sola-ley-visual, video-como-estructura, dos-familias]
+    avoid: [portada-con-207-palabras, dependencia-de-material-que-no-existe]
+
+# Regla de uso: una referencia de `origen: medido` puede citarse en 04_DIRECTION con su
+# número. Una de `origen: ficha` sólo aporta la mecánica declarada por el sistema original.
+
+# ---------------------------------------------------------------------------------------
+# Las 30 que cuentan. De las 59, éstas son las que se usan para decidir; el resto es archivo.
+# Criterio: 10 de autoridad (claridad, estructura, credibilidad), 10 de innovación
+# (fotografía, escala, movimiento) y 10 rechazadas con motivo. Un rechazo vale tanto como
+# una referencia: dice qué no se hace y por qué.
+# ---------------------------------------------------------------------------------------
+seleccion:
+  autoridad:
+    - nombre: winwithoutpitching
+      porque: "2 familias, 844 palabras, serif para el argumento. El orden sin adorno."
+    - nombre: robwalling
+      porque: "autoridad personal con una sola acción por banda; 444 palabras."
+    - nombre: notion
+      porque: "serif en titulares, gris cálido, densidad documental sin tarjetas."
+    - nombre: mintlify
+      porque: "medida de lectura corta y navegación lateral persistente."
+    - nombre: stripe
+      porque: "peso ligero a gran tamaño; el diagrama como prueba, no como adorno."
+    - nombre: ibm
+      porque: "sistema antes que página: retícula de 16 columnas y tipo funcional."
+    - nombre: vercel
+      porque: "blanco y negro sin tercero; filetes de 1 px como estructura."
+    - nombre: linear.app
+      porque: "densidad precisa y un solo acento por vista."
+    - nombre: wise
+      porque: "claridad de tarifas y lenguaje directo: el dato ordena la página."
+    - nombre: sanity
+      porque: "contenido primero y edición visible."
+  innovacion:
+    - nombre: ideo
+      porque: "2.470 palabras y 51 imágenes: la fotografía real sostiene el argumento."
+    - nombre: field
+      porque: "una sola ley visual; 17 videos y 2 familias, cero degradados."
+    - nombre: pentagram
+      porque: "190 imágenes y escala como ritmo; la navegación como identidad."
+    - nombre: clay
+      porque: "dirección de arte antes que plantilla."
+    - nombre: framer
+      porque: "movimiento con propósito y tipografía grande."
+    - nombre: runwayml
+      porque: "video como superficie con texto legible encima."
+    - nombre: pinterest
+      porque: "imagen antes que texto; proporción irregular."
+    - nombre: bmw
+      porque: "ficha técnica como contenido; oscuridad con detalle."
+    - nombre: spacex
+      porque: "imagen a sangre con el texto fuera del encuadre."
+    - nombre: elevenlabs
+      porque: "negro como superficie, no como acento."
+  rechazadas:
+    - nombre: lovable
+      motivo: "degradado como estructura: la página se sostiene en el fondo."
+    - nombre: raycast
+      motivo: "degradado como fondo de banda."
+    - nombre: superhuman
+      motivo: "brillo como profundidad."
+    - nombre: minimax
+      motivo: "neón sobre negro como identidad."
+    - nombre: cohere
+      motivo: "exceso de color por banda y gradientes de fondo."
+    - nombre: cursor
+      motivo: "degradados en botones."
+    - nombre: revolut
+      motivo: "tarjetas degradadas como sistema."
+    - nombre: zapier
+      motivo: "naranja saturado en superficies grandes."
+    - nombre: miro
+      motivo: "amarillo como fondo de banda."
+    - nombre: airtable
+      motivo: "varios acentos en una misma vista."
+

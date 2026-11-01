@@ -1,0 +1,19 @@
+# entornos y credenciales
+.env
+.env.*
+*.key
+*.pem
+
+# python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# artefactos regenerables
+framework/03_CURATION/gusto/capturas/
+
+# sistema
+.DS_Store
+Thumbs.db
+desktop.ini
