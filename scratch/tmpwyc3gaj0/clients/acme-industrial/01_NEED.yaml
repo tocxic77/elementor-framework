@@ -1,0 +1,23 @@
+cliente: acme-industrial
+estado: completo
+respuestas:
+  a1: {respuesta: "x", fuente: "Mario, 2026-11-01"}
+  a2: {respuesta: "x", fuente: "Mario, 2026-11-01"}
+  a3: {respuesta: "x", fuente: "Mario, 2026-11-01"}
+  a4: {respuesta: "x", fuente: "Mario, 2026-11-01"}
+  a5: {respuesta: "x", fuente: "Mario, 2026-11-01"}
+  a6: {respuesta: "x", fuente: "Mario, 2026-11-01"}
+  b1: {respuesta: "x", fuente: "Mario, 2026-11-01"}
+  b2: {respuesta: "x", fuente: "Mario, 2026-11-01"}
+  b3: {respuesta: "x", fuente: "Mario, 2026-11-01"}
+  b4: {respuesta: "x", fuente: "Mario, 2026-11-01"}
+  b5: {respuesta: "x", fuente: "Mario, 2026-11-01"}
+  c1: {respuesta: "x", fuente: "Mario, 2026-11-01"}
+  c2: {respuesta: "x", fuente: "Mario, 2026-11-01"}
+  c3: {respuesta: "x", fuente: "Mario, 2026-11-01"}
+  c4: {respuesta: "x", fuente: "Mario, 2026-11-01"}
+  c5: {respuesta: "x", fuente: "Mario, 2026-11-01"}
+  d1: {respuesta: "x", fuente: "Mario, 2026-11-01"}
+  d2: {respuesta: "x", fuente: "Mario, 2026-11-01"}
+  d3: {respuesta: "x", fuente: "Mario, 2026-11-01"}
+  d4: {respuesta: "x", fuente: "Mario, 2026-11-01"}

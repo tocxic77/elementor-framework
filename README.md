@@ -137,6 +137,8 @@ documento en blanco o un repositorio sin `clients/` ya no salen `0`.
 | `framework/tools/medir_referentes.py` | **referentes**: cruza los mecanismos observados en cada sitio analizado con el material del cliente; un mecanismo inventado en `REFERENTES.yaml` es error de dato | instrumento, no puerta |
 | `framework/04_DIRECTION/MATERIALES.yaml` | **protocolo de material**: por cada material, a quién preguntarle, con qué pregunta, qué documento lo prueba y en qué campo se archiva | no es una guía genérica: se cruza con los huecos de un cliente |
 | `framework/tools/plan_material.py` | convierte lo que falta en un **plan de entrevista** para este cliente; falla si la biblioteca usa un material sin protocolo de obtención | instrumento, no puerta |
+| `framework/tools/medir_migracion.py` | Cuánta autoridad pública sigue en dominio ajeno; separa enlazar de rehospedar |
+| `framework/tools/verificar_composicion.py` | La arquitectura propuesta sólo usa mecanismos disponibles, patrones reales y evidencia que existe |
 | `inventario_activos.py` | inventario medido de una carpeta de material | CSV |
 | `adapters/elementor/verificar_sistema.py` | variables con token de origen y componentes presentes en el kit | `SISTEMA OK · N comprobaciones, 0 fallos` |
 | `adapters/elementor/auditar_sitio.py` | un sitio ya publicado: páginas con estructura de Elementor, plantillas duplicadas, 404 mal condicionado, imágenes, H1, **favicon y `og:image`** | tabla + `AUDITORÍA · N fallos` |

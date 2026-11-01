@@ -136,6 +136,35 @@ def medir(cliente):
     }, None
 
 
+def disponibilidad(medidas, mecanismos):
+    """Única implementación de «este mecanismo está disponible para este cliente»."""
+    disponibles, faltan = [], []
+    for nombre, datos in mecanismos.items():
+        # `requiere`: todos. `requiere_uno_de`: al menos uno.
+        faltantes = [m for m in (datos.get("requiere") or []) if not hay(medidas.get(m, (None,))[0])]
+        for material, umbral in (datos.get("minimo") or {}).items():
+            valor = medidas.get(material, (None,))[0]
+            if valor is None:
+                aviso = material
+            elif valor < umbral:
+                aviso = "%s: %d de %d" % (material, valor, umbral)
+            else:
+                continue
+            if material not in faltantes and aviso not in faltantes:
+                faltantes = [f for f in faltantes if f != material] + [aviso]
+        alternativas = datos.get("requiere_uno_de") or []
+        if alternativas:
+            # Una alternativa con umbral no está cubierta por el primer dato: se exige el mínimo.
+            def sirve(material):
+                valor = medidas.get(material, (None,))[0]
+                umbral = (datos.get("minimo") or {}).get(material)
+                return (valor is not None and valor >= umbral) if umbral is not None else hay(valor)
+            if not any(sirve(m) for m in alternativas):
+                faltantes.append("uno de: " + " / ".join(alternativas))
+        (faltan if faltantes else disponibles).append((nombre, faltantes))
+    return disponibles, faltan
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--cliente", required=True)
@@ -172,30 +201,7 @@ def main():
                 FUENTES.get(nombre, ""), valor or 0, fuente)
         print("  %-30s %-8s %s" % (nombre, marca, fuente))
 
-    disponibles, faltan = [], []
-    for nombre, datos in mecanismos.items():
-        # `requiere`: todos. `requiere_uno_de`: al menos uno.
-        faltantes = [m for m in (datos.get("requiere") or []) if not hay(medidas.get(m, (None,))[0])]
-        for material, umbral in (datos.get("minimo") or {}).items():
-            valor = medidas.get(material, (None,))[0]
-            if valor is None:
-                aviso = material
-            elif valor < umbral:
-                aviso = "%s: %d de %d" % (material, valor, umbral)
-            else:
-                continue
-            if material not in faltantes and aviso not in faltantes:
-                faltantes = [f for f in faltantes if f != material] + [aviso]
-        alternativas = datos.get("requiere_uno_de") or []
-        if alternativas:
-            # Una alternativa con umbral no está cubierta por el primer dato: se exige el mínimo.
-            def sirve(material):
-                valor = medidas.get(material, (None,))[0]
-                umbral = (datos.get("minimo") or {}).get(material)
-                return (valor is not None and valor >= umbral) if umbral is not None else hay(valor)
-            if not any(sirve(m) for m in alternativas):
-                faltantes.append("uno de: " + " / ".join(alternativas))
-        (faltan if faltantes else disponibles).append((nombre, faltantes))
+    disponibles, faltan = disponibilidad(medidas, mecanismos)
 
     print("\nDISPONIBLES %d de %d" % (len(disponibles), len(mecanismos)))
     for nombre, _ in disponibles:

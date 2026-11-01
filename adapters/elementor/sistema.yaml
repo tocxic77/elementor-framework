@@ -70,5 +70,9 @@ patrones:
     componente: 11393      # Tarjeta de línea de trabajo
   credencial:
     componente: null       # hueco: franja de atributos en línea
+  prueba:
+    componente: null
+    forma: "banda de imagen propia con pie de evidencia"
+    cuando: "hay imágenes propias que prueban el oficio mejor que cualquier frase"
   caso:
     componente: null       # hueco: lista editorial situación → método → resultado

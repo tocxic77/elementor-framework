@@ -313,6 +313,36 @@ afirmaciones:
                 int(bool(_re.search(r"trayectoria_publica\s+0\b", stdout_de(
                     "medir_material.py", ["--cliente", str(otro)])))), 1)
 
+        arq = c.tmp / "arq.yaml"
+        arq.write_text(
+            "bandas:\n"
+            "  - {n: 1, objetivo: metodo, mecanismos: [metodo_en_secuencia], patron: proceso,"
+            " componente: 11383, evidencia: ['problema_declarado'], activo: null, cta: null}\n",
+            encoding="utf-8")
+        esperar("composicion · una banda sostenible pasa",
+                correr("verificar_composicion.py", ["--cliente", c.cliente, "--arquitectura", str(arq)])[0], 0)
+        arq.write_text(
+            "bandas:\n"
+            "  - {n: 1, objetivo: metodo, mecanismos: [metodo_en_secuencia, prueba_distribuida],"
+            " patron: proceso, componente: 11383, evidencia: ['problema_declarado']}\n"
+            "prohibidos:\n  - {mecanismo: prueba_distribuida, motivo: sin testimonios}\n",
+            encoding="utf-8")
+        esperar("composicion · un mecanismo prohibido por material falla",
+                correr("verificar_composicion.py", ["--cliente", c.cliente, "--arquitectura", str(arq)])[0], 1)
+        arq.write_text(
+            "bandas:\n"
+            "  - {n: 1, objetivo: relleno, mecanismos: [], patron: proceso, componente: 11383}\n",
+            encoding="utf-8")
+        esperar("composicion · una banda sin mecanismo es decorativa y falla",
+                correr("verificar_composicion.py", ["--cliente", c.cliente, "--arquitectura", str(arq)])[0], 1)
+        arq.write_text(
+            "bandas:\n"
+            "  - {n: 1, objetivo: hero, mecanismos: [metodo_en_secuencia], patron: apertura,"
+            " componente: 11383}\n",
+            encoding="utf-8")
+        esperar("composicion · componente que no es el del patron falla",
+                correr("verificar_composicion.py", ["--cliente", c.cliente, "--arquitectura", str(arq)])[0], 1)
+
         respaldo = (c.cliente / "02_EVIDENCE.yaml").read_text(encoding="utf-8")
         (c.cliente / "02_EVIDENCE.yaml").write_text(respaldo +
             "\npiezas:\n  - {id: P-A, tipo: medio, titulo: ajeno, publicable: true, "
