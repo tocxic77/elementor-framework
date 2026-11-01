@@ -226,3 +226,4 @@ completo o sólo trasladado.
 
 MIT — ver [`LICENSE`](LICENSE). Los 64 PNG de la biblioteca de gusto no se incluyen por
 peso y por derechos; se regeneran con `framework/03_CURATION/gusto/gen_specimen.py`.
+| `framework/tools/verificar_wireframe.py` | El wireframe es la arquitectura banda por banda; ninguna ranura obligatoria se llena de la nada |

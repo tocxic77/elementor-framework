@@ -313,6 +313,32 @@ afirmaciones:
                 int(bool(_re.search(r"trayectoria_publica\s+0\b", stdout_de(
                     "medir_material.py", ["--cliente", str(otro)])))), 1)
 
+        cinco = c.cliente / "05_SYSTEM"
+        cinco.mkdir(parents=True, exist_ok=True)
+        ARQ = ("bandas:\n"
+               "  - {n: 1, objetivo: metodo, mecanismos: [metodo_en_secuencia], patron: proceso,"
+               " componente: 11383, evidencia: ['problema_declarado']}\n")
+        WIRE = ("esquema_componentes: {medido: false}\n"
+                "bandas:\n"
+                "  - {banda: 1, objetivo: metodo, patron: proceso, componente: 11383, slots: ["
+                "{ranura: titulo, funcion: x, fuente: 'docs/PRODUCT.md', obligatorio: true}]}\n")
+        (cinco / "ARQUITECTURA.yaml").write_text(ARQ, encoding="utf-8")
+        (cinco / "WIREFRAME.yaml").write_text(WIRE, encoding="utf-8")
+        esperar("wireframe · coherente pero con slots del kit sin medir devuelve 3",
+                correr("verificar_wireframe.py", ["--cliente", c.cliente])[0], 3)
+        (cinco / "WIREFRAME.yaml").write_text(WIRE.replace("fuente: 'docs/PRODUCT.md', ", ""),
+                                                encoding="utf-8")
+        esperar("wireframe · ranura obligatoria sin fuente falla",
+                correr("verificar_wireframe.py", ["--cliente", c.cliente])[0], 1)
+        (cinco / "WIREFRAME.yaml").write_text(WIRE.replace("componente: 11383", "componente: 11377"),
+                                                encoding="utf-8")
+        esperar("wireframe · componente distinto al de la arquitectura falla",
+                correr("verificar_wireframe.py", ["--cliente", c.cliente])[0], 1)
+        (cinco / "WIREFRAME.yaml").write_text(WIRE.replace("banda: 1", "banda: 2"), encoding="utf-8")
+        esperar("wireframe · banda que la arquitectura no tiene falla",
+                correr("verificar_wireframe.py", ["--cliente", c.cliente])[0], 1)
+        (cinco / "WIREFRAME.yaml").write_text(WIRE, encoding="utf-8")
+
         arq = c.tmp / "arq.yaml"
         arq.write_text(
             "bandas:\n"
