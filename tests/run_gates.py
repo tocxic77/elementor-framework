@@ -109,6 +109,13 @@ class Caso:
 resultados = []
 
 
+def stdout_de(script, args, donde=None):
+    """Stdout del instrumento, para los casos que no se deciden por código de salida."""
+    import subprocess
+    cmd = [sys.executable, str((donde or RAIZ) / script)] + list(args)
+    return subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8").stdout
+
+
 def esperar(nombre, obtenido, esperado):
     ok = obtenido == esperado
     resultados.append((nombre, ok, obtenido, esperado))
@@ -282,6 +289,16 @@ def main():
                 correr("medir_material.py", ["--cliente", c.cliente, "--mecanismos", bib])[0], 0)
         bib.write_text(original_bib.replace("requiere: [problema_declarado]",
                                             "requiere: [problema_que_no_existe]"), encoding="utf-8")
+        c.escribir("02_EVIDENCE.yaml", """
+afirmaciones:
+  - {id: T1, valor: uno, tipo: testimonio, estado: validada}
+  - {id: T2, valor: dos, tipo: testimonio, estado: validada}
+  - {id: T3, valor: tres, tipo: testimonio, estado: validada}
+""")
+        esperar("materiales · tres testimonios declarados dejan de ser NO MEDIDO",
+                int("testimonios_reales             3" in stdout_de("medir_material.py",
+                    ["--cliente", c.cliente])), 1)
+
         esperar("materiales · el plan de entrevista se genera desde los huecos",
                 correr("plan_material.py", ["--cliente", c.cliente])[0], 0)
         c.escribir("MEC_inventado.yaml", """

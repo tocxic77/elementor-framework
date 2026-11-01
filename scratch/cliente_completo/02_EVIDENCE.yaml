@@ -1,0 +1,56 @@
+cliente: Pennacchiotti
+fecha: 2026-10-31
+activos:
+  imagenes: 20
+  clips: 6
+  fuente: Pennacchiotti.cl/02_MATERIAL.md:1
+afirmaciones:
+- id: EV-001
+  valor: 350+ profesionales formados
+  estado: validada
+  fuente: docs/PRODUCT.md:71
+  autorizado_por: Mario
+  fecha: 2026-10-27
+- id: EV-002
+  valor: 40+ organizaciones acompañadas
+  estado: validada
+  fuente: docs/PRODUCT.md:72
+  autorizado_por: Mario
+  fecha: 2026-10-27
+- id: EV-003
+  valor: 5 países
+  estado: validada
+  fuente: docs/PRODUCT.md:73
+  autorizado_por: Mario
+  fecha: 2026-10-27
+- id: EV-004
+  valor: margen >55 %
+  estado: rechazada
+  motivo: quedó fuera de la autorización del 2026-10-27; sigue siendo no publicable
+  fuente: docs/PRODUCT.md:74-77
+- id: EV-005
+  valor: 70 personas, USD 180 MM, error 20 %→<5 %, -70 % quiebres
+  estado: rechazada
+  motivo: 'resultados de empresas donde fue empleado: sólo experiencia narrada, sin
+    atribución ni cifra'
+  fuente: docs/PRODUCT.md:74
+- id: TS-1
+  valor: cita
+  tipo: testimonio
+  estado: validada
+  fuente: x
+- id: TS-2
+  valor: cita
+  tipo: testimonio
+  estado: validada
+  fuente: x
+- id: TS-3
+  valor: cita
+  tipo: testimonio
+  estado: validada
+  fuente: x
+- id: CS-1
+  valor: caso
+  tipo: caso
+  estado: validada
+  fuente: x

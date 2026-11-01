@@ -50,6 +50,8 @@ def texto(valor):
 def medir(cliente):
     need, err_need = cargar_yaml(os.path.join(cliente, "01_NEED.yaml"))
     act, err_act = cargar_yaml(os.path.join(cliente, "03_ASSETS.yaml"))
+    evid, _ = cargar_yaml(os.path.join(cliente, "02_EVIDENCE.yaml"))
+    evid = evid or {}
     if err_need:
         return None, err_need
     respuestas = need.get("respuestas") or {}
@@ -61,6 +63,21 @@ def medir(cliente):
 
     # Una oferta gratis es una oferta. `precio: 0` es precio publicado; `precio: null` es
     # precio no publicado; la ausencia de `ofertas` no es cero, es NO MEDIDO.
+    # Las afirmaciones llevan `tipo`: sin él no se puede saber si son prueba, caso o trayectoria.
+    afirmaciones = [a for a in (evid.get("afirmaciones") or []) if isinstance(a, dict)]
+
+    def con_tipo(cual):
+        return len([a for a in afirmaciones
+                    if str(a.get("tipo") or "").strip().lower() == cual
+                    and str(a.get("estado") or "").strip().lower() in ("validada", "validado", "aprobada")])
+
+    # Declarado y vacío no es lo mismo que no declarado.
+    def cuenta(clave, elemento, campos):
+        if clave not in need:
+            return None
+        return len([x for x in (need.get(clave) or [])
+                    if isinstance(x, dict) and any(x.get(c) for c in campos)])
+
     ofertas = [o for o in (need.get("ofertas") or []) if isinstance(o, dict)]
     con_precio = [o for o in ofertas if o.get("precio") is not None]
 
@@ -74,15 +91,19 @@ def medir(cliente):
                                 "01_NEED.yaml intencion.audiencia"),
         "evidencia_visual_propia": (len(visuales),
                                     "03_ASSETS.yaml activos seleccionados con autorizacion: propia"),
-        "testimonios_reales": (None, "02_EVIDENCE.yaml: las afirmaciones no declaran tipo"),
-        "caso_documentado": (None, "02_EVIDENCE.yaml: las afirmaciones no declaran tipo"),
-        "trayectoria_publica": (None, "02_EVIDENCE.yaml: las afirmaciones no declaran tipo"),
-        "ofertas_distintas": (len(ofertas) if ofertas else None,
+        "testimonios_reales": (con_tipo("testimonio"),
+                               "02_EVIDENCE.yaml afirmaciones tipo: testimonio"),
+        "caso_documentado": (con_tipo("caso"), "02_EVIDENCE.yaml afirmaciones tipo: caso"),
+        "trayectoria_publica": (cuenta("trayectoria", "hecho", ("hecho", "hito")),
+                                "01_NEED.yaml trayectoria[].hecho"),
+        "ofertas_distintas": (len(ofertas) if ofertas else (None if "ofertas" not in need else 0),
                               "01_NEED.yaml ofertas (gratis cuenta)"),
-        "precio_publico": (len(con_precio) if ofertas else None,
+        "precio_publico": (len(con_precio) if ofertas else (None if "ofertas" not in need else 0),
                            "01_NEED.yaml ofertas[].precio (0 = gratis, null = no publicado)"),
-        "atributos_verificables": (None, "01_NEED.yaml: no hay lista de atributos"),
-        "propiedades_propias": (None, "no hay inventario de propiedades propias"),
+        "atributos_verificables": (cuenta("atributos", "atributo", ("atributo",)),
+                                   "01_NEED.yaml atributos[].atributo"),
+        "propiedades_propias": (cuenta("propiedades", "dominio", ("dominio",)),
+                                "01_NEED.yaml propiedades[].dominio"),
     }, None
 
 
