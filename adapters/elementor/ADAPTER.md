@@ -26,7 +26,9 @@ Verificado contra **Elementor 4.3.5 / Pro 4.3.0**, kit `11286`.
 4. Colores y tamaños se referencian con `var(--token)`. Prohibido hex en el estilo de
    un elemento.
 5. Anidación máxima: 4 niveles. Espaciado uniforme con `gap` en el padre, no con
-   márgenes en los hijos.
+   `margin`/`padding` sueltos ni con el widget `spacer`: un `spacer` es un elemento vacío
+   que ocupa DOM y rompe la uniformidad, así que **es FALLA**, no aviso. Un hueco se declara
+   en la clase del padre; si el hueco cambia por breakpoint, se declara en la misma clase.
 6. Cada elemento necesita un `configuration-id` único dentro de la composición.
 7. Breakpoints reales del kit: `--tablet` = 1025 px, `--mobile` = 768 px (máximo
    inclusivo). No se usan 1024/767.

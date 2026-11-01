@@ -254,6 +254,12 @@ def main():
         esperar("estructura · página conforme pasa", estructura(), 0)
         esperar("estructura · R1 container prohibido",
                 estructura(lambda d: d[0].update(elType="container")), 1)
+        def con_spacer(d):
+            d[0]["elements"][0]["elements"].append(
+                {"id": "sp", "elType": "widget", "widgetType": "spacer",
+                 "settings": {"classes": ["pp-band"], "configuration-id": "sp"}, "elements": []})
+            return d
+        esperar("estructura · spacer es FALLA, no aviso", estructura(con_spacer), 1)
         esperar("estructura · R2 text-editor prohibido",
                 estructura(lambda d: hoja(d).update(widgetType="text-editor")), 1)
         esperar("estructura · R2 html prohibido",
@@ -398,6 +404,62 @@ def main():
                             "--sitio", "https://ejemplo.cl"],
                            capture_output=True, text=True, env=entorno, cwd=str(RAIZ))
         esperar("sitio · sin credenciales sale NO MEDIDO", r.returncode, 3)
+
+        # ARQUITECTURA DE SITIO · lo que sólo existe entre páginas
+        def paginas(n=3, cabecera="PENNACCHIOTTI", cta=False, distinto=False):
+            d = c.tmp / ("exports%d" % (n * 100 + (1 if distinto else 0) + (2 if cta else 0)))
+            d.mkdir(exist_ok=True)
+            for i in range(n):
+                bloque_cabecera = {
+                    "id": "h", "elType": "e-flexbox",
+                    "settings": {"classes": ["pp-band"], "gap": {"unit": "px", "size": 24},
+                                 "configuration-id": "h"},
+                    "elements": [{"id": "l", "elType": "widget", "widgetType": "e-heading",
+                                  "settings": {"classes": ["pp-display"],
+                                               "title": ("%s %d" % (cabecera, i)) if distinto else cabecera,
+                                               "configuration-id": "l"}, "elements": []}]}
+                cuerpo = {"id": "c", "elType": "e-flexbox",
+                          "settings": {"classes": ["pp-band"], "configuration-id": "c"},
+                          "elements": [{"id": "t", "elType": "widget", "widgetType": "e-heading",
+                                        "settings": {"classes": ["pp-display"],
+                                                     "title": "Pagina %d" % i,
+                                                     "configuration-id": "t"}, "elements": []}]}
+                elementos_pagina = [bloque_cabecera, cuerpo]
+                if cta:
+                    elementos_pagina.append({
+                        "id": "cta", "elType": "e-flexbox",
+                        "settings": {"classes": ["pp-band"], "configuration-id": "cta"},
+                        "elements": [
+                            {"id": "x", "elType": "widget", "widgetType": "e-heading",
+                             "settings": {"classes": ["pp-display"], "title": "Hablemos",
+                                          "configuration-id": "x"}, "elements": []},
+                            {"id": "y", "elType": "widget", "widgetType": "e-paragraph",
+                             "settings": {"classes": ["pp-body"], "text": "Escribenos",
+                                          "configuration-id": "y"}, "elements": []}]})
+                elementos_pagina.append({
+                    "id": "f", "elType": "e-flexbox",
+                    "settings": {"classes": ["pp-band"], "configuration-id": "f"},
+                    "elements": [{"id": "p", "elType": "widget", "widgetType": "e-paragraph",
+                                  "settings": {"classes": ["pp-body"],
+                                               "text": ("Pie %d" % i) if distinto else "Pie",
+                                               "configuration-id": "p"}, "elements": []}]})
+                (d / ("pagina-%d.json" % i)).write_text(json.dumps(elementos_pagina),
+                                                        encoding="utf-8")
+            return d
+
+        esperar("arquitectura · cabecera y pie copiados en 3 páginas fallan",
+                correr("verificar_arquitectura.py", [paginas(3)])[0], 1)
+        esperar("arquitectura · páginas con cabecera propia no fallan",
+                1 if correr("verificar_arquitectura.py", [paginas(3, distinto=True)])[0] == 1 else 0, 0)
+        esperar("arquitectura · un bloque repetido es REVISAR, no falla",
+                1 if correr("verificar_arquitectura.py",
+                            [paginas(3, cta=True, distinto=True)])[0] == 1 else 0, 0)
+        esperar("arquitectura · con dos páginas no se puede juzgar",
+                correr("verificar_arquitectura.py", [paginas(2)])[0], 3)
+        vacia = c.tmp / "exports_vacia"
+        vacia.mkdir(exist_ok=True)
+        esperar("arquitectura · carpeta sin exports es NO MEDIDO",
+                correr("verificar_arquitectura.py", [vacia])[0], 3)
 
         # release
         codigo, salida = correr("verificar_release.py", [c.cliente])

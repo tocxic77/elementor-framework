@@ -182,6 +182,11 @@ def main(argv):
         # R2 · texto
         if widget in WIDGETS_PROHIBIDOS:
             p.falla("R2 %s: widget %s prohibido (usa e-heading o e-paragraph)" % (ruta, widget))
+        elif widget in ("spacer", "divider"):
+            # Regla 5: el hueco se declara con `gap` en la clase del padre, no con un
+            # elemento vacío. Avisar no basta: una regla que sale OK con aviso no es regla.
+            p.falla("R5 %s: widget %s ocupando DOM (usa gap en la clase del padre)"
+                    % (ruta, widget))
         elif widget and not widget.startswith("e-") and tipo == "widget":
             p.aviso("R2 %s: widget «%s» fuera de la capa atómica" % (ruta, widget))
 

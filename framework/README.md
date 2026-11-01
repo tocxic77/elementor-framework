@@ -72,7 +72,7 @@ es del cliente, aunque se llame igual.
 
 ```
 04_WEB/
-├── framework/          6 ranuras, 3 archivos de sistema, 10 puertas — cero nombres de cliente
+├── framework/          6 ranuras, 3 archivos de sistema, 11 puertas — cero nombres de cliente
 ├── clients/
 │   └── <cliente>/  01_NEED.yaml · 02_EVIDENCE.yaml · 03_ASSETS.yaml · 03_SELECCION.md
 │                       DIRECTION.md · 05_SYSTEM/ (página, assets, capturas) · docs · material

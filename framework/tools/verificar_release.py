@@ -109,6 +109,13 @@ def main(argv):
     else:
         pasos.append(("estructura", "", []))
 
+    # Arquitectura de sitio: necesariamente más de una página.
+    carpeta_exports = cliente / "05_SYSTEM" / "_elementor_data" if cliente else None
+    if carpeta_exports and carpeta_exports.is_dir() and len(list(carpeta_exports.glob("*.json"))) >= 3:
+        pasos.append(("arquitectura", "verificar_arquitectura.py", [str(carpeta_exports)]))
+    else:
+        pasos.append(("arquitectura", "", []))
+
     if args.sitio:
         pasos.append(("404", "verificar_404.py", ["--sitio", args.sitio]))
     else:
@@ -124,6 +131,7 @@ def main(argv):
             motivo = {
                 "sistema": "sin ELEMENTOR_MCP_URL: el kit vivo no se midió",
                 "estructura": "sin export de _elementor_data: el artefacto publicado no se auditó",
+                "arquitectura": "sin al menos 3 exports de página en 05_SYSTEM/_elementor_data/: no hay relación entre páginas que medir",
                 "servido": "sin registro de activos o sin páginas: no hay nada que cruzar",
                 "404": "sin --sitio: el código de la página inexistente no se pidió",
             }.get(nombre, "sin instrumento")
