@@ -77,11 +77,15 @@ componentes:
     nombre: Prueba material
     uid: component-4f9780cc-7fe9-4ca2-9b59-03154d4dcba9
     origen: "creado 2026-11-01 desde 05_SYSTEM/COMPONENTE-pp-prueba.yaml"
-    estado: creado_sin_estilo
+    estado: publicado_con_estilo
+    clases: {raiz: [pp-band, pp-stack], fila: [pp-grid-2], img-1: [pp-figure], img-2: [pp-figure], pie: [pp-meta]}
+    estructura: "<e-flexbox raiz><e-flexbox fila>img-1, img-2</e-flexbox>pie</e-flexbox>"
+    verificado: {estructura: true, props: true, render: false}
+    nota_render: "el preview devuelve una URL firmada que el MCP trunca: las clases se confirman al colocar la banda 2 en una pagina"
     ranuras:
       - {nombre: imagen, etiqueta: Imagen principal, tipo: imagen, campos: [src, size, alt]}
       - {nombre: pie, etiqueta: Pie de prueba, tipo: texto_parrafo}
       - {nombre: segunda_imagen, etiqueta: Segunda imagen, tipo: imagen, campos: [src, size, alt]}
     restricciones:
-      - "creado sin clases ni tokens: el estilo es la pasada siguiente, no parte de esta"
+      - "estilo resuelto con cuatro clases existentes y cero tokens nuevos: no se creo ninguna clase"
       - "el pie trae un texto de relleno que se reemplaza por atributos[1] en cada instancia"
