@@ -282,6 +282,18 @@ def main():
                 correr("medir_material.py", ["--cliente", c.cliente, "--mecanismos", bib])[0], 0)
         bib.write_text(original_bib.replace("requiere: [problema_declarado]",
                                             "requiere: [problema_que_no_existe]"), encoding="utf-8")
+        esperar("materiales · el plan de entrevista se genera desde los huecos",
+                correr("plan_material.py", ["--cliente", c.cliente])[0], 0)
+        c.escribir("MEC_inventado.yaml", """
+mecanismos:
+  inventado:
+    grupo: prueba
+    requiere: [material_que_no_existe]
+""")
+        esperar("materiales · un material sin protocolo de obtención falla",
+                correr("plan_material.py", ["--cliente", c.cliente,
+                                            "--mecanismos", str(c.yaml("MEC_inventado.yaml"))])[0], 1)
+
         ref = c.escribir("REFERENTES.yaml", """
 cliente: acme-industrial
 referentes:

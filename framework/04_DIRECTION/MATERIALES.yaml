@@ -1,0 +1,123 @@
+# Protocolo de material
+#
+# El inverso de medir_material.py. Aquel dice qué falta; éste dice a quién preguntárselo,
+# con qué pregunta, qué documento lo prueba y en qué campo se archiva.
+#
+# Un material no se escribe: se obtiene. Si no hay pregunta que lo produzca, no es un
+# material, es una suposición.
+#
+# `quien`     dueño · cliente_final · archivo · material_fotografico
+# `destino`   archivo y campo exactos donde el material queda registrado
+# `umbral`    cuántas unidades hacen falta para que habilite mecanismos
+#
+# Los nombres deben coincidir con los que usa 04_DIRECTION/MECANISMOS.yaml.
+
+materiales:
+
+  problema_declarado:
+    quien: dueño
+    pregunta:
+      - ¿Qué le pasaba al último cliente cuando llegó? Cuéntemelo como se lo contaría a un amigo.
+      - ¿Qué palabras usa él para describirlo? ¿Tiene el mensaje o el correo original?
+    documento: el mensaje real del cliente, no la paráfrasis
+    destino: 01_NEED.yaml · respuestas.a2
+    umbral: 1
+
+  objecion_declarada:
+    quien: dueño
+    pregunta:
+      - ¿Qué le dicen cuando decide no comprar o no seguir?
+      - ¿Cuál es la duda que usted sabe que tienen todos y casi nadie dice en voz alta?
+    documento: objeción citada en una conversación real
+    destino: 01_NEED.yaml · intencion.objecion
+    umbral: 1
+
+  conversion_declarada:
+    quien: dueño
+    pregunta:
+      - ¿Qué tiene que hacer alguien para contratarlo, paso por paso?
+      - ¿Cuál es el paso que casi nadie da?
+    documento: el recorrido real, con lo que ocurre en cada paso
+    destino: 01_NEED.yaml · intencion.accion
+    umbral: 1
+
+  audiencia_declarada:
+    quien: dueño
+    pregunta:
+      - ¿Quiénes son los tres clientes que sí quiere repetir?
+      - ¿Y los tres que preferiría no tener? ¿Por qué?
+    documento: lista de clientes reales, con rubro y tamaño
+    destino: 01_NEED.yaml · intencion.audiencia
+    umbral: 1
+
+  evidencia_visual_propia:
+    quien: material_fotografico
+    pregunta:
+      - ¿Tiene fotos del trabajo real, del proceso, del producto?
+      - ¿Quién las tomó? ¿Puede usarlas en la web?
+    documento: archivo original con autoría declarada
+    destino: 03_ASSETS.yaml · activos[].autorizacion = propia
+    umbral: 1
+
+  testimonios_reales:
+    quien: cliente_final
+    pregunta:
+      - ¿Me consigue tres clientes dispuestos a decir una frase de dos líneas?
+      - Con nombre, cargo, empresa y permiso por escrito.
+    documento: correo o mensaje del propio cliente testimoniante
+    destino: 02_EVIDENCE.yaml · afirmaciones[].tipo = testimonio
+    umbral: 3
+
+  caso_documentado:
+    quien: dueño
+    pregunta:
+      - ¿Hay un trabajo con antes y después, con números?
+      - ¿Qué se midió, cuándo, y quién lo certifica?
+    documento: informe, medición o fotos fechadas del mismo trabajo
+    destino: 02_EVIDENCE.yaml · afirmaciones[].tipo = caso
+    umbral: 1
+
+  trayectoria_publica:
+    quien: dueño
+    pregunta:
+      - Años de oficio, cargos, ferias, publicaciones, cursos dictados. Con fechas.
+      - ¿Cuál de esas cosas puede verificar un tercero hoy?
+    documento: CV, LinkedIn, programa de feria, publicación
+    destino: 01_NEED.yaml · trayectoria
+    umbral: 1
+
+  atributos_verificables:
+    quien: dueño
+    pregunta:
+      - Tres cosas de su operación que se puedan comprobar con un documento.
+      - Planta, laboratorio, certificación, capacidad, cobertura.
+    documento: certificado, patente, contrato, registro
+    destino: 01_NEED.yaml · atributos
+    umbral: 3
+
+  ofertas_distintas:
+    quien: dueño
+    pregunta:
+      - ¿Qué cosas distintas puede comprar o pedir alguien? Nómbrelas, aunque sean gratis.
+      - ¿Qué incluye cada una y a quién le sirve?
+    documento: lista de ofertas, con lo que entra y lo que no
+    destino: 01_NEED.yaml · ofertas
+    umbral: 3
+
+  precio_publico:
+    quien: dueño
+    pregunta:
+      - ¿Cuál es el precio, o el mínimo, que se puede publicar sin engañar a nadie?
+      - ¿Qué oferta es gratis y se puede anunciar como gratis?
+    documento: tarifa o decisión escrita del dueño
+    destino: 01_NEED.yaml · ofertas[].precio (0 = gratis, null = no publicado)
+    umbral: 1
+
+  propiedades_propias:
+    quien: dueño
+    pregunta:
+      - ¿Qué sitios, marcas o dominios propios existen?
+      - ¿Cuáles están en operación hoy?
+    documento: listado de dominios con su estado
+    destino: 01_NEED.yaml · propiedades
+    umbral: 2
