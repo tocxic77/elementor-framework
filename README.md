@@ -129,6 +129,7 @@ documento en blanco o un repositorio sin `clients/` ya no salen `0`.
 | `verificar_tokens.py` | `tokens.css` ↔ `sistema.yaml`: mismo color, tamaño y familia; sin hex nuevos fuera de tokens | divergencias |
 | `verificar_estatico.py` · `verificar.js` | capa estática y capa renderizada de la calidad (18 comprobaciones estáticas + las renderizadas) | `N comprobaciones · 0 bloqueantes` |
 | `verificar_release.py` | **la secuencia**: corre todas las puertas en orden, corta en la primera FALLA y no declara publicable lo que quedó sin medir | tabla + `PUBLICABLE` / `NO PUBLICABLE` |
+| `adapters/elementor/auditar_estructura.py` | **ADAPTER.md reglas 1-7 sobre `_elementor_data`**: estructura, widget de texto, estilo local, hex, profundidad ≤4, `configuration-id` único, breakpoints | `R1…R7` + recuento |
 | `inventario_activos.py` | inventario medido de una carpeta de material | CSV |
 | `adapters/elementor/verificar_sistema.py` | variables con token de origen y componentes presentes en el kit | `SISTEMA OK · N comprobaciones, 0 fallos` |
 | `adapters/elementor/auditar_sitio.py` | un sitio ya publicado: páginas con estructura de Elementor, plantillas duplicadas, 404 mal condicionado, imágenes, H1, **favicon y `og:image`** | tabla + `AUDITORÍA · N fallos` |

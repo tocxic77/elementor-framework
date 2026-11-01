@@ -1,0 +1,59 @@
+[
+  {
+    "id": "1a2b3c4",
+    "elType": "e-flexbox",
+    "widgetType": null,
+    "settings": {
+      "classes": ["pp-band"],
+      "gap": {"unit": "px", "size": 64},
+      "configuration-id": "banda-hero"
+    },
+    "elements": [
+      {
+        "id": "1a2b3c5",
+        "elType": "e-flexbox",
+        "widgetType": null,
+        "settings": {
+          "classes": ["pp-wrap", "pp-stack"],
+          "gap": {"unit": "px", "size": 24},
+          "configuration-id": "hero-stack"
+        },
+        "elements": [
+          {
+            "id": "1a2b3c6",
+            "elType": "widget",
+            "widgetType": "e-heading",
+            "settings": {
+              "classes": ["pp-display"],
+              "title": "Pan sin atajos",
+              "tag": "h1",
+              "configuration-id": "hero-titulo"
+            },
+            "elements": []
+          },
+          {
+            "id": "1a2b3c7",
+            "elType": "widget",
+            "widgetType": "e-paragraph",
+            "settings": {
+              "classes": ["pp-lead"],
+              "text": "Masa madre, harina medida y un método que no se improvisa.",
+              "configuration-id": "hero-bajada"
+            },
+            "elements": []
+          },
+          {
+            "id": "1a2b3c8",
+            "elType": "e-component",
+            "widgetType": null,
+            "settings": {
+              "component_id": 11383,
+              "configuration-id": "hero-paso"
+            },
+            "elements": []
+          }
+        ]
+      }
+    ]
+  }
+]

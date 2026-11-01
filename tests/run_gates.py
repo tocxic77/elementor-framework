@@ -8,6 +8,8 @@ sobre un buen documento: es que **falle** sobre el defecto que dice detectar.
 Uso:    python tests/run_gates.py [-v]
 Sale   0 si todos los casos pasan · 1 si alguno falla.
 """
+import copy
+import json
 import os
 import shutil
 import subprocess
@@ -68,8 +70,8 @@ PAGINA_OK = """<!doctype html><html><head><meta name="viewport" content="width=d
 TOKENS_CSS = ":root{ --ink:#223035; --body:16px; }\n"
 
 
-def correr(script, args, cwd=None):
-    r = subprocess.run([sys.executable, str(TOOLS / script)] + [str(a) for a in args],
+def correr(script, args, cwd=None, donde=None):
+    r = subprocess.run([sys.executable, str((donde or TOOLS) / script)] + [str(a) for a in args],
                        capture_output=True, text=True, encoding="utf-8", errors="replace", cwd=cwd)
     return r.returncode, (r.stdout or "") + (r.stderr or "")
 
@@ -190,11 +192,82 @@ def main():
                 correr("verificar_tokens.py", ["--sistema", sistema,
                                                "--css", c.tmp / "sin-css"])[0], 1)
 
+        # ADAPTER.md · las siete reglas, sobre _elementor_data
+        adaptador = RAIZ / "adapters" / "elementor"
+        plantilla = json.loads((RAIZ / "tests" / "fixtures" / "estructura" / "valida.json")
+                               .read_text(encoding="utf-8"))
+
+        def hoja(d):
+            return d[0]["elements"][0]["elements"][0]
+
+        def estructura(mutar=None):
+            datos = copy.deepcopy(plantilla)
+            if mutar:
+                mutar(datos)
+            destino = c.tmp / "export.json"
+            destino.write_text(json.dumps(datos), encoding="utf-8")
+            return correr("auditar_estructura.py", [destino], donde=adaptador)[0]
+
+        def profundidad5(d):
+            cola = hoja(d)
+            cola["elements"] = [{"id": "n1", "elType": "e-flexbox", "settings": {"configuration-id": "n1"},
+                                 "elements": [{"id": "n2", "elType": "e-flexbox",
+                                               "settings": {"configuration-id": "n2"},
+                                               "elements": [{"id": "n3", "elType": "e-flexbox",
+                                                             "settings": {"configuration-id": "n3"},
+                                                             "elements": []}]}]}]
+
+        def sin_tipo(d):
+            pila = list(d)
+            while pila:
+                el = pila.pop()
+                el.pop("elType", None)
+                pila.extend(el.get("elements") or [])
+
+        def sin_cid(d):
+            pila = list(d)
+            while pila:
+                el = pila.pop()
+                (el.get("settings") or {}).pop("configuration-id", None)
+                pila.extend(el.get("elements") or [])
+
+        esperar("estructura · página conforme pasa", estructura(), 0)
+        esperar("estructura · R1 container prohibido",
+                estructura(lambda d: d[0].update(elType="container")), 1)
+        esperar("estructura · R2 text-editor prohibido",
+                estructura(lambda d: hoja(d).update(widgetType="text-editor")), 1)
+        esperar("estructura · R2 html prohibido",
+                estructura(lambda d: hoja(d).update(widgetType="html")), 1)
+        esperar("estructura · R3 estilo local falla",
+                estructura(lambda d: hoja(d)["settings"].update(padding="2rem")), 1)
+        esperar("estructura · R3 clase no registrada falla",
+                estructura(lambda d: hoja(d)["settings"].update(classes=["pp-display", "pp-inventada"])), 1)
+        esperar("estructura · R4 hex local falla",
+                estructura(lambda d: hoja(d)["settings"].update(color="#FF0000")), 1)
+        esperar("estructura · R5 profundidad 6 falla", estructura(profundidad5), 1)
+        esperar("estructura · R6 configuration-id duplicado falla",
+                estructura(lambda d: hoja(d)["settings"].update({"configuration-id": "banda-hero"})), 1)
+        esperar("estructura · R7 breakpoint 1024 falla",
+                estructura(lambda d: hoja(d)["settings"].update(gap_tablet={"unit": "px", "size": 1024})), 1)
+        esperar("estructura · export sin configuration-id es NO MEDIDO", estructura(sin_cid), 3)
+        esperar("estructura · JSON que no es _elementor_data es NO MEDIDO", estructura(sin_tipo), 3)
+        esperar("estructura · lista vacía es NO MEDIDO", estructura(lambda d: d.clear()), 3)
+
         # release
         codigo, salida = correr("verificar_release.py", [c.cliente])
         esperar("release · cliente válido no falla", 1 if codigo == 1 else 0, 0)
-        esperar("release · declara la puerta que no existe",
-                1 if "estructura" in salida and "sin gate" in salida else 0, 1)
+        esperar("release · declara lo que no pudo medir",
+                1 if "estructura" in salida and "sin export" in salida else 0, 1)
+        export = c.cliente / "05_SYSTEM" / "_elementor_data.json"
+        export.write_text(json.dumps(plantilla), encoding="utf-8")
+        esperar("release · con export conforme no falla",
+                1 if correr("verificar_release.py", [c.cliente])[0] == 1 else 0, 0)
+        roto = copy.deepcopy(plantilla)
+        hoja(roto).update(widgetType="text-editor")
+        export.write_text(json.dumps(roto), encoding="utf-8")
+        esperar("release · export con text-editor corta la secuencia",
+                correr("verificar_release.py", [c.cliente])[0], 1)
+        export.unlink()
         c.escribir("03_ASSETS.yaml", "cliente: acme-industrial\nactivos: []\n")
         esperar("release · cliente roto corta la secuencia",
                 correr("verificar_release.py", [c.cliente])[0], 1)

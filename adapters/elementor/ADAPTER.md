@@ -47,7 +47,9 @@ Verificado contra **Elementor 4.3.5 / Pro 4.3.0**, kit `11286`.
 - `list-components` devuelve los componentes publicados, no sus overrides; para saber
   qué expone cada uno hay que leerlo en el editor.
 - Las clases globales no se pueden enumerar por herramienta: se validan al aplicarlas
-  (un label inexistente devuelve error con la lista disponible). El gate no las cubre.
+  (un label inexistente devuelve error con la lista disponible). `auditar_estructura.py`
+  comprueba que la clase aplicada esté en `sistema.yaml`, que es la autoridad; no comprueba
+  que exista en el kit — para eso hace falta abrir el gestor de clases.
 - Un componente no acepta contenido arbitrario: si la instancia necesita estructura
   distinta, se crea otro componente, no se parchea la instancia.
 - `e-form` (formulario nativo) existe en 4.3.5 pero este adaptador todavía no lo emite.

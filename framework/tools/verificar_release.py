@@ -13,8 +13,8 @@ Pasos (en este orden, todos contra un cliente):
     4  activos         03_ASSETS.yaml — procedencia y medida de la imagen
     5  tokens          tokens.css ↔ sistema.yaml — una sola fuente de verdad
     6  estatico        05_SYSTEM/*.html — capa estática de la puerta de calidad
-    7  sistema         el kit vivo de Elementor (requiere ELEMENTOR_MCP_*)
-    8  estructura      _elementor_data contra ADAPTER.md — **no implementado todavía**
+    7  sistema         el kit vivo de Elementor (requiere ELEMENTOR_MCP_URL)
+    8  estructura      ADAPTER.md reglas 1-7 sobre el export de _elementor_data del cliente
 
 Uso:
     python verificar_release.py [<cliente>] [--html archivo ...] [--json]
@@ -81,24 +81,38 @@ def main(argv):
     else:
         pasos.append(("sistema", "", []))
 
+    # Estructura: se audita el export si el cliente tiene uno; si no, NO MEDIDO.
+    export = None
+    if cliente:
+        for patron in ("05_SYSTEM/_elementor_data*.json", "06_DEPLOYMENT/estructura*.json",
+                       "**/_elementor_data*.json"):
+            encontrados = sorted(cliente.glob(patron))
+            if encontrados:
+                export = encontrados[0]
+                break
+    if export:
+        pasos.append(("estructura", str(RAIZ / "adapters" / "elementor" / "auditar_estructura.py"),
+                      [export]))
+    else:
+        pasos.append(("estructura", "", []))
+
     resultados = []
     cortado = False
     for nombre, script, argumentos in pasos:
         if cortado:
             resultados.append({"paso": nombre, "codigo": None, "resultado": "no ejecutado (secuencia cortada)"})
             continue
-        if nombre == "sistema" and not script:
-            resultados.append({"paso": nombre, "codigo": NO_MEDIDO,
-                               "resultado": "sin ELEMENTOR_MCP_URL: el kit vivo no se midió"})
+        if not script:
+            motivo = {
+                "sistema": "sin ELEMENTOR_MCP_URL: el kit vivo no se midió",
+                "estructura": "sin export de _elementor_data: el artefacto publicado no se auditó",
+            }.get(nombre, "sin instrumento")
+            resultados.append({"paso": nombre, "codigo": NO_MEDIDO, "resultado": motivo})
             continue
         codigo, resumen, salida = correr(nombre, script, argumentos)
         resultados.append({"paso": nombre, "codigo": codigo, "resultado": resumen, "salida": salida})
         if codigo == FALLA:
             cortado = True
-
-    # Paso declarado y no implementado: se informa siempre, nunca se omite.
-    resultados.append({"paso": "estructura", "codigo": NO_MEDIDO,
-                       "resultado": "sin gate: ADAPTER.md reglas 1-7 (_elementor_data) no se validan"})
 
     codigos = [r["codigo"] for r in resultados if r["codigo"] is not None]
     if FALLA in codigos:
