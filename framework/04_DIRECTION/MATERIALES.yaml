@@ -65,7 +65,7 @@ materiales:
       - ¿Me consigue tres clientes dispuestos a decir una frase de dos líneas?
       - Con nombre, cargo, empresa y permiso por escrito.
     documento: correo o mensaje del propio cliente testimoniante
-    destino: 02_EVIDENCE.yaml · afirmaciones[] con tipo: testimonio y estado: validada
+    destino: "02_EVIDENCE.yaml · afirmaciones[] con tipo: testimonio y estado: validada"
     umbral: 3
 
   caso_documentado:
@@ -74,7 +74,7 @@ materiales:
       - ¿Hay un trabajo con antes y después, con números?
       - ¿Qué se midió, cuándo, y quién lo certifica?
     documento: informe, medición o fotos fechadas del mismo trabajo
-    destino: 02_EVIDENCE.yaml · afirmaciones[] con tipo: caso y estado: validada
+    destino: "02_EVIDENCE.yaml · afirmaciones[] con tipo: caso y estado: validada"
     umbral: 1
 
   trayectoria_publica:
@@ -83,7 +83,7 @@ materiales:
       - Años de oficio, cargos, ferias, publicaciones, cursos dictados. Con fechas.
       - ¿Cuál de esas cosas puede verificar un tercero hoy?
     documento: CV, LinkedIn, programa de feria, publicación
-    destino: 01_NEED.yaml · trayectoria[] con hecho: y verificable:
+    destino: "01_NEED.yaml · trayectoria[] con hecho: y verificable:"
     umbral: 1
 
   atributos_verificables:
@@ -92,7 +92,7 @@ materiales:
       - Tres cosas de su operación que se puedan comprobar con un documento.
       - Planta, laboratorio, certificación, capacidad, cobertura.
     documento: certificado, patente, contrato, registro
-    destino: 01_NEED.yaml · atributos[] con atributo: y documento:
+    destino: "01_NEED.yaml · atributos[] con atributo: y documento:"
     umbral: 3
 
   ofertas_distintas:
@@ -119,5 +119,5 @@ materiales:
       - ¿Qué sitios, marcas o dominios propios existen?
       - ¿Cuáles están en operación hoy?
     documento: listado de dominios con su estado
-    destino: 01_NEED.yaml · propiedades[] con dominio: y estado:
+    destino: "01_NEED.yaml · propiedades[] con dominio: y estado:"
     umbral: 2
