@@ -53,3 +53,22 @@ pendientes:
   - "pp-grid-3 y pp-numeral no tienen variante móvil probada en render"
   - "falta componente de formulario nativo con e-form"
   - "falta componente de cita o testimonio"
+
+# Tipo de conocimiento → componente obligatorio. Es el dato que consulta el constructor
+# antes de componer: ADAPTER.md lo exige como paso 0. `null` no es un descuido — es un
+# hueco declarado, y una banda de ese tipo no se compone con widgets sueltos.
+patrones:
+  apertura:
+    componente: 11377      # Hero de banda
+  objecion:
+    componente: 11380      # Banda de objeción
+  proceso:
+    componente: 11383      # Paso del método
+  cifras:
+    componente: 11390      # Bloque de cifras
+  servicio:
+    componente: 11393      # Tarjeta de línea de trabajo
+  credencial:
+    componente: null       # hueco: franja de atributos en línea
+  caso:
+    componente: null       # hueco: lista editorial situación → método → resultado

@@ -202,6 +202,21 @@ def main():
                 correr("verificar_tokens.py", ["--sistema", sistema,
                                                "--css", c.tmp / "sin-css"])[0], 1)
 
+        # patrones · el mapa tipo → componente se comprueba sin MCP
+        patrones_ok = c.tmp / "sistema_patrones.yaml"
+        patrones_ok.write_text(original, encoding="utf-8")
+        esperar("sistema · patrones coherentes, sin MCP es NO MEDIDO",
+                correr("verificar_sistema.py", ["--sistema", patrones_ok], donde=RAIZ / "adapters" / "elementor")[0], 3)
+        patrones_ok.write_text(original.replace("componente: 11383", "componente: 99999"),
+                               encoding="utf-8")
+        esperar("sistema · patrón que apunta a un componente inexistente falla",
+                correr("verificar_sistema.py", ["--sistema", patrones_ok], donde=RAIZ / "adapters" / "elementor")[0], 1)
+        patrones_ok.write_text(original.replace("credencial:\n    componente: null",
+                                                "credencial:\n    componente: 12345"),
+                               encoding="utf-8")
+        esperar("sistema · un hueco declarado no es error, uno inventado sí",
+                correr("verificar_sistema.py", ["--sistema", patrones_ok], donde=RAIZ / "adapters" / "elementor")[0], 1)
+
         c.escribir("03_ASSETS.yaml", ACTIVOS_OK.replace("seleccionado: false", "usado: false"))
         esperar("activos · el campo «usado» ya no vale",
                 correr("verificar_activos.py", [c.yaml("03_ASSETS.yaml")])[0], 1)

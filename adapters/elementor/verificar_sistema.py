@@ -8,7 +8,9 @@ No conoce ningún cliente: lee endpoint y credenciales del entorno.
     ELEMENTOR_MCP_KEY   application password
 
 Uso:  python verificar_sistema.py [--sistema sistema.yaml] [--tokens tokens.css]
-Sale 0 si todo pasa; 1 si algo falta. No imprime credenciales.
+Sale 0 si todo pasa; 1 si algo falta; 3 si no se pudo medir (sin MCP o sin .env).
+El mapa `patrones` se comprueba siempre, antes de cualquier llamada: es local.
+No imprime credenciales.
 """
 import argparse
 import base64
@@ -19,6 +21,8 @@ import sys
 import urllib.request
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(AQUI, "..", "..", "framework", "tools"))
+from _comun import cargar_yaml  # noqa: E402
 
 
 def leer_yaml_minimo(ruta):
@@ -54,18 +58,56 @@ def rpc(url, cabeceras, cuerpo, sesion=None):
         return e.code, None, e.read().decode("utf-8", "ignore")
 
 
+def revisar_patrones(ruta):
+    """El mapa tipo → componente tiene que apuntar a componentes que existen.
+
+    Se comprueba sin MCP y antes de cualquier llamada: es un dato local, y un mapa que apunta
+    a un componente borrado manda a construir con un id inexistente.
+    """
+    datos, error = cargar_yaml(ruta)
+    if error:
+        return ["no se pudo leer %s: %s" % (ruta, error)]
+    componentes = {c.get("id") for c in (datos.get("componentes") or []) if isinstance(c, dict)}
+    patrones = datos.get("patrones") or {}
+    if not patrones:
+        return ["sistema.yaml no declara patrones: no hay mapa tipo → componente"]
+    fallos = []
+    for tipo, valor in patrones.items():
+        destino = (valor or {}).get("componente") if isinstance(valor, dict) else valor
+        if destino is None:
+            continue                      # hueco declarado, no error
+        try:
+            destino = int(destino)
+        except (TypeError, ValueError):
+            fallos.append("patrón «%s»: componente «%s» no es un id" % (tipo, destino))
+            continue
+        if destino not in componentes:
+            fallos.append("patrón «%s»: componente %d no está entre los componentes declarados"
+                          % (tipo, destino))
+    return fallos
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--sistema", default=os.path.join(AQUI, "sistema.yaml"))
     ap.add_argument("--tokens", default=os.path.join(AQUI, "..", "..", "framework", "05_SYSTEM", "tokens.css"))
     args = ap.parse_args()
 
+    fallos_patrones = revisar_patrones(args.sistema)
+    if fallos_patrones:
+        print("SISTEMA INCOMPLETO · patrones: %d fallos" % len(fallos_patrones))
+        for f in fallos_patrones:
+            print("  - " + f)
+        return 1
+    print("0 · patrones: mapa tipo → componente coherente")
+
     url = os.environ.get("ELEMENTOR_MCP_URL", "").strip()
     usuario = os.environ.get("ELEMENTOR_MCP_USER", "").strip()
     clave = os.environ.get("ELEMENTOR_MCP_KEY", "").strip()
     if not (url and usuario and clave):
-        print("FALTAN variables ELEMENTOR_MCP_URL / ELEMENTOR_MCP_USER / ELEMENTOR_MCP_KEY")
-        return 1
+        print("NO MEDIDO · faltan variables ELEMENTOR_MCP_URL / ELEMENTOR_MCP_USER / ELEMENTOR_MCP_KEY: "
+              "el kit vivo no se comprobó")
+        return 3
 
     # La credencial puede venir ya codificada (base64 de usuario:contraseña) o en crudo.
     if ":" in clave and not re.fullmatch(r"[A-Za-z0-9+/=]{20,}", clave):

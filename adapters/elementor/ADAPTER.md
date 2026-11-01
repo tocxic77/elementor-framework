@@ -33,7 +33,22 @@ Verificado contra **Elementor 4.3.5 / Pro 4.3.0**, kit `11286`.
 7. Breakpoints reales del kit: `--tablet` = 1025 px, `--mobile` = 768 px (máximo
    inclusivo). No se usan 1024/767.
 
-## Procedimiento
+## Antes de componer: clasificar, no improvisar
+
+0. **Clasificar el conocimiento** de la banda en un tipo de `patrones` (`sistema.yaml`):
+   `apertura` · `proceso` · `servicio` · `cifras` · `objecion` · `credencial` · `caso`. Si no
+   encaja en ninguno, no se compone: se declara el tipo que falta.
+1. **Buscar el patrón**: el tipo manda la forma. La forma está en `DIRECTION.md` §E-4 y §6, no
+   en el gusto de quien construye.
+2. **Buscar el componente**: `patrones[tipo].componente` es el único id admisible para esa
+   banda. Todos los ids tienen que existir en `componentes`.
+3. **Si `componente: null`**, la banda no se construye con widgets sueltos: se declara el
+   hueco y se sigue. Un hueco declarado se lee; una banda improvisada se confunde con diseño.
+
+Construir widgets sueltos para un tipo que ya tiene componente es el fallo medido en el
+borrador 11357: 17 elementos, **0 `e-component`**, **0 `configuration-id`**, 15 fallas en R3/R5.
+
+## Procedimiento de montaje del kit
 
 1. `elementor/manage-global-variable` — crear las variables que falten (ver `sistema.yaml`).
 2. `elementor/manage-classes` — crear las clases con sus declaraciones CSS.
