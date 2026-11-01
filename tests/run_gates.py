@@ -282,6 +282,25 @@ def main():
                 correr("medir_material.py", ["--cliente", c.cliente, "--mecanismos", bib])[0], 0)
         bib.write_text(original_bib.replace("requiere: [problema_declarado]",
                                             "requiere: [problema_que_no_existe]"), encoding="utf-8")
+        ref = c.escribir("REFERENTES.yaml", """
+cliente: acme-industrial
+referentes:
+  - sitio: ejemplo.com
+    tipo: referente
+    observados: [promesa_de_resultado, contraste_binario]
+""")
+        esperar("referentes · los mecanismos observados existen en la biblioteca",
+                correr("medir_referentes.py", ["--cliente", c.cliente])[0], 0)
+        c.escribir("REFERENTES.yaml", """
+cliente: acme-industrial
+referentes:
+  - sitio: ejemplo.com
+    tipo: referente
+    observados: [promesa_de_resultado, mecanismo_inventado]
+""")
+        esperar("referentes · un mecanismo inventado en un referente falla",
+                correr("medir_referentes.py", ["--cliente", c.cliente])[0], 1)
+
         esperar("mecanismos · material inexistente en la biblioteca falla",
                 correr("medir_material.py", ["--cliente", c.cliente, "--mecanismos", bib])[0], 1)
 
