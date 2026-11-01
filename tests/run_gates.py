@@ -274,6 +274,17 @@ def main():
                 {"id": "sp", "elType": "widget", "widgetType": "spacer",
                  "settings": {"classes": ["pp-band"], "configuration-id": "sp"}, "elements": []})
             return d
+        # mecanismos · el material se mide; lo que no se puede medir no queda en verde
+        bib = c.tmp / "MECANISMOS.yaml"
+        original_bib = (RAIZ / "framework" / "04_DIRECTION" / "MECANISMOS.yaml").read_text(encoding="utf-8")
+        bib.write_text(original_bib, encoding="utf-8")
+        esperar("mecanismos · biblioteca medible contra un cliente completo",
+                correr("medir_material.py", ["--cliente", c.cliente, "--mecanismos", bib])[0], 0)
+        bib.write_text(original_bib.replace("requiere: [problema_declarado]",
+                                            "requiere: [problema_que_no_existe]"), encoding="utf-8")
+        esperar("mecanismos · material inexistente en la biblioteca falla",
+                correr("medir_material.py", ["--cliente", c.cliente, "--mecanismos", bib])[0], 1)
+
         esperar("estructura · spacer es FALLA, no aviso", estructura(con_spacer), 1)
         esperar("estructura · R2 text-editor prohibido",
                 estructura(lambda d: hoja(d).update(widgetType="text-editor")), 1)

@@ -1,0 +1,160 @@
+# Biblioteca de mecanismos de impacto
+#
+# Un mecanismo no es un componente ni un patrón: es la razón por la que una banda
+# produce un efecto. `patrones` (sistema.yaml) dice con qué componente se construye;
+# este archivo dice si el mecanismo está habilitado por el material que el cliente tiene.
+#
+# Capas, sin mezclarse:
+#   mecanismo (por qué funciona)  →  patrón (qué forma)  →  componente (con qué id)
+#                                     sistema.yaml          sistema.yaml
+#
+# `requiere` sólo usa el vocabulario cerrado de abajo. Un mecanismo cuyos materiales no
+# se pueden medir NO está disponible: no se asume, no se improvisa.
+#
+# Materiales y dónde se miden (los implementa tools/medir_material.py):
+#   problema_declarado     01_NEED.yaml  respuestas.a2
+#   objecion_declarada     01_NEED.yaml  intencion.objecion
+#   conversion_declarada   01_NEED.yaml  intencion.accion
+#   audiencia_declarada    01_NEED.yaml  intencion.audiencia
+#   evidencia_visual_propia 03_ASSETS.yaml  activos seleccionados con autorizacion: propia
+#   testimonios_reales     sin campo donde vivir → NO MEDIDO
+#   caso_documentado       sin campo donde vivir → NO MEDIDO
+#   trayectoria_publica    sin campo donde vivir → NO MEDIDO
+#   ofertas_distintas      sin campo donde vivir → NO MEDIDO
+#   atributos_verificables sin campo donde vivir → NO MEDIDO
+
+mecanismos:
+
+  perdida_antes_de_beneficio:
+    objetivo: que el lector se reconozca antes de que se le pida atención
+    requiere: [problema_declarado]
+    cuando_si: el problema está declarado por el propietario y citado con fuente
+    cuando_no: el problema lo supone la agencia
+    efecto: identificación antes de la promesa
+
+  reconocimiento_antes_del_diagnostico:
+    objetivo: validar la competencia del lector antes de señalarle un error
+    requiere: [problema_declarado, audiencia_declarada]
+    cuando_si: la audiencia tiene un oficio con maestría reconocible
+    cuando_no: la audiencia no se identifica por oficio
+    efecto: baja la guardia antes del reproche
+
+  titular_diagnostico:
+    objetivo: nombrar el error del lector, no el beneficio de la marca
+    requiere: [problema_declarado]
+    cuando_si: el error se puede decir en una frase
+    cuando_no: el error depende de circunstancias que el lector no controla
+    efecto: el lector reformula su propia situación
+
+  promesa_de_resultado:
+    objetivo: que el titular diga qué se produce, no quién lo produce
+    requiere: [conversion_declarada]
+    cuando_si: el resultado es observable y nombrable
+    cuando_no: el resultado es «calidad» o «confianza»
+    efecto: la oferta se puede evaluar sin conocer la marca
+
+  calificador_de_audiencia:
+    objetivo: filtrar antes de persuadir
+    requiere: [audiencia_declarada]
+    cuando_si: la audiencia se identifica por sector, escala o rol
+    cuando_no: el público es heterogéneo y filtrar excluye clientes legítimos
+    efecto: el lector correcto se reconoce y el resto se autoexcluye
+
+  accion_unica_por_banda:
+    objetivo: una sola decisión por banda
+    requiere: [conversion_declarada]
+    cuando_si: hay una conversión declarada
+    cuando_no: hay varias rutas legítimas en la misma banda
+    efecto: la intención no se reparte entre destinos
+    nota: es por banda, no por página. Una página con tres puertas sigue teniendo una acción por banda.
+
+  escalera_de_compromiso:
+    objetivo: que cada lector elija su profundidad de compromiso
+    requiere: [ofertas_distintas, conversion_declarada]
+    cuando_si: existen tres ofertas de fricción creciente que ya existen de verdad
+    cuando_no: hay menos de tres ofertas reales
+    efecto: el visitante avanza sin que se le pida todo de golpe
+
+  destino_nombrado:
+    objetivo: que el botón nombre la cosa, no la acción
+    requiere: [ofertas_distintas]
+    cuando_si: cada destino tiene un nombre propio
+    cuando_no: todos los destinos llevan a la misma página
+    efecto: el clic deja de ser una apuesta
+
+  prueba_material:
+    objetivo: demostrar operación real
+    requiere: [evidencia_visual_propia]
+    cuando_si: existe al menos un activo real, propio y autorizado
+    cuando_no: habría que comprar stock
+    efecto: el material es la prueba, no la decoración
+
+  prueba_distribuida:
+    objetivo: sostener la confianza entre afirmaciones, no en un bloque
+    requiere: [testimonios_reales]
+    cuando_si: hay tres o más citas verificables con nombre
+    cuando_no: no hay citas reales
+    efecto: confianza distribuida a lo largo de la página
+
+  prueba_que_ordena_la_accion:
+    objetivo: que la prueba misma pida la acción
+    requiere: [testimonios_reales, conversion_declarada]
+    cuando_si: un cliente recomienda la acción con sus palabras
+    cuando_no: los testimonios elogian sin recomendar
+    efecto: la decisión llega desde un tercero
+
+  autoridad_embebida:
+    objetivo: verificar contexto sin argumentar
+    requiere: [atributos_verificables]
+    cuando_si: hay tres atributos verificables y distintos entre sí
+    cuando_no: los tres son calidad, compromiso y experiencia
+    efecto: credencial comprimida en una línea
+
+  autoridad_diferida:
+    objetivo: que la credencial llegue cuando ya hay interés
+    requiere: [trayectoria_publica]
+    cuando_si: existe obra pública previa (libros, prensa, charlas)
+    cuando_no: no hay obra que diferir; diferida sin obra es autoridad ausente
+    efecto: la trayectoria no interrumpe el argumento
+
+  objecion_citada:
+    objetivo: desarmar la duda única antes de que el lector la use para irse
+    requiere: [objecion_declarada]
+    cuando_si: la objeción está declarada por el propietario con sus palabras
+    cuando_no: la objeción la supone la agencia
+    efecto: la duda pierde fuerza al venir de la voz del lector
+
+  metodo_en_secuencia:
+    objetivo: que el método se lea como proceso
+    requiere: [problema_declarado]
+    cuando_si: los pasos tienen orden causal
+    cuando_no: los pasos son paralelos
+    efecto: el lector entiende cómo se trabaja
+
+  contraste_binario:
+    objetivo: hacer el reencuadre legible de un golpe
+    requiere: []
+    cuando_si: hay un reencuadre que se puede decir en dos mitades
+    cuando_no: se usa como adorno o se repite sin tesis
+    efecto: el cambio de marco se entiende en una lectura
+
+  una_sola_idea:
+    objetivo: que toda la página defienda una tesis
+    requiere: [problema_declarado]
+    cuando_si: la página se puede resumir en una frase
+    cuando_no: varias tesis compiten
+    efecto: todo el texto empuja en la misma dirección
+
+  ritmo_densidad_alterna:
+    objetivo: evitar el cansancio y el ruido
+    requiere: []
+    cuando_si: hay prosa larga que cortar con una línea o una prueba
+    cuando_no: todo el texto es breve
+    efecto: la lectura respira sin perder densidad
+
+  cierre_invitacion:
+    objetivo: dejar la relación abierta después de la acción
+    requiere: [conversion_declarada]
+    cuando_si: la relación continúa después de la conversión
+    cuando_no: la acción es transaccional y termina ahí
+    efecto: la puerta queda abierta sin volver a vender

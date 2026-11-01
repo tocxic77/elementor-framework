@@ -133,6 +133,7 @@ documento en blanco o un repositorio sin `clients/` ya no salen `0`.
 | `verificar_release.py` | **la secuencia**: corre todas las puertas en orden, corta en la primera FALLA y no declara publicable lo que quedó sin medir | tabla + `PUBLICABLE` / `NO PUBLICABLE` |
 | `adapters/elementor/auditar_estructura.py` | **ADAPTER.md reglas 1-7 sobre `_elementor_data`**: estructura, widget de texto, estilo local, hex, profundidad ≤4, `configuration-id` único, breakpoints, `spacer`/`divider` prohibidos | `R1…R7` + recuento |
 | `framework/tools/verificar_arquitectura.py` | **arquitectura de sitio**: cabecera y pie repetidos en 3+ páginas, plantillas globales (NO MEDIDO sin kit), bloques repetidos como REVISAR | FALLA por copia, aviso por candidato |
+| `framework/tools/medir_material.py` | **material disponible**: qué mecanismos de `MECANISMOS.yaml` habilita el material real del cliente; lo que no tiene dónde medirse queda NO DISPONIBLE | instrumento, no puerta |
 | `inventario_activos.py` | inventario medido de una carpeta de material | CSV |
 | `adapters/elementor/verificar_sistema.py` | variables con token de origen y componentes presentes en el kit | `SISTEMA OK · N comprobaciones, 0 fallos` |
 | `adapters/elementor/auditar_sitio.py` | un sitio ya publicado: páginas con estructura de Elementor, plantillas duplicadas, 404 mal condicionado, imágenes, H1, **favicon y `og:image`** | tabla + `AUDITORÍA · N fallos` |
