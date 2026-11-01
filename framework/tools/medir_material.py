@@ -34,6 +34,11 @@ def lista(valor):
     return [valor] if valor else []
 
 
+def hay(valor):
+    """0 no habilita el mecanismo, pero tampoco es «no medido»: None sí lo es."""
+    return valor is not None and valor > 0
+
+
 def texto(valor):
     """Las respuestas de 01_NEED.yaml son dicts con `respuesta`; algunas son texto plano."""
     if isinstance(valor, dict):
@@ -54,6 +59,11 @@ def medir(cliente):
                 if isinstance(a, dict) and a.get("seleccionado")
                 and str(a.get("autorizacion") or "").strip().lower() == "propia"]
 
+    # Una oferta gratis es una oferta. `precio: 0` es precio publicado; `precio: null` es
+    # precio no publicado; la ausencia de `ofertas` no es cero, es NO MEDIDO.
+    ofertas = [o for o in (need.get("ofertas") or []) if isinstance(o, dict)]
+    con_precio = [o for o in ofertas if o.get("precio") is not None]
+
     return {
         "problema_declarado": (1 if texto(respuestas.get("a2")) else 0, "01_NEED.yaml a2"),
         "objecion_declarada": (1 if (texto(intencion.get("objecion")) or texto(respuestas.get("b3")))
@@ -67,9 +77,11 @@ def medir(cliente):
         "testimonios_reales": (None, "02_EVIDENCE.yaml: las afirmaciones no declaran tipo"),
         "caso_documentado": (None, "02_EVIDENCE.yaml: las afirmaciones no declaran tipo"),
         "trayectoria_publica": (None, "02_EVIDENCE.yaml: las afirmaciones no declaran tipo"),
-        "ofertas_distintas": (None, "01_NEED.yaml: no hay lista de ofertas"),
+        "ofertas_distintas": (len(ofertas) if ofertas else None,
+                              "01_NEED.yaml ofertas (gratis cuenta)"),
+        "precio_publico": (len(con_precio) if ofertas else None,
+                           "01_NEED.yaml ofertas[].precio (0 = gratis, null = no publicado)"),
         "atributos_verificables": (None, "01_NEED.yaml: no hay lista de atributos"),
-        "precio_publico": (None, "01_NEED.yaml: no hay campo de precio"),
         "propiedades_propias": (None, "no hay inventario de propiedades propias"),
     }, None
 
@@ -110,9 +122,19 @@ def main():
     disponibles, faltan = [], []
     for nombre, datos in mecanismos.items():
         # `requiere`: todos. `requiere_uno_de`: al menos uno.
-        faltantes = [m for m in (datos.get("requiere") or []) if not medidas.get(m, (None,))[0]]
+        faltantes = [m for m in (datos.get("requiere") or []) if not hay(medidas.get(m, (None,))[0])]
+        for material, umbral in (datos.get("minimo") or {}).items():
+            valor = medidas.get(material, (None,))[0]
+            if valor is None:
+                aviso = material
+            elif valor < umbral:
+                aviso = "%s: %d de %d" % (material, valor, umbral)
+            else:
+                continue
+            if material not in faltantes and aviso not in faltantes:
+                faltantes = [f for f in faltantes if f != material] + [aviso]
         alternativas = datos.get("requiere_uno_de") or []
-        if alternativas and not any(medidas.get(m, (None,))[0] for m in alternativas):
+        if alternativas and not any(hay(medidas.get(m, (None,))[0]) for m in alternativas):
             faltantes.append("uno de: " + " / ".join(alternativas))
         (faltan if faltantes else disponibles).append((nombre, faltantes))
 

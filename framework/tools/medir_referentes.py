@@ -26,9 +26,11 @@ def disponibilidad(mecanismos, medidas):
     """Devuelve (disponibles, motivos por mecanismo no disponible)."""
     libres, motivos = set(), {}
     for nombre, datos in mecanismos.items():
-        faltan = [m for m in (datos.get("requiere") or []) if not medidas.get(m, (None,))[0]]
+        faltan = [m for m in (datos.get("requiere") or [])
+                  if not medir_material.hay(medidas.get(m, (None,))[0])]
         alternativas = datos.get("requiere_uno_de") or []
-        if alternativas and not any(medidas.get(m, (None,))[0] for m in alternativas):
+        if alternativas and not any(medir_material.hay(medidas.get(m, (None,))[0])
+                                    for m in alternativas):
             faltan.append("uno de: " + " / ".join(alternativas))
         if faltan:
             motivos[nombre] = ", ".join(faltan)
