@@ -24,14 +24,15 @@ import sys
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, AQUI)
-from _comun import cargar_yaml, salir  # noqa: E402
+from _comun import existe_campo, cargar_yaml, salir  # noqa: E402
 import medir_material  # noqa: E402
 
 KIT = os.path.normpath(os.path.join(AQUI, "..", "..", "adapters", "elementor", "COMPONENTES.yaml"))
 SISTEMA = os.path.normpath(os.path.join(AQUI, "..", "..", "adapters", "elementor", "sistema.yaml"))
 REF = re.compile(r"^(?:(EV|P)-\d+|(trayectoria|atributos|ofertas)"
                  r"(?:\[(\d+|i)(?:\.\.(\d+))?\](?:\.([a-z_]+))?)?"
-                 r"|activo:(.+)|docs/.+\.md|[a-z_]+)$")
+                 r"|activo:(.+)|docs/.+\.md|[a-z_][a-z0-9_]*"
+                 r"(?:(?:\[\d+\])|\.[a-z_][a-z0-9_]*)*)$")
 
 
 def verificar(cliente):
@@ -176,12 +177,16 @@ def verificar(cliente):
                     fallas.append("banda %s - %s: activo '%s' no esta en 03_ASSETS"
                                   % (n, nombre, m.group(6)))
             elif fuente.startswith("docs/"):
+                if not os.path.exists(os.path.join(cliente, fuente)):
+                    fallas.append("banda %s - %s: el documento '%s' no existe" % (n, nombre, fuente))
+            elif existe_campo(need, fuente)[0]:
                 pass
             elif fuente in medidas:
-                if not medidas[fuente][0]:
-                    fallas.append("banda %s - %s: '%s' vale 0" % (n, nombre, fuente))
-            elif fuente not in ("conversion_declarada", "audiencia_declarada"):
-                fallas.append("banda %s - %s: '%s' no se mide" % (n, nombre, fuente))
+                # un material medido dice si hay o no hay, no dice qué texto va en la ranura
+                fallas.append("banda %s - %s: '%s' es un material medido, no una fuente de texto"
+                              % (n, nombre, fuente))
+            else:
+                fallas.append("banda %s - %s: %s" % (n, nombre, existe_campo(need, fuente)[1]))
 
     for n in bandas_wire:
         if n not in bandas_arq:

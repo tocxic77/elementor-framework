@@ -51,6 +51,8 @@ componentes:
   - {id: 11399, titulo: "Prueba material", overrides: [imagen, pie, segunda_imagen]}
 
 pendientes:
+  - "HostGator congela el HTML de una URL en su primer render: el HTML que se mide es el de la primera peticion despues de publicar. Todo cambio posterior exige purgar la cache de pagina del hosting; sin purga, el HTML parece no haber cambiado aunque el documento si cambio."
+
   - "pp-grid-3 y pp-numeral no tienen variante móvil probada en render"
   - "falta componente de formulario nativo con e-form"
   - "falta componente de cita o testimonio"

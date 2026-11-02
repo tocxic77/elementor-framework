@@ -66,6 +66,41 @@ def resolver_fuente(fuente, base):
     return p if p.is_absolute() else (Path(base) / p)
 
 
+_RE_CAMPO = re.compile(r"^(?P<raiz>[a-z_][a-z0-9_]*)(?P<resto>(?:\[\d+\]|\.[a-z_][a-z0-9_]*)*)$")
+_TOKEN = re.compile(r"\[(\d+)\]|\.([a-z_][a-z0-9_]*)")
+
+
+def existe_campo(datos, ref):
+    """(existe, motivo). Una referencia del tipo `campo`, `campo[i]` o `campo[i].sub`
+    tiene que apuntar a un valor real: ni clave ausente, ni clave presente y vacía.
+
+    Sin esto, `fuente: problema_declarado` pasaba el gate aunque el NEED tuviera ese
+    campo en null: se construía con una referencia inexistente y nadie protestaba.
+    """
+    ref = str(ref).strip()
+    m = _RE_CAMPO.match(ref)
+    if not m:
+        return False, "no es un campo del NEED"
+    actual = datos.get(m.group("raiz"), Ellipsis)
+    if actual is Ellipsis:
+        return False, "no existe el campo '%s' en 01_NEED.yaml" % m.group("raiz")
+    for indice, clave in _TOKEN.findall(m.group("resto")):
+        if indice:
+            if not isinstance(actual, list):
+                return False, "'%s' no es una lista" % ref
+            i = int(indice)
+            if i >= len(actual):
+                return False, "'%s' pide el indice %d y hay %d" % (ref, i, len(actual))
+            actual = actual[i]
+        else:
+            if not isinstance(actual, dict) or clave not in actual:
+                return False, "'%s' no tiene la clave '%s'" % (ref, clave)
+            actual = actual[clave]
+    if actual is None or actual == "" or actual == [] or actual == {}:
+        return False, "el campo '%s' existe pero esta vacio en 01_NEED.yaml" % ref
+    return True, None
+
+
 def archivo_de(ruta):
     """Directorio del documento, que es la base de sus rutas relativas."""
     return Path(ruta).resolve().parent

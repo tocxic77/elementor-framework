@@ -94,9 +94,12 @@ componentes:
 # de ranuras. No es una decisión de diseño: es lo que el componente no expone. Si un
 # wireframe futuro pide una de estas ranuras, la puerta falla y cita esta lista.
 restricciones_permanentes:
+  # medido en https://pennacchiotti.cl/portada-v2/ (2026-11-02): 11390 expone
+  # rotulo_1 y nada mas; los rotulos de la 2a y 3a cifra son textos por defecto
+  # del componente que no se pueden sobrescribir.
   11377: []
   11380: [cita, cita_objecion]
   11383: [entregable, duracion]
-  11390: [enlace_evidencia, imagen, rotulo_por_cifra]
+  11390: [enlace_evidencia, imagen, rotulo_por_cifra, rotulo_2, rotulo_3]
   11393: [cta, cta_interno, situacion, precio]
   11399: []
