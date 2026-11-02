@@ -182,19 +182,34 @@ def main():
         # independencia
         framework = c.tmp / "framework"
         framework.mkdir(exist_ok=True)
+        vacio = c.tmp / "vacio"
+        vacio.mkdir(exist_ok=True)  # --adapters tiene que existir: si no, es error de uso
         (framework / "nota.md").write_text("patrón reutilizable, sin nombres propios\n", encoding="utf-8")
         esperar("independencia · framework limpio",
                 correr("verificar_independencia.py",
                        ["--clients", c.cliente.parent, "--framework", framework,
-                        "--adapters", c.tmp / "sin-adapters"])[0], 0)
+                        "--adapters", vacio])[0], 0)
         (framework / "nota.md").write_text("ver acme-industrial para el ejemplo\n", encoding="utf-8")
         esperar("independencia · cliente nombrado falla",
                 correr("verificar_independencia.py",
                        ["--clients", c.cliente.parent, "--framework", framework,
-                        "--adapters", c.tmp / "sin-adapters"])[0], 1)
-        esperar("independencia · sin clients es NO MEDIDO",
+                        "--adapters", vacio])[0], 1)
+        # Sin --clients la medida de nombres no aplica (no hay carpeta), pero la de
+        # dominios sí corre contra lo que se le pasa.
+        # un archivo limpio da OK, y la URL de un cliente da FALLA.
+        (framework / "nota.md").write_text("patrón reutilizable, sin nombres propios\n", encoding="utf-8")
+        esperar("independencia · sin clients mide dominios y da OK",
                 correr("verificar_independencia.py",
-                       ["--clients", c.tmp / "no-existe", "--framework", framework])[0], 3)
+                       ["--framework", framework, "--adapters", vacio])[0], 0)
+        (framework / "nota.md").write_text("ver <SITIO>/portada-v1/\n", encoding="utf-8")
+        (framework / "ejemplo.md").write_text("ejemplo real: https://cliente-real.cl/contacto/\n", encoding="utf-8")
+        salida_dominio = correr("verificar_independencia.py",
+                                ["--framework", framework, "--adapters", vacio])
+        esperar("independencia · URL de cliente sin clients/ falla", salida_dominio[0], 1)
+        esperar("independencia · nombra el dominio culpable",
+                "cliente-real.cl" in salida_dominio[1], True)
+        (framework / "ejemplo.md").unlink()
+        (framework / "nota.md").write_text("patrón reutilizable, sin nombres propios\n", encoding="utf-8")
 
         # tokens
         esperar("tokens · adaptador y tokens.css coinciden", correr("verificar_tokens.py", [])[0], 0)

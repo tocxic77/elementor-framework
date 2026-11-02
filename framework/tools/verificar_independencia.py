@@ -41,6 +41,14 @@ DOMINIOS = {
 RE_URL = re.compile(r"https?://([a-z0-9][a-z0-9.-]*\.[a-z]{2,})")
 
 
+def rel(ruta):
+    """Ruta relativa a la raíz del proyecto; si el archivo vive fuera, se nombra completo."""
+    try:
+        return ruta.relative_to(RAIZ)
+    except ValueError:
+        return ruta
+
+
 def permitido(dominio, extra):
     if dominio in DOMINIOS or dominio in extra:
         return True
@@ -49,14 +57,26 @@ def permitido(dominio, extra):
 
 def main(argv):
     ap = argparse.ArgumentParser(description="independencia del framework")
-    ap.add_argument("--clients", default=str(RAIZ / "clients"))
-    ap.add_argument("--framework", default=str(RAIZ / "framework"))
-    ap.add_argument("--adapters", default=str(RAIZ / "adapters"))
+    ap.add_argument("--clients")
+    ap.add_argument("--framework")
+    ap.add_argument("--adapters")
     ap.add_argument("--permitir", nargs="*", default=[], help="dominios extra aceptados")
     args = ap.parse_args(argv)
 
     p = Puerta("independencia")
     extra = {d.strip().lower() for d in args.permitir if d.strip()}
+
+    # Una ruta indicada a mano que no existe es error de uso, no un OK silencioso:
+    # medir un directorio distinto al que se pidió es la forma más fácil de mentir.
+    for nombre, valor in (("--framework", args.framework), ("--adapters", args.adapters),
+                          ("--clients", args.clients)):
+        if valor is not None and not Path(valor).exists():
+            print("ERROR DE USO: no existe %s %s" % (nombre, valor), file=sys.stderr)
+            return 2
+
+    args.framework = args.framework or str(RAIZ / "framework")
+    args.adapters = args.adapters or str(RAIZ / "adapters")
+    args.clients = args.clients or str(RAIZ / "clients")
     raices = [Path(r) for r in (args.framework, args.adapters) if Path(r).is_dir()]
     if not raices:
         p.sin_medir("no existe framework/ ni adapters/ que revisar")
@@ -93,9 +113,9 @@ def main(argv):
             for i, linea in enumerate(lineas, 1):
                 for n, patron in patrones:
                     if patron.search(linea):
-                        acoplamientos.append((archivo.relative_to(RAIZ), i, "ACOPLA a «%s»" % n, linea.strip()[:70]))
+                        acoplamientos.append((rel(archivo), i, "ACOPLA a «%s»" % n, linea.strip()[:70]))
                 for dominio in RE_URL.findall(linea):
-                    dominios.setdefault(dominio, []).append("%s:%d" % (archivo.relative_to(RAIZ), i))
+                    dominios.setdefault(dominio, []).append("%s:%d" % (rel(archivo), i))
 
     p.mide("archivos revisados", revisados)
     p.mide("nombres de cliente buscados", "%d" % len(buscables) if buscables else "0 (repositorio sin clients/)")
