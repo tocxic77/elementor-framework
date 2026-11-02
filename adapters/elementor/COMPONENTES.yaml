@@ -80,8 +80,8 @@ componentes:
     estado: publicado_con_estilo
     clases: {raiz: [pp-band, pp-stack], fila: [pp-grid-2], img-1: [pp-figure], img-2: [pp-figure], pie: [pp-meta]}
     estructura: "<e-flexbox raiz><e-flexbox fila>img-1, img-2</e-flexbox>pie</e-flexbox>"
-    verificado: {estructura: true, props: true, render: false}
-    nota_render: "el preview devuelve una URL firmada que el MCP trunca: las clases se confirman al colocar la banda 2 en una pagina"
+    verificado: {estructura: true, props: true, render: true}
+    nota_render: "render confirmado en https://pennacchiotti.cl/portada-v1/ (2026-11-02): pp-band, pp-stack, pp-grid-2 y pp-figure en el HTML servido"
     ranuras:
       - {nombre: imagen, etiqueta: Imagen principal, tipo: imagen, campos: [src, size, alt]}
       - {nombre: pie, etiqueta: Pie de prueba, tipo: texto_parrafo}
