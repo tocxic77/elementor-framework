@@ -22,8 +22,12 @@ jobs:
 
       # El release del repositorio nunca puede dar FALLA. NO MEDIDO (3) es
       # admisible aquí porque no hay cliente; FALLA (1) no.
+      # `set +e` no es adorno: el shell de Actions corre con -e y abortaba en el
+      # python antes de poder inspeccionar el código, así que el build salía rojo
+      # con un 3 que este mismo bloque considera admisible.
       - name: release del repositorio
         run: |
+          set +e
           python framework/tools/verificar_release.py; codigo=$?
           echo "salida: $codigo"
           if [ "$codigo" -ne 0 ] && [ "$codigo" -ne 3 ]; then exit 1; fi
