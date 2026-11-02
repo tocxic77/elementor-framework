@@ -7,10 +7,13 @@ on:
 
 jobs:
   puertas:
-    runs-on: ubuntu-latest
+    # `ubuntu-latest` pasa a Ubuntu 26.04 entre el 19-oct y el 19-nov-2026: mientras
+    # migra, dos corridas seguidas no miden el mismo sistema. La imagen se fija.
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      # checkout v4 y setup-python v5 corren sobre Node 20, retirado el 23-sep-2026.
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
       - run: pip install pyyaml
@@ -25,9 +28,14 @@ jobs:
       # `set +e` no es adorno: el shell de Actions corre con -e y abortaba en el
       # python antes de poder inspeccionar el código, así que el build salía rojo
       # con un 3 que este mismo bloque considera admisible.
+      # Un 3 no es verde: se anota como aviso, para que la corrida no quede en
+      # "success" sin que se lea que hay puertas que no se midieron.
       - name: release del repositorio
         run: |
           set +e
           python framework/tools/verificar_release.py; codigo=$?
           echo "salida: $codigo"
+          if [ "$codigo" -eq 3 ]; then
+            echo "::warning::release NO PUBLICABLE: hay puertas sin medir en CI (ver tabla)"
+          fi
           if [ "$codigo" -ne 0 ] && [ "$codigo" -ne 3 ]; then exit 1; fi
