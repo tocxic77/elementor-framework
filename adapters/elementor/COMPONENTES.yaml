@@ -81,7 +81,7 @@ componentes:
     clases: {raiz: [pp-band, pp-stack], fila: [pp-grid-2], img-1: [pp-figure], img-2: [pp-figure], pie: [pp-meta]}
     estructura: "<e-flexbox raiz><e-flexbox fila>img-1, img-2</e-flexbox>pie</e-flexbox>"
     verificado: {estructura: true, props: true, render: true}
-    nota_render: "render confirmado en https://pennacchiotti.cl/portada-v1/ (2026-11-02): pp-band, pp-stack, pp-grid-2 y pp-figure en el HTML servido"
+    nota_render: "render confirmado en <sitio>/portada-v1/ (2026-11-02): pp-band, pp-stack, pp-grid-2 y pp-figure en el HTML servido"
     ranuras:
       - {nombre: imagen, etiqueta: Imagen principal, tipo: imagen, campos: [src, size, alt]}
       - {nombre: pie, etiqueta: Pie de prueba, tipo: texto_parrafo}
@@ -94,7 +94,7 @@ componentes:
 # de ranuras. No es una decisión de diseño: es lo que el componente no expone. Si un
 # wireframe futuro pide una de estas ranuras, la puerta falla y cita esta lista.
 restricciones_permanentes:
-  # medido en https://pennacchiotti.cl/portada-v2/ (2026-11-02): 11390 expone
+  # medido en <sitio>/portada-v2/ (2026-11-02): 11390 expone
   # rotulo_1 y nada mas; los rotulos de la 2a y 3a cifra son textos por defecto
   # del componente que no se pueden sobrescribir.
   11377: []

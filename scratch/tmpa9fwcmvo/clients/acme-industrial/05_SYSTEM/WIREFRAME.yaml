@@ -1,3 +1,0 @@
-esquema_componentes: {medido: false}
-bandas:
-  - {banda: 2, objetivo: metodo, patron: proceso, componente: 11383, slots: [{ranura: titulo, slot_componente: titulo, fuente: 'docs/PRODUCT.md', obligatorio: true}]}

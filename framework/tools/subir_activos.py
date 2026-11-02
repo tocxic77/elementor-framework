@@ -7,7 +7,7 @@ responde 200 y que el parent es la biblioteca. Si algo falla, deja el activo en
 `biblioteca_medios.estado: fallido` y sale 1.
 
 Credenciales por entorno, nunca por argumento ni por archivo:
-  WP_URL              p. ej. https://pennacchiotti.cl
+  WP_URL              p. ej. https://ejemplo.cl
   WP_APP_USER         usuario de WordPress
   WP_APP_PASSWORD     Application Password (Ajustes del perfil → Contraseñas de aplicación)
 
